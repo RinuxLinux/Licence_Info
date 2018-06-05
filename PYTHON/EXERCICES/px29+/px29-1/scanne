@@ -1,0 +1,46 @@
+#! /usr/bin/env python(
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px29-1 main VERSION 2
+
+from urllib import urlopen
+from sys import argv
+from dexlex import get_files, get_list, get_option, get_urls, indexe, nettoie_html, prd
+from os import chdir, getcwd
+
+source = getcwd()
+chdir(source+'/wdir/')
+
+
+def pilote(cibles, X, option, switch):
+	liste = get_list('go.list') if option is 'go' else get_list('stop.list')
+	for element in cibles:
+		url = element if switch is 'url' else None
+		flux = urlopen(element) if url else open(element)
+		data = nettoie_html(flux.read()) if switch is 'url' else None 
+		if switch is 'file':
+			for n, texte in enumerate(flux):
+				X = indexe(X, texte.split(), n + 1, liste, switch, option)
+		else:
+			X = indexe(X, data.split(), url, liste, switch, option)
+		flux.close()
+	return X 
+
+
+if len(argv) > 1:
+	if '-aide' in argv : 
+		print open('-aide').read()
+		open('-aide').close()
+	else: 
+		try:
+			option = get_option(argv)
+			urls = get_urls(argv)
+			files = get_files(argv, option).split()
+			switch = 'file' if urls is None else 'url'
+			prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+		except :
+			exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+else:
+	exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+

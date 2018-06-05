@@ -1,0 +1,181 @@
+#! /usr/bin/env python
+#-*-coding:utf-8-*-
+
+import sys
+
+
+J = True																# joueur initial
+T = int(sys.argv[1])
+H = 60																	# taille de cellule
+M = [T * [False] for x in range(T)]
+tour = 1
+# regles = "  --  Alignez %s symboles pour gagner!" % T
+
+
+def joue(event) :
+	global M, J
+	w = event.widget
+	if M[w.R][w.C] :
+		return
+	if J :
+		fais_x(w)
+	else :
+		coup = IA()
+		R = coup[0]
+		C = coup[1]
+		w = grille.grid_slaves(row=R, column=C)[0]
+		fais_o(w)
+	s = symbole(J)
+	M[w.R][w.C] = s
+	if gagnant(s) :
+		info['text'] = 'joueur %s gagne' % s
+		M = [T * [s] for x in range(T)]
+	J = not J
+
+
+def fais_x(w) :
+	w.create_polygon(10, 10, 20, 10, 55, 45, 55, 55, 45, 55, 10, 20, fill = 'red')
+	w.create_polygon(10, 55, 10, 45, 45, 10, 55, 10, 55, 20, 20, 55, fill = 'red')
+
+
+def fais_o(w) : 
+	w.create_oval(10, 10, 55, 55, width = 10)
+
+
+def symbole(j) : return ['O', 'X'][j]
+
+
+def gagnant(s) : 
+	global info
+	m = []
+	for x in range(T):
+		m += M[x]
+	for i in range(T):
+		if [[M[x][y] for y in range(T)] for x in range(T)][i].count(s) is T : return True
+		if [[M[x][y] for x in range(T)] for y in range(T)][i].count(s) is T : return True
+	if [M[x][x] for x in range(T)].count(s) is T : return True
+	if [M[x][T-x-1] for x in range(T)].count(s) is T : return True
+	if False not in m :
+		info ['text'] = 'GAME OVER'
+
+
+def IA():
+	global T, M, tour
+	
+	# Representation du plateau au moment du tour de IA (avec coord des cases)
+	
+	plateau = [[(x,y) for y in range(T)] for x in range(T)]
+	for i in range(len(M)):
+		for j in range(len(M[i])):
+			if M[i][j] : plateau[i][j] = M[i][j]
+	col = [[plateau[x][y] for x in range(T)] for y in range(T)]
+	lig = [[plateau[x][y] for y in range(T)] for x in range(T)]
+	di1 = [plateau[x][x] for x in range(T)]
+	di2 = [plateau[T-x-1][x] for x in range(T)]
+
+	lst = {'col' : col, 'lig' : lig, '[di1]' : [di1], '[di2]' : [di2]}
+	
+	dico = {'contrer' : [], 'gagner': [], 'normal' : [], 'priorite1' : [], 'priorite2' : [], 'priorite3' : [], 'priorite4' : [], 'priorite5' : [], 'priorite6' : [], 'priorite7' : []}
+	
+	# ANALYSE des combinaisons possibles, par section:
+	
+	for cle in lst.keys():
+		liste = lst[cle]
+		for i in range(len(liste)):
+			
+			# COMPTER LES CELLULES VIDES dans la section
+			tpl = 0
+			for j in range(len(liste[i])):
+				if type(liste[i][j]) is tuple : tpl += 1
+			
+			# PAS DE CASES LIBRES = on ignore la section
+			if tpl == 0 : continue
+						
+			# STRATEGIE 1 : jouer le coup gagnant
+			if liste[i].count('O') == T-1 : dico['gagner'] += (liste[i])
+			
+			# STRATEGIE 2 : contrer adversaire
+			if liste[i].count('X') == T-1 : dico['contrer'] += (liste[i])
+			
+			# STRATEGIES 3 et 4: premier coup = jouer le centre ou un coin
+			if tour == 1: 
+				# case stratégique: prendre le centre (si existe)
+				if T %2 != 0:
+					if not M[(T-1)/2][(T-1)/2] : dico['priorite1'] = [((T-1)/2, (T-1)/2)]
+				# case stratégique: prendre un coin
+				if not M[0][0] : dico['priorite2'] += [(0, 0)]
+				if not M[0][T-1] : dico['priorite2'] += [(0, T-1)]
+				if not M[T-1][0] : dico['priorite2'] += [(T-1, 0)]
+				if not M[T-1][T-1] : dico['priorite2'] += [(T-1, T-1)]
+				
+			# STRATEGIES 5 à 9 : chercher les sections les plus occupees et sans 'X'
+			if liste[i].count('X') == 0:
+				if liste[i].count('O') > 4 : dico['priorite3'] += (liste[i])
+				if liste[i].count('O') == 4 : dico['priorite4'] += (liste[i])
+				if liste[i].count('O') == 3 : dico['priorite5'] += (liste[i])
+				if liste[i].count('O') == 2 : dico['priorite6'] += (liste[i])
+				if liste[i].count('O') == 1 : dico['priorite7'] += (liste[i])
+				
+			# STRATEGIE 10 : dernier recours: jouer une case libre
+			if liste[i].count('O') > 0 and liste[i].count('X') != 0 : dico['normal'] += (liste[i])
+	tour += 1
+	return choix(dico)
+
+
+def choix(dico):
+	import random
+	ran = random.choice
+	
+	# TRI : ne garder que les coordonnees & enlever les doublons
+	for cle in dico.keys():
+		while 'X' in dico[cle] : dico[cle].remove('X')
+		while 'O' in dico[cle] : dico[cle].remove('O')
+		tri = []
+		for i in dico[cle]:
+			if i not in tri: tri.append(i)
+		dico[cle] = tri
+	
+	# CHOIX du coup par priorite // ajouter else if ??
+	
+	# strategie 1: coup gagnant
+	if dico['gagner'] != [] : return ran(dico['gagner']) 
+	
+	# strategie 2: contrer
+	if dico['contrer'] != [] : return ran(dico['contrer'])
+	
+	# strategies 3-4: premier coup strategique
+	if dico['priorite1'] != [] : return ran(dico['priorite1'])
+	if dico['priorite2'] != [] : return ran(dico['priorite2'])
+	
+	# strategies 5-9: n-ieme coup
+	i = 1
+	while i != 8:
+		if dico['priorite' + str(i)] != [] : 
+			k = i
+			i = 8
+			return ran(dico['priorite' + str(k)])
+		else: i += 1
+	# strategie 10 : toutes les autres strategies ont echoue
+	if dico['normal'] != [] : return ran(dico['normal'])
+
+
+# ~~~~~~~~~~~~~~  
+
+from Tkinter import *
+morpion = Tk() 
+morpion.title('MORPION 1.3')
+grille = Frame(morpion)
+
+for R in range(T) : 
+	for C in range(T) :
+		Cell = Canvas(grille, bg = 'light grey', width = H, height = H) 
+		Cell.bind("<Button-1>", joue)
+		Cell.grid(row = R, column = C)
+		Cell.R, Cell.C = R, C
+
+grille.pack()
+stop = Button(morpion, text='ASSEZ', command = morpion.destroy)
+stop.pack()
+info = Label(morpion)
+info.pack()
+morpion.mainloop()

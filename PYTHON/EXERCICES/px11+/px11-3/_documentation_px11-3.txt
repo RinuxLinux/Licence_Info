@@ -1,0 +1,19 @@
+# Renaud Lizot
+# 14509956
+# px11-3
+
+Pour cet exercice il suffit de changer argv[1] en argv[1:] afin que l'expression retourne toutes les valeurs après argv[0].
+
+for x in sys.argv[1:] :
+
+reno@reno-SATELLITE:~$ cd '/home/reno/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px11/Renaud Lizot px11-3/'
+reno@reno-SATELLITE:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px11/Renaud Lizot px11-3$ chmod u+x 'plusieurs'
+reno@reno-SATELLITE:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px11/Renaud Lizot px11-3$ python plusieurs clou chou aïeul vélo houx vendu ébêté
+clous
+choux
+aïeux
+vélos
+houx
+vendus
+ébêtés
+reno@reno-SATELLITE:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px11/Renaud Lizot px11-3$

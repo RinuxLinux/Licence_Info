@@ -1,0 +1,4 @@
+[px03-2] définir la fonction grogne() d'arité 0, qui retourne la chaîne 'grrrrr'.
+
+def grogne() : return 'grrrrr'
+grogne()

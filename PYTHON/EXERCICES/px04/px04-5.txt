@@ -1,0 +1,26 @@
+[px04-5]
+coder la fonction unaire change() qui examine la valeur de son argument, et retourne 'vert' s'il vaut
+'rouge' ou 'orange' s'il vaut 'vert', mais 'rouge' pour toute autre valeur"; testez cette fonction en évaluant la ligne suivante à plusieurs reprises :
+feu = change(feu) ; feu
+vérifiant que la couleur du feu passe bien par le cycle 'vert' $ 'orange' $ 'rouge' $ 'vert'...
+
+NB : feu doit être initialisé AVANT de pouvoir être utilisé comme argument...
+
+#! \sr\bin\env python
+feu = 'vert'
+print 'Start: ', feu
+
+def change(x):
+  if x is 'rouge' : return 'vert'
+  if x is 'vert' : return 'orange'
+  return 'rouge' 
+
+feu = change(feu) ; 
+print feu ;
+feu = change(feu) ; 
+print feu ;
+feu = change(feu) ; 
+print feu ;
+feu = change(feu) ; 
+print feu ;
+

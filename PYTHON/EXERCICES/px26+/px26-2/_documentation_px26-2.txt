@@ -1,0 +1,16 @@
+# Renaud Lizot
+# 14509956
+# px26-2
+
+CHANGEMENTS PAR RAPPORT A L'EXEMPLE DU COURS
+
+- Ajout d'un bouton Fermer pour le fun.
+- Ajout de l'affichage des coordonnées. Ca m'a aidé à comprendre comment corriger l'offsetting. Je l'ai laissé pour le fun.
+- L'origine du repère cartésien devient le centre du canvas.
+- Ajout des étiquettes x, y, -360°, +360° sur les axes du repère. Pour le sport.
+- Suppression de la fonction scale qui me paraissait superflue. Le scaling est fait pendant le calcul de x et y, ce qui me paraît plus concis sans changer la lisibilité du code (ça n'engage que moi).
+- Par contre, je n'ai pas intégré l'inversion de y (y = H - y) au calcul de y pour qu'elle soit bien visible.
+
+
+
+

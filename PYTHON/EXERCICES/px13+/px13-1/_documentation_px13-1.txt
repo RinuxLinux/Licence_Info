@@ -1,0 +1,23 @@
+# Renaud Lizot
+# 14509956
+# px13-1
+ 
+>>> def conjugue(verbe, personne):
+...     ps = 'je tu il nous vous ils'
+...     ps = 'je tu il nous vous ils'.split()
+...     ip1 = 'e es e ons ez ent'.split()
+...     return ps[personne-1] + ' ' + verbe[:-2] + ip1[personne-1]
+... 
+>>> v = 'tirer'
+>>> p = 3
+>>> conjugue(v, p)
+'il tire'
+>>> p = 6
+>>> conjugue(v, p)
+'ils tirent'
+>>>
+
+
+
+Note: [personne-1] parce que d'instint, l'utilisateur va proposer personne = 1 en pensant à la première personne du singulier, alors que dans la liste ps, celle-ci est en position ps[0].
+

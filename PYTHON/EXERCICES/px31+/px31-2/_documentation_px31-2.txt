@@ -1,0 +1,51 @@
+# Renaud Lizot
+# 14509956
+# px30-2
+# LCD polygones
+
+
+Tâches: changer les segments pour des polygones, pour un effet plus naturel
+
+
+# Analyse:
+La méthode create_polygon joint 6 points dans l'ordre donné. Il me suffit d'entrer les coordonnées de chaque sommet.
+Pour ce faire, je me dessine un modèle sur du papier quadrillé. De cette façon, j'ai toutes les coordonnées nécessaires sous le nez.
+
+Je décide de pousser le vice jusqu'à changer la couleur du remplissage des polygones et à ajouter un contour blanc pour un effet plus vrai que nature.
+
+
+# Faisabilité
+
+Premiere remarque:
+On peut utiliser fill pour simuler l'epaisseur du trait tout en gardant une width minimale, puisque width se reflete sur la outline seulement. 
+
+J'ai bien mes coordonnées sur papier quadrillé, mais il en faut 12 par polygones! Je pourrais le faire à la main mais c'est rébarbatif et sujet à erreur.
+Je me fais donc un petit outil sur mesure sous la forme d'un script Python qui prend les coordonnées en LDC et me renvoie les coordonnées factorisées. 
+J'y ajoute une fonction eval() qui me permet de contrôler le résultat.
+Voir: script 'poly' dans ./_outils
+
+( note en passant: je ne comprend pas pourquoi ma fonction process(coords) ne donne pas le meme resultat si je definis x1 =[] et y1 = [], ou x1 = y1 = [] ... la deuxième instruction me facilite le travail, je suis juste curieux de savoir pourquoi)
+
+En un rien de temps, j'ai toutes mes coordonnées et je peux apprécier le résultat:
+Voir: ./_screenshots/00_modele_complet.png
+
+
+# Intégration
+Il y a quelques menues adaptations à faire (on a maintenant 6 coordonnées au lieu de 2).
+
+Premier test:
+Voir: ./_screenshots/01_test_abcedaire_comparaison.png
+
+Pour donner l'illusion d'un affichage LCD, je vais avoir besoin de revoir l'ordre de tracé des polygones. 
+Les diagonales et les segments verticaux médians devraient être tracés en premiers pour pouvoir être recouverts par les segments suivants.
+
+Je vérifie que le zoom fonctionne toujours:
+Voir: ./_screenshots/02_test_description_zoom_140.png
+
+
+# Ajustements
+
+Pour l'instant, je règle le tracé des polygones pour faire illusion.
+Je remarque que les diagonales sont plus fines que les autres segments. Les sommets ne sont pas bien réglés... mais corriger le tir impliquerait des calculs savants alors je laisse ça pour plus tard.
+
+J'annexe la largeur de la bordure du trait au zoom car, en cas de dézoomage très fort (-80%), on ne voit plus que la bordure.

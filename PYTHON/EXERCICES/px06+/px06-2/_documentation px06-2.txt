@@ -1,0 +1,135 @@
+# px06-2
+# LIZOT Renaud
+# 14509956
+
+
+Pour cet exercice, j'ai préfère travailler directement via un fichier .py exécutable, plus pratique à modifier à la volée.
+Par conséquent je n'ai pas de log du terminal à vous montrer. Plutôt que de vous livrer une liste interminable des erreurs (faute de frappes ou de syntaxe pour la plupart) et des tests que j'ai pu faire, je préfère vous livrer un commentaire chronologique qui explique comment j'ai procède, et surtout pourquoi il y a deux versions du code. Spoiler: un mélange de confusion dans la lecture de l'énoncé et une légère confusion dans le principe des fonctions que cet exercice m'a permis de mieux comprendre.
+
+L'énoncé demande de créer une fonction binaire qui prend taille (numérique) et couleur (chaîne) en argument puis cette même fonction doit tracer le carré correspondant dans turtle.
+
+------------------
+LA MAUVAISE VOIE :
+------------------
+
+#######################################
+#! \sr\bin\env python
+# px06-2 version 1: fonction arite 0
+# LIZOT Renaud
+# 14509956
+
+def instructions():
+	while True:
+		try:
+			taille = int(raw_input('Taille: '))
+			break
+		except:	
+			print 'Veuillez entrer un nombre entier'
+			pass
+	couleur = raw_input('Choisir une couleur entre bleu, rouge et vert: ').lower()
+	while couleur not in ['rouge', 'bleu', 'vert'] : couleur = raw_input('Veuillez choisir entre BLEU, ROUGE et VERT: ').lower()
+	if couleur == 'rouge' : couleur = 'red'
+	if couleur == 'bleu' : couleur = 'blue'
+	if couleur == 'vert' : couleur = 'green'
+	for x in range(4):
+		color(couleur)
+		forward(taille)
+		left(90)
+	return taille, couleur
+
+from turtle import *
+instructions()
+done()
+
+#######################################
+
+ANALYSE DU PROBLEME
+--------------------
+Ma première difficulté a été de définir cette fonction. Comment l'appeler? Pourquoi l'appeler de telle façon et pas d'une autre? A ce moment-là, le principe de fonction était encore flou. Quel est l'intérêt d'une fonction binaire dans cet exercice? 
+J'ai fini par trouver une fonction instructions() d'arité 0 dans laquelle étaient définies les deux variables taille et couleur.
+A vrai dire, je ne suis toujours pas sûr qu'elle soit bien d'arité 0 puisqu'elle prend 2 variables dans sa définition... Le problème étant qu'au moment de l'appel, on ne peut pas l'appeler autrement que par un instructions(), donc sans arguments (?).
+
+J'en suis arrivé là car je ne trouvais pas le moyen d'appeler une fonction binaire dans le corps du code. Ça n'avait aucun sens quand l'énoncé précisait que cette fonction servait à la fois à déterminer les variable tailles et couleur, et à tracer le carré dans turtle. J'ai compris la nuance de l'énoncé que plus tard ('une fonction binaire qui ACCEPTE deux arguments') (!= DEFINIT !!)
+
+
+ELABORATION PAS A PAS
+---------------------
+J'ai commencé par écrire un code rudimentaire, sur papier. La fonction instructions() se définit comme suit: les variables sont entrées via un raw_input puis couleur est traduit en anglais et enfin l'itération qui trace le carré intervient. J'apprends au passage que Turtle ne peut pas être importé à l'intérieur d'une fonction. L'import doit se faire dans le corps du code. Par conséquent je note qu'il faut importer turtle avant d'appeler la fonction, sans quoi python ne comprend pas comment interpréter les instructions turtle.* contenus dans la fonction et renvoie une erreur.
+
+Premier test: La fenêtre turtle ne reste pas à l'écran. Après une recherche dans les aides sur le module turtle, j'apprends qu'une commande done() à la fin des instructions permet d'éviter la fermeture intempestive de la fenêtre turtle.  
+
+
+TEST & AFFINAGE:
+----------------
+# COULEUR
+Un premier test est de vérifier si la commande color() comprend le français et si elle est 'case-sensitive'. Pour ce faire je teste dans une fenêtre terminal color(x) avec x = 'Red' ou 'rouge'. J'en déduis que turtle ne parle qu'anglais et n'est pas sensible aux majuscules.
+Maintenant que je suis sûr que turtle est anglophone, j'ai le choix entre faire confiance à l'utilisateur ou bien le forcer à choisir une couleur parmi une liste restreinte. J'opte pour restreindre l'utilisateur en lui proposant un choix entre 3 couleurs, en français. J'aurai pu proposer autant couleurs que turtle en comprend mais la liste est longue, très longue.
+
+La variable couleur sera donc entrée via un raw_input puis passée à travers une boucle while qui vérifie qu'elle est dans la liste donnée et enfin une série de if traduiront sa valeur en anglais (if couleur == rouge then couleur = red).
+Pour que cette dernière série de if fonctionne en un minimum de lignes, il faudrait que la valeur couleur soit entrée en minuscule. D'où l'ajout du suffixe .lower() dans l'attribution de la valeur couleur, accolé au raw_input(), pour convertir toute lettre majuscule en minuscule sans rallonger le code.
+
+L'opérateur while permet de répéter une instruction tant que la condition de sortie de la boucle n'est pas atteinte. La condition ici est que la valeur couleur soit dans la liste 'rouge'/'bleu'/'vert'. Sans quoi un deuxième raw_input est lancé pour redemander la valeur de couleur. 
+Je me suis inspiré d'une boucle while utilisée pour un exercice précédent dans lequel je cherchais à créer une boucle qui répéterait un raw_input tant qu'un mot-clé ne serait pas entrer pour arrêter l'exécution du code. Très utile pour les exercices où il faut tester plusieurs valeurs dans une même instruction:
+	while 1:
+		valeur = raw_input('Valeur? (q pour quitter) ')
+		if valeur in ['q','Q'] : break
+		### reste du code ###
+
+
+#TAILLE
+Pour bien faire, j'ai voulu trouvé un moyen de contrôler la variable taille, de façon à toujours avoir un nombre entier. 
+Dans l'exercice précédent, on remarque que le type d'un raw_input est toujours un string. La fonction int(raw_input) corrige le tir mais ça coince si l'utilisateur entre une chaine à la place de taille en premier lieu. Le fait est que si on entre une valeur autre qu'un entier pour taille, le code taille = int(raw_input(...)) renvoie une erreur.
+Le morceau de code while...try...except a été trouvé tout fait sur internet. While créé une boucle qui passe try et except tant que try n'est pas True, c'est-à-dire que tant que taille n'est pas un nombre entier, le message 'Veuillez entrer un nombre entier' s'affiche, suivi par taille = int(raw_input(...)) qui redemande une valeur pour taille. Lorsque taille est converti en entier sans problème, on passe directement à la suite. 
+Je réutiliserai très certainement cette astuce plus tard.
+
+
+Donc ma fonction - pas binaire mais tant pis - est prête. L'appel se fait tout simplement. 
+Le module Turtle ne pouvant être importé que dans le corps du code, je le mets avant l'appel de la fonction instructions()
+Une instruction done() garde le trace a l'écran.
+
+
+---------------
+LA BONNE VOIE ?
+---------------
+
+C'est beau, ça marche, mais le doute m'assaille. Non, vraiment, cette fonction n'est pas binaire. 
+Et si je sortais les valeurs taille et couleur de la fonction et que je gardais la fonction uniquement pour l'exécution des commandes turtle?
+
+Il m'a suffi de déplacer le def instructions(): juste avant l'itération et adapter l'indentation.
+
+Le nouveau code donne ceci:
+
+#######################################
+#! \sr\bin\env python
+# px06-2 version 2 - fonction binaire
+# LIZOT Renaud
+# 14509956
+
+
+def instructions(taille, couleur):
+	for x in range(4):
+		color(couleur)
+		forward(taille)
+		left(90)
+	return taille, couleur
+
+while True:
+	try:
+		taille = int(raw_input('Taille: '))
+		break
+	except:	
+		print 'Veuillez entrer un nombre entier'
+		pass
+couleur = raw_input('Choisir une couleur entre bleu, rouge et vert: ').lower()
+while couleur not in ['rouge', 'bleu', 'vert'] : couleur = raw_input('Veuillez choisir entre BLEU, ROUGE et VERT: ').lower()
+if couleur == 'rouge' : couleur = 'red'
+if couleur == 'bleu' : couleur = 'blue'
+if couleur == 'vert' : couleur = 'green'
+
+from turtle import *
+taille, couleur = instructions(taille, couleur)
+done()
+#######################################
+
+
+Note: Finalement mon erreur m'a permis de mieux comprendre le principe des fonctions et m'a quand même mené vers un code plus acceptable aux vues de l'exercice en question.

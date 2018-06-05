@@ -1,0 +1,146 @@
+# Renaud Lizot
+# 14509956
+# px27-2
+
+
+#####################################
+OBSERVATIONS:
+Pas de grosse difficulté: on ajoute une boucle for qui, pour chaque mot de stoplist, y accole un '\n' dans le fichier stop.list
+
+flux = open('stop.list','w')
+for mot in stoplist :
+	flux.write(mot + '\n')
+flux.close()
+
+Implique que la variable stoplist soit définie avant ce bout de code.
+J'ai été tenté d'en faire une fonction mais cela impliquerai qu'elle soit appelée dans la fonction pilote. 
+Je pense que ça ralentirait l'exécution du code étant donné qu'un fichier stop.list serait alors créé à chaque exécution de pilote(). (Pas sûr?)
+Toutefois on gagnerai en lisibilité, à mon avis. A voir.
+J'ai aussi mis un peu d'ordre dans l'ordre des fonctions, pour ma visibilité.
+
+
+OBSERVATIONS LEGEREMENT HORS-SUJET: LE MODULE OS
+Mes dossiers contenant mes cours et exercices sont dans le tréfond de répertoires aux noms interminables. 
+C'est volontaire. Maladroit mais volontaire. Choix de débutant.
+Pour cet exercice et par souci de simplicité, j'ai déplacé les fichiers concernés dans le répertoire au plus près du dossier par défaut, ici /home/reno/wdir/
+Mais je m'en serais voulu de rendre un script qui ne soit pas autonome. Dans le cours vous mentionnez le module os et la méthode chdir().
+Après un peu de recherche, j'ai fini par ajouter en tête du script ci-joint ces quelques lignes:
+
+# CHANGEMENT DE REPERTOIRE DE TRAVAIL
+from os import getcwd, chdir
+chemin = getcwd() + '/wdir'
+chdir(chemin)
+
+getcwd(): 'get current working directory' (rend un type string)
+auquel j'ajoute le chemin vers mon dossier wdir ('working directory')
+puis chdir vers ce chemin.
+
+Je ne suis évidemment pas arrivé à ce résultat du premier coup :
+Au début, j'importais le module os en entier (from os import *) et j'avais cette erreur :
+>>> flux = open('stop.list','w')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: an integer is required
+
+Open prendrait un entier? En consultant de la documentation sur le module os, j'apprend qu'il dispose lui aussi d'une méthode open qui a une syntaxe différente de celle utilisée.
+Pour parer à ça, j'ai donc importé du module os uniquement les méthodes dont j'avais besoin.
+
+
+#####################################
+
+
+reno@Jupiter:~$ cd ./wdir/
+reno@Jupiter:~/wdir$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> # VARIABLES GLOBALES
+... ponctuation = '(, . ")'
+>>> stoplist = "ce de du en le la mais on ou par pas pour qui un une c'est dans s'en plus qu'elle".split()
+>>> 
+>>> # STOP.LIST
+... flux = open('stop.list','w')
+>>> for mot in stoplist :
+...     flux.write(mot + '\n')
+... 
+>>> flux.close()
+>>> flux = open('stop.list','r')
+>>> stoplist = flux.read().split()
+>>> flux.close()
+>>> 
+>>> # FONCTIONS AUXILLIAIRES
+... def nettoie(mot):
+...     if mot[-1] in ponctuation : mot = mot[:-1]
+...     if mot[0] in ponctuation : mot = mot[1:]
+...     return mot
+... 
+>>> def indexe(dex, mots, ligne) :
+...     for mot in mots :
+...             mot = nettoie(mot)
+...             if mot.lower() in stoplist : pass
+...             else : dex = ajoute(dex, mot, ligne)
+...     return dex
+... 
+>>> def ajoute(dex, mot, ligne) :
+...     if mot in dex :
+...             if ligne in dex[mot] : pass
+...             else : dex[mot].append(ligne)
+...     else : dex[mot] = [ligne]
+...     return dex
+... 
+>>> def prd(d) :
+...     for c in sorted(d) :
+...             print '\t', c, ':', d[c]
+... 
+>>> # FONCTION PRINCIPALE               
+... def pilote(fichier, dex) :
+...     flux = open(fichier, 'r')
+...     for n, ligne in enumerate(flux) :
+...             dex = indexe(dex, ligne.split(), n + 1)
+...     flux.close()
+...     prd(dex)
+...     return dex
+... 
+>>> # APPEL PRINCIPAL
+... pilote('indexe-moi', {})
+	alors : [8]
+	attendue : [6]
+	autrement : [7]
+	avant : [6]
+	avec : [8]
+	avoir : [5]
+	bien : [1, 5]
+	bon : [9]
+	bouts : [4]
+	certitude : [5]
+	chaque : [4, 8]
+	coder : [3]
+	contexte : [8]
+	dit : [7]
+	expression : [4, 6]
+	fonctionnement : [9]
+	frustration : [3]
+	garantit : [9]
+	global : [9]
+	grosse : [3]
+	instruction : [7, 8]
+	large : [7]
+	mal : [2]
+	marche : [2]
+	petits : [4]
+	plaisir : [1]
+	programme : [1, 2, 7]
+	progressivement : [4, 9]
+	retourne : [5]
+	servir : [6]
+	solution : [3]
+	testant : [4]
+	teste : [8]
+	tourne : [1]
+	tout : [2]
+	valeur : [5]
+	voulu : [8]
+	vraiment : [2]
+{'certitude': [5], 'progressivement': [4, 9], 'global': [9], 'grosse': [3], 'plaisir': [1], 'retourne': [5], 'coder': [3], 'avec': [8], 'alors': [8], 'attendue': [6], 'bien': [1, 5], 'chaque': [4, 8], 'valeur': [5], 'frustration': [3], 'autrement': [7], 'avoir': [5], 'testant': [4], 'tourne': [1], 'bouts': [4], 'vraiment': [2], 'petits': [4], 'teste': [8], 'garantit': [9], 'mal': [2], 'marche': [2], 'instruction': [7, 8], 'solution': [3], 'large': [7], 'fonctionnement': [9], 'tout': [2], 'voulu': [8], 'bon': [9], 'dit': [7], 'avant': [6], 'servir': [6], 'expression': [4, 6], 'contexte': [8], 'programme': [1, 2, 7]}
+>>> 
+ 

@@ -1,0 +1,85 @@
+# Renaud Lizot
+# 14509956
+# px32-2
+# Pendu
+
+Tâches:
+- empêcher un mot d'être sélectionné 2 fois de suite
+
+# Analyse
+La méthode qui saute aux yeux est d'avoir tous les mots dans une liste (c'est déjà le cas), transférer cette liste à une autre liste de référence, puis le mot choisi est supprimé de cette liste
+De cette façon, chaque mot ne passera qu'une fois.
+
+Cette méthode à un problème: en l'état actuel, il faut relancer le script à chaque fois que l'on veut jouer. 
+La liste de référence serait alors réinitialilsée à chaque exécution.
+Ceci est dû en partie au fait que les boutons start et stop sont paramétrer pour quitter le jeu.
+Button(top, text='start', command=top.quit).pack(side=TOP)
+Button(top, text='stop', command=top.quit).pack(side=TOP)
+
+On pourrait assigner au bouton start l'action de réinitialiser le jeu, donc de choisir un nouveau mot. 
+Ceci voudrait dire qu'il me faudrait revoir la façon dont j'ai organisé mes fonctions, fonctions qui produisent des variables utilisées par d'autre fonctions... 
+(et puis c'est l'énoncé de l'exercice suivant).
+
+La première solution qui me vient en tête est de créer un fichier texte contenant les mots déjà vus et transvaser les mots d'une liste à l'autre. 
+Toutefois cela compliquerait encore les choses lorsque le premier fichier sera vide. il faudrait une sorte de switch qui permette de choisir le bon fichier lors de l'initialisation (get_mots()).
+
+Plutôt que de transvaser les mots, on pourrait juste faire un fichier contenant les mots déjà utilisé et le comparer à l'autre fichier.
+
+
+# Faisabilité
+Etapes:
+- choisit un mot
+- regarde dans fichier des 'déjà-vu':
+	si mot présent:
+		choisit un nouveau mot
+		regarde à nouveau
+		répète jusque tous les mots soient testé
+			auquel cas, efface le contenu de deja_vu, et continue
+	si mot absent:
+		inscrit le au fichier deja vu
+		continue
+
+Pour tester si le mot est présent, on se ressert de la fonction get_mots, adaptée pour pouvoir servir à différents fichiers:
+
+def isSeen(mot):
+	seen = ' '.join(get_mots('f_dejavu'))
+	if mot in seen: return True
+	else: return False
+
+Pour inscrire le mot au fichier, on crée une fonction avec open(fichier) et l'option 'a+' qui permet notamment d'écrire à la suite, sans écraser le contenu déjà présent.
+
+def record(mot):
+	flux = open('f_dejavu', 'a+')
+	flux.write(mot + '\n')
+	flux.close()
+
+Pour effacer le contenu du fichier, on crée la fonction reset(fichier):
+
+def reset(fichier):
+	flux = open(fichier, 'w')
+	flux.write('')
+	flux.close()
+
+Le tout est orchestré dans la fonction parametrage() [ça commence à faire beaucoup de fonctions dans des fonctions... ]
+
+def parametrage(mots):
+	mot = random.choice(mots)
+	compteur = len(mots)
+	while isSeen(mot) is True and compteur != 0:
+		mot = random.choice(mots)
+		compteur -= 1
+	if compteur == 0: reset('f_dejavu')
+	record(mot)
+	mot = mot.decode('utf-8')
+	taille = len(mot)
+	trou = '-'
+	devine = trou * taille
+	return mot, taille, trou, devine
+
+Un compteur basé sur la taille de la liste de mots permet d'ajouter à la boucle while une deuxième condition qui, en tandem avec isSeen (True/False), empêche cette boucle de tourner sans fin au cas où isSeen est toujours Vrai (quand tous les mots ont été déjà été choisis). 
+Si le compteur arrive à 0, on garde le dernier mot choisi et on lance la procédure d'effacement du contenu du fichier. Suivie de la procédure d'enregistrement du mot dans ce même fichier, qui aura lieu sans conditions.
+Pour pouvoir comparer les mots des deux fichiers dans de bonnes conditions, il fallait procéder au décodage du mot après cette batterie d'instructions.
+
+
+# Tests:
+Tout est OK

@@ -1,0 +1,296 @@
+# Renaud Lizot
+# 14509956
+# px28-3
+# module dexlex avec fonctions et donnees globales + coeur du script a part
+
+
+
+PREAMBULE:
+Je me suis rendu compte après coup qu'il fallait que la fonction pilote() soit dans le module-maître. 
+Les modifications apportées sont minimes. Import de dexlex et ses fonctions concernées pour le bon fonctionnement du script ; amputation de pilote() dans dexlex.
+Ca ne change rien à mes observations ci-dessous.
+
+Nouveau code:
+
+from dexlex import indexe, get_list, prd
+import sys
+
+def pilote(fichier, dex, liste, option) :
+	flux = open(fichier, 'r')
+	for n, ligne in enumerate(flux) :
+		dex = indexe(dex, ligne.split(), n + 1, liste, option)
+	flux.close()
+	prd(dex)
+	return dex
+
+
+# APPEL PRINCIPAL
+if __name__ == '__main__' :
+	try :
+		if len(sys.argv) == 3 :
+			option = sys.argv[2]
+			fich_list = ''.join(list(option)[1:]) + '.list'
+			liste = get_list(fich_list)
+			pilote(sys.argv[1], {}, liste, option)
+		else: exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")
+	except :
+		exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")
+
+		
+
+#####################################
+OBSERVATIONS: 
+
+Le script principal:
+
+# APPEL PRINCIPAL
+import sys
+import dexlex
+entree = len(sys.argv)
+if entree == 3 :
+	option = sys.argv[2]
+	fichier = ''.join(list(option)[1:]) + '.list'
+	dexlex.pilote(sys.argv[1], {}, option)
+else: exit("Erreur. Trop ou pas assez d'arguments. Options possibles: -go ou -stop")
+
+Une différence notable: la fonction pilote ne peut plus prendre liste en argument puisque liste est définie via la fonction get_list qui ne fait plus partie du script.
+Par conséquent la fonction pilote() de dexlex doit être modifiée:
+
+# FONCTION PRINCIPALE		
+def pilote(fichier, dex, option) :
+	liste = get_list(fichier)
+	flux = open(fichier, 'r')
+	for n, ligne in enumerate(flux) :
+		dex = indexe(dex, ligne.split(), n + 1, liste, option)
+	flux.close()
+	prd(dex)
+	return dex
+
+### PREMIERS TESTS
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python px28-3.py indexe-moi -go
+	alors  : 8
+	autrement  : 7
+	avant  : 6
+	avec  : 8
+	avoir  : 5
+	bien  : 1, 5
+	bon  : 9
+	ce  : 8
+	certitude  : 5
+	chaque  : 4, 8
+	coder  : 3
+	contexte  : 8
+	dans  : 6
+	de  : 3, 6
+	dit  : 7
+	du  : 2, 7
+	en  : 4
+	expression  : 4, 6
+	fonctionnement  : 9
+	garantit  : 9
+	instruction  : 7-8
+	la  : 3, 5
+	le  : 3, 8-9
+	mais  : 1
+	mal  : 2
+	marche  : 2
+	ou  : 2
+	par  : 3
+	pas  : 2
+	petits  : 4
+	plus  : 6
+	pour  : 5
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	qui  : 1-2, 9
+	retourne  : 5
+	servir  : 6
+	solution  : 3
+	testant  : 4
+	teste  : 8
+	tourne  : 1
+	un  : 1
+	une  : 3, 6-7
+	valeur  : 5
+	vraiment  : 2
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python px28-3.py indexe-moi -stop	
+	#  : 1-3, 5-6
+	attendue  : 6
+	bouts  : 4
+	frustration  : 3
+	global  : 9
+	grosse  : 3
+	large  : 7
+	on  : 7
+	plaisir  : 1
+	tout  : 2
+	voulu  : 8
+
+On remarque la présence du #, témoin gênant d'un bidouillage précédent.
+
+### CONTROLE TECHNIQUE
+Je me rends compte qu'il y a plusieurs erreurs à divers endroits.
+
+Appel principal et fonction pilote(): 
+- deux variables ont le même nom ('fichier'). 
+- fichier = ''.join(list(option)[1:]) + '.list' n'a rien à faire dans le corps du script (crtl+c ctrl+v fail!) 
+
+Nouvelle version :
+
+# APPEL PRINCIPAL
+import sys
+import dexlex
+entree = len(sys.argv)
+if entree == 3 :
+	option = sys.argv[2]
+	dexlex.pilote(sys.argv[1], {}, option)
+else: exit("Erreur. Trop ou pas assez d'arguments. Options possibles: -go ou -stop")
+
+# FONCTION PRINCIPALE		
+def pilote(fichier, dex, option) :
+	fich_list = ''.join(list(option)[1:]) + '.list'
+	liste = get_list(fich_list)
+	flux = open(fichier, 'r')
+	for n, ligne in enumerate(flux) :
+		dex = indexe(dex, ligne.split(), n + 1, liste, option)
+	flux.close()
+	prd(dex)
+	return dex
+
+Autre problème: la fonction indexe() peut être raccourcie en changeant les conditions in/not in --> pass, en not in/in --> action.
+Nouveau code:
+
+def indexe(dex, mots, ligne, liste, option) :
+	for mot in mots :
+		mot = nettoie(mot)
+		if option == '-stop' :
+			if mot.lower() not in liste : dex = ajoute(dex, mot, ligne)
+		if option == '-go' :
+			if mot.lower() in liste : dex = ajoute(dex, mot, ligne)			
+	return dex
+
+### TESTS SUIVANTS
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python px28-3.py indexe-moi -stop
+	alors  : 8
+	attendue  : 6
+	autrement  : 7
+	avant  : 6
+	avec  : 8
+	avoir  : 5
+	bien  : 1, 5
+	bon  : 9
+	bouts  : 4
+	certitude  : 5
+	chaque  : 4, 8
+	coder  : 3
+	contexte  : 8
+	dit  : 7
+	expression  : 4, 6
+	fonctionnement  : 9
+	frustration  : 3
+	garantit  : 9
+	global  : 9
+	grosse  : 3
+	instruction  : 7-8
+	large  : 7
+	mal  : 2
+	marche  : 2
+	petits  : 4
+	plaisir  : 1
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	retourne  : 5
+	servir  : 6
+	solution  : 3
+	testant  : 4
+	teste  : 8
+	tourne  : 1
+	tout  : 2
+	valeur  : 5
+	voulu  : 8
+	vraiment  : 2
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python px28-3.py indexe-moi -go
+	bouts  : 4
+	frustration  : 3
+	global  : 9
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	valeur  : 5
+
+
+### PEAUFINAGE
+Dans le script principal, j'enlève les variables qui rendaient les choses plus faciles à lire et ajoute une condition qui teste si le script est maître (comme dans le cours sur les modules), et une combinaison de try... except pour gérer les erreurs.
+Le message d'erreur est rendu plus explicite.
+Le nom du script est changé en 'lit'. 
+
+# APPEL PRINCIPAL
+if __name__ == '__main__' :
+	import dexlex
+	import sys
+	try :
+		if len(sys.argv) == 3 :
+			dexlex.pilote(sys.argv[1], {}, sys.argv[2])
+		else: exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")
+	except :
+		exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")
+
+
+### DERNIERS TESTS
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python lit indexe-moi fsdf
+ Erreur. Trop ou pas assez d'arguments. 
+ Options possibles: -go ou -stop 
+ Exemple : python lit indexe-moi -stop
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python lit indexe-moi
+ Erreur. Trop ou pas assez d'arguments. 
+ Options possibles: -go ou -stop 
+ Exemple : python lit indexe-moi -stop
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python lit
+ Erreur. Trop ou pas assez d'arguments. 
+ Options possibles: -go ou -stop 
+ Exemple : python lit indexe-moi -stop
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python lit indexe-moi -stop
+	alors  : 8
+	attendue  : 6
+	autrement  : 7
+	avant  : 6
+	avec  : 8
+	avoir  : 5
+	bien  : 1, 5
+	bon  : 9
+	bouts  : 4
+	certitude  : 5
+	chaque  : 4, 8
+	coder  : 3
+	contexte  : 8
+	dit  : 7
+	expression  : 4, 6
+	fonctionnement  : 9
+	frustration  : 3
+	garantit  : 9
+	global  : 9
+	grosse  : 3
+	instruction  : 7-8
+	large  : 7
+	mal  : 2
+	marche  : 2
+	petits  : 4
+	plaisir  : 1
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	retourne  : 5
+	servir  : 6
+	solution  : 3
+	testant  : 4
+	teste  : 8
+	tourne  : 1
+	tout  : 2
+	valeur  : 5
+	voulu  : 8
+	vraiment  : 2
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-3$ python lit indexe-moi -go
+	bouts  : 4
+	frustration  : 3
+	global  : 9
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	valeur  : 5

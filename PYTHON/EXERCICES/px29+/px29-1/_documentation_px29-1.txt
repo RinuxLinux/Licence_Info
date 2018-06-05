@@ -1,0 +1,405 @@
+# Renaud Lizot
+# 14509956
+# px29-1
+
+#########
+PREAMBULE
+Au cours de la réalisation de ce code, j'ai été confronté à un gros problème de temps d'exécution (17 minutes pour un test à 3 urls).
+Après avoir résolu le problème dans l'exercice px29-2, je suis revenu sur cet exercice pour apporter quelques corrections (appliquer enumerate(flux) sur le code source d'une page url n'était pas utile et était, probablement, à l'origine du ralentissement).
+Je laisse toutefois le code problematique, renommé scanne_v1, mais ajoute le nouveau code dans scanne (dexlex.py reste inchangé).
+A titre d'exemple, le test suivant mettait 17 minutes avec la première version:
+
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied https://fr.wikipedia.org/wiki/Mandriva_Linux www.canardpc.com 
+real	0m2.532s
+user	0m0.865s
+sys	0m0.028s
+
+Les observations suivantes concernent la première version du code.
+
+#####################################
+OBSERVATIONS:
+
+Objectif: un utilisateur lambda doit pouvoir scanner un fichier ou une ou plusieurs pages web selon un filtre de mots choisis (golist) ou sans filtre (ou si peu).
+
+On reprend le code de l'exercice précedent en apportant quelques modifications.
+
+Tâches:
+- analyser la ldc pour savoir si on a affaire à des urls ou un nom de fichier
+- nettoyer le code html
+- déterminer le charset de chaque page web soumise (2 méthodes)
+
+
+On va continuer dans l'esprit de modularisation et faire une fonction pour chaque tâche.
+
+# DETERMINER L'OPTION CHOISIE
+-stop par défaut, -go sur demande:
+
+def get_option(argv): return 'go' if '-go' in argv else 'stop'
+
+
+# DETERMINER SI URL(S) OU FICHIER
+- fichier: une fonction était peut être de trop mais ça rend les chose plus claires.
+
+def get_files(argv): return argv[1]
+
+- url: j'ai voulu éviter à l'utilisateur le fardeau de taper http:// devant chaque adresse. Taper www.exemple.com fonctionne pareillement que http://www.exemple.com. 
+Aussi, après avoir testé la page wiki de Mandriva, j'ai ajouté le cas du https://
+
+def get_urls(argv):
+	urls = []
+	for i in argv:
+		if i.startswith('http://') or i.startswith('https://'): urls.append(i)
+		if i.startswith('www.'): urls.append('http://' + i)
+	return None if urls == [] else urls
+
+get_urls renvoie None s'il n'y a pas d'url dans les arguments de la ldc pour pouvoir établir un switch qui sera utile pour la suite.
+
+Ainsi, ces fonctions sont appelées dans le script principal:
+	option = get_option(argv)
+	urls = get_urls(argv)
+	files = get_files(argv).split()
+	switch = 'file' if urls is None else 'url'
+
+
+# LA FONCTION pilote()
+On aura besoin de préciser l'option choisie et le switch à plusieurs reprises. A commencer par la fonction pilote.
+
+def pilote(cibles, X, option, switch):
+	liste = get_list('go.list') if option is 'go' else get_list('stop.list')
+	for element in cibles:
+		url = element if switch is 'url' else None
+		flux = urlopen(element) if url else open(element)
+		for n, texte in enumerate(flux):
+			X = indexe(X, texte.split(), url or n + 1, liste, switch, option)
+		flux.close()
+	return X
+	
+On commence par créer la liste d'après l'option choisie.
+On passe à la moulinette les arguments (cibles) et choisit la procédure d'ouverture de flux (c'est ici que le switch commence à devenir utile) et ce, pour chaque élément (donc si plusieurs urls, chaque url y a droit).
+
+[UPDATE]
+Suite aux tests approfondis, j'ai dû apporter quelques changements.
+Le principal souci était le nettoyage du code html qui omettait toujours des bouts de code.
+Le meilleur moyen de bien tout nettoyer est de passer la page entière au karsher, dès la fonction pilote().
+Il en résulte un sérieux impact sur le temps d'execution (pouvant aller jusqu'à une dizaine de minutes). J'ai bougé certains appels de fonction pour qu'elles affectent une plus petite partie de texte.
+Cela réduit un peu le temps d'execution mais ça reste assez inquiètant. Quels peuvent être les causes? Un code mal ficellé? Ma machine vieillissante? Ma connection internet? Un peu de tout ça?
+note: J'ai eu beaucoup d'erreurs IOError: [Errno socket error] [Errno -2] Name or service not known pour des sites qui fonctionnaient bien à d'autres occasions.
+Selon moi, plus le code source est long, plus le procédé prend du temps. On peut limiter les dégâts en passant le flux au nettoyage html qu'au cas où l'option n'est pas stop.
+
+Nouveau code:
+def pilote(cibles, X, option, switch):
+	liste = get_list('go.list') if option is 'go' else get_list('stop.list')
+	for element in cibles:
+		url = element if switch is 'url' else None
+		flux = urlopen(element) if url else open(element)
+		flux2 = nettoie_html(flux.read()) if switch is 'url' else None 
+		for n, texte in enumerate(flux if switch is 'file' else flux2.split()):
+			X = indexe(X, texte.split(), url or n + 1, liste, switch, option)
+		flux.close()
+	return X 
+
+flux2 est le code source intégral débarassé du code html.
+
+[UPDATE POST-PX29-2]: La fonction pilote() a été modifiée en s'inspirant du px29-2:
+Code de la Version 2:
+
+def pilote(cibles, X, option, switch):
+	liste = get_list('go.list') if option is 'go' else get_list('stop.list')
+	for element in cibles:
+		url = element if switch is 'url' else None
+		flux = urlopen(element) if url else open(element)
+		data = nettoie_html(flux.read()) if switch is 'url' else None 
+		if switch is 'file':
+			for n, texte in enumerate(flux):
+				X = indexe(X, texte.split(), n + 1, liste, switch, option)
+		else:
+			X = indexe(X, data.split(), url, liste, switch, option)
+		flux.close()
+	return X 
+
+
+# LES FONCTIONS get_list() et put_list()
+Pas de gros changement, mis à part le fait que l'on crée les deux listes quel que soit l'option choisie en ldc.
+Je n'y vois pas d'inconvénient au bon fonctionnement du programme et ça évite d'ajouter des conditions qui seraient superflues, d'après moi.
+
+def get_list(fichier) :
+	put_list('go.list', "solution programme informatique python programmation universit\xc3\xa9 paris informatique actualit\xc3\xa9s")
+	put_list('stop.list', "ce de du en # le la les je tu il elle nous vous ils elles et donc or ou mais ( - , . ) n' j' qu' l' ... .. : ; ? ! [ ] on ou par pas pour qui un une c'est dans s'en plus qu'elle")
+	flux = open(fichier,'r')
+	liste = flux.read().split()
+	flux.close()
+	return liste
+
+def put_list(fichier, liste) :
+	liste = liste.split()
+	flux = open(fichier,'w')
+	for mot in liste :
+			flux.write(mot + '\n')
+	flux.close()
+	return	
+
+
+# LA FONCTION indexe()
+On a besoin de plusieurs arguments supplémentaires par rapport au code d'origine:
+- reference: c'est la source à traiter - url ou fichier (changement de nom d'argument)
+- liste: selon l'option, golist ou stoplist
+- switch: pour un traitement spécial des contenus html (nettoyage supplémentaire des tags)
+- option: pour savoir la manière dont on filtre (on garde ou on exclut les termes de la liste)
+ 
+def indexe(dex, mots, reference, liste, switch, option):
+	if switch is 'url' : 
+		mots = nettoie_html(' '.join(mots)).split()
+	for mot in mots:
+		mot = nettoie(mot)
+		if option is 'go':
+			if mot.lower() in liste: dex = ajoute(dex, mot, reference)
+		else:
+			if mot.lower() not in liste: dex = ajoute(dex, mot, reference)
+	return dex if switch is 'file' else dec_enc(dex, reference)
+
+Si c'est une url, on passe tout le texte au nettoyeur de code html.
+Ensuite vient la procédure commune aux url et fichier: pour chaque mot, on nettoie les mots inutiles puis on choisit la procédure d'analyse en fonction de l'option.
+Au cas où on a affaire à une url, la fonction retourne le decodage/encodage du dex. 
+
+[UPDATE]
+Adaptation du code: execution de la conversion des caractères html (ex: &eacute;) et décodage/encodage de chaque mot.
+
+def indexe(dex, mots, reference, liste, switch, option):
+	charset = get_charset(reference) if switch is 'url' else None
+	for mot in mots:
+		mot = mot.lower()
+		if switch is 'url': mot = dec_enc(trad_code_html(mot), charset)
+		mot = nettoie(mot)
+		if option is 'go':
+			if mot in liste: dex = ajoute(dex, mot, reference)
+		else:
+			if mot not in liste: dex = ajoute(dex, mot, reference)
+	return dex
+ 
+Le decodage/encodage s'effectue sur chaque mot, d'où la définition de charset. Peut être une des source du ralentissement du programme? J'ai essayé de placer cette procédure ailleurs dans le code mais c'est ici qu'elle semble la moins problématique. 
+
+ 
+# LA FONCTION nettoie_html()
+Le texte d'une page web fourmille généralement de code html délimité par des termes entre '< >' (les balises).
+J'ai choisi, pour faire simple, de supprimer toutes les balises. 
+Pour ce faire, on identifie leur présence avec la méthode find() puis on les remplace toutes entière par ''.
+
+def nettoie_html(ligne): 
+	for element in ligne:
+		x = ligne.find('<')
+		y = ligne.find('>')
+		if -1 != x or y : ligne = ligne.replace(ligne[x:y+1],'')
+		else: return ligne
+	return ligne
+
+Je suis conscient que cela va affecté l'efficacité du programme, par exemple si un élément html est écrit sur plusieurs lignes (ex.: les commentaires dans le code html taggués <!-- --!> sont parfois sur plusieurs lignes) alors il échappera au nettoyage. 
+Pour l'instant, c'est la meilleure solution que j'ai trouvée.
+
+Note: les symboles type &eacute; pour é sont simplement ignorés. Pour bien faire, il faudrait une fonction qui analyse les lignes et y trouve ces symboles grâce à un dictionnaire qui aurait, par exemple, le symbole en clé et son équivalent unicode en valeur. Et remplace l'un avec l'autre.
+Ceci dit, cela fait déjà 4 jours que je travaille sur cet exercice : il est temps que je passe à la suite. Toutefois cette idée est sur ma to-do list, pour quand je trouverai le temps d'y revenir.
+
+[UPDATE 1] A propos des codes html des caractères diacritiques et autres: 
+Finalement j'ai trouvé le temps de me pencher sur la question. En résulte une nouvelle fonction qui traduit ces codes html en unicode grâce à un dictionnaire qui contient les informations à trouver et leur équivalent.
+C'est un cas de 'si trouve la clé dans la phrase alors remplace par la valeur de cette clé'
+
+def trad_code_html(mot):
+	dico = {'&agrave;' : '\xc3\xa0', '&acirc;' : '\xc3\xa2', '&eacute;' : '\xc3\xa9', '&egrave;' : '\xc3\xa8', '&ecirc;' : '\xc3\xaa', '&ucirc;' : '\xc3\xbb', '&ugrave;' : '\xc3\xb9', '&icirc;' : '\xc3\xae', '&ocirc;' : '\xc3\xb4', '&ccedil;' : '\xc3\xa7', '&aelig;' : '\xc3\xa6', '&euml;' : '\xc3\xab', '&uuml;' : '\xc3\xbc', '&iuml;' : '\xc3\xaf', '&oelig;' : '\xc5\x93', '&laquo;' : '"', '&raquo;' : '"', '&rsquo;' : "'", '&euro;' : '\xe2\x82\xac', '&nbsp;' : ' ', '&#160;' : ' ', '&#8217;' : "'"}
+	for cle in dico.keys():
+		if mot.find(cle) != -1 : mot = mot.replace(cle, dico[cle])
+	return mot
+	
+[UPDATE 2]
+J'ai donc réfléchi à une méthode pour nettoyer le code source plus efficacement. 
+
+def nettoie_html(ligne):
+	p = {'<script' : '</script>', '<' : '>'}
+	x = y = 0
+	while x != -1 and y != -1:
+		for element in p.keys():
+			x = ligne.find(element)
+			y = ligne.find(p[element])
+			if x > y : 
+				if y != -1: ligne = ligne.replace(ligne[0:y+len(p[element])], ' ')
+			if x < y and x != -1:
+				if y != -1: ligne = ligne.replace(ligne[x:y+len(p[element])],' ')
+				else: ligne = ligne.replace(ligne[x:], ' ')
+	return ligne
+	
+Comme l'argument n'est plus une ligne mais un texte intégal, je peux à loisir filtrer les balises html. 
+Un test sur la page 'www.nainwak.com' montre que certains scripts intrinsèques passaient au travers des mailles du filet.
+C'est pour cela que j'ai ajouté le dictionnaire p qui contient en clé les balises d'ouverture et en valeur celles qui ferment le code. Les instructions qui suivent traquent chacune de ses balises et remplace ce qu'il y a entre elles.
+Ce système permet de soumettre au filtrage n'importe quelles balises juste en modifiant le dictionnaire p.
+
+[UPDATE 2]
+J'ai essayé un système de marqueurs (très grossièrement) mais aucune amélioration. 
+Code non-retenu:
+
+marqueur = 0
+def nettoie_html(mots):
+	global marqueur
+	p = {'<script' : '</script>', '<' : '>'}
+	x = y = 0
+	ligne = ' '.join(mots)
+	for i in range(10) :
+		for element in p.keys():
+			el = p[element]
+			x = ligne.find(element)
+			y = ligne.find(p[element])
+			if x != -1 and y != -1:
+				marqueur = 0
+				ligne = ligne.replace(ligne[x : y + len(el)], ' ')
+			if x != -1 and y == -1:
+				marqueur = 1
+				ligne = ligne.replace(ligne[x:], ' ')
+			if x == -1 and y != -1:
+				marqueur = 0
+				ligne = ligne.replace(ligne[:y + len(el)], ' ')
+			if x == -1 and y == -1:
+				if marqueur == 1:
+					ligne = ligne.replace(ligne, ' ')
+				else:
+					ligne = ligne
+	return ligne.split()
+
+
+# LA FONCTION nettoie()
+Pas de changement par rapport au code d'origine.
+Les textes issus de pages web y passe aussi pour nettoyer les ponctuations et les mots non-utiles.
+
+def nettoie(mot):
+	try:
+		for i in range(len(mot)):
+			if mot[-1] in ponctuation : mot = mot[:-1]
+			if mot[0] in ponctuation : mot = mot[1:]
+			if "'" in mot: mot = mot.split("'")[1:]
+		return mot.lower()
+	except:
+		return '#'
+
+[UPDATE]
+Après certains test, j'ai dû corrigé certaines maladresse.
+La fonction nettoie() pose problème pour des mots comme "aujourd'hui" ou "lorsqu'". 
+Le for i in range (len(mot)) sert toujours à gérer les cas particuliers, par exemple "c't'à dire" ou 'hein??!!!??!' (c'est tiré par les cheveux mais on sait jamais...) 
+Solution: créer une liste des mots éludés à ignorer, en plus du traditionnel nettoyage de la ponctuation.
+Le mot passé à nettoie() est mis en lower case dès l'appel de la fonction, dans indexe():
+	for mot in mots:
+		mot = nettoie(mot.lower())
+	[etc.]
+
+def nettoie(mot):
+	exclusions = ["c'", "d'", "j'", "l'", "m'", "n'", "s'", "t'", "y'"]
+	try:
+		for i in range(len(mot)):
+			if mot[-1] in ponctuation : mot = mot[:-1]
+			if mot[0] in ponctuation : mot = mot[1:]
+			for ex in exclusions:
+				if mot.startswith(ex): mot = mot.replace(ex, '')
+		return mot
+	except:
+		return '#'
+
+
+# LA FONCTION ajoute()
+Aucun changement là non plus.
+
+def ajoute(dex, mot, ligne):
+	if mot in dex:
+		if ligne in dex[mot] : pass
+		else: dex[mot].append(ligne)
+	else: dex[mot] = [ligne]
+	return dex
+
+
+# LA FONCTION dec_enc() 
+Cette fonction permet de décoder puis encoder la ligne soumise en utf-8 selon le charset de départ.
+
+def dec_enc(texte, url): 
+	charset = get_charset(urlopen(url))
+	temp = []
+	for i in texte:
+		temp.append(i.decode(charset).encode('utf-8'))
+	return temp
+
+[UPDATE]
+Adaptation de la fonction à la nouvelle configuration du code.
+
+def dec_enc(mot, charset): return mot.decode(charset).encode('utf-8')
+
+	
+# La fonction get_charset()
+Cette fonction execute les deux méthodes d'obtention du charset vues dans le cours. La seconde méthode est utilisée seulement si la première échoue.
+
+def get_charset(url): 
+	try:
+		return dict(url.info())['content-type'].split()[1].split('=')[1]
+	except: 
+		for line in urlopen(url):
+			if line.find('<meta') < 0 : continue
+			x = line.find('charset=')
+			if not x < 0 : return line[x + len('charset='):-2]
+
+
+# LE RESTE : 
+
+- La fonction borner() ne change pas puisqu'elle ne sert que pour les fichiers, pas pour les url.
+
+- La fonction prd()
+Les numéros de ligne sont toujours passer à borner(). Grâce au switch, on peut afficher les résultats d'une analyse d'url simplement sous forme de chaîne et séparés par ';' si résultats multiples.
+J'ai aussi ajouté une condition pour afficher un message lorsque la recherche ne donne aucun résultat.
+
+def prd(d, switch):
+	if d == {} : 
+		print 'Aucun(s) r\xc3\xa9sultat(s) trouv\xc3\xa9(s)'
+		pass
+	for c in sorted(d):
+		print '\t', c, ' : ', borner(d[c]) if switch is 'file' else ' ; '.join(d[c])
+
+
+# LE SCRIPT PRINCIPAL
+On commence par le set-up des paramètres principaux (option, switch, etc) puis on appelle prd(pilote(arguments))
+
+option = get_option(argv)
+urls = get_urls(argv)
+files = get_files(argv, option).split()
+switch = 'file' if urls is None else 'url'
+prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+
+- Gestion des erreurs:
+Le programme est destiné à un utilisateur lambda, donc on va ajouter des try... except pour renvoyer un message si jamais une erreur se produit (mauvaise syntaxe, charset introuvable, etc).
+
+On oublie le coup du if __name__ == '__main__' bêtement intégré dans l'exercice précédent parce que je n'en vois pas l'intérêt pour l'instant (si on avait une ribambelle de scripts, je dis pas...).
+
+Pour le fun, j'ajoute un fichier nommé '-aide' dans le répertoire de travail (/wdir/) contenant des détails sur l'utilisation du script. 
+Il s'affichera grâce aux méthodes open().read() si la ldc contient '-aide' placé n'importe où en argument de 'python scanne'.
+
+Bien entendu, les modules nécessaires sont importés en début de script, la variable globale 'ponctuation' est fidèle à son poste et le chdir() intervient toujours dès le lancement de 'scanne' (à cause de open(-aide) avec '-aide' se trouvant, par coincidence, dans wdir)
+
+if len(argv) > 1:
+	if '-aide' in argv : 
+		print open('-aide').read()
+		open('-aide').close()
+	else: 
+		try:
+			option = get_option(argv)
+			urls = get_urls(argv)
+			files = get_files(argv, option).split()
+			switch = 'file' if urls is None else 'url'
+			prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+		except :
+			exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+else:
+	exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+
+
+
+## CONCLUSIONS
+Lorsqu'appliqué à la plupart des sites web avec l'option implicite -stop (sans option déclarée, donc), 'scanne' renvoie des bribes de code html parmi les résultats. Comme je le dis plus haut, ma méthode de nettoyage du html est loin d'être parfaite. 
+J'ai lu que python avait des modules pour parser le html. Peut-être que ma solution miracle se trouve par là.
+[UPDATE] Problème résolu, ou en tous cas amoindri. Le temps d'excécution est toutefois un gros problème à résoudre.
+
+Aussi, comment gérer les pages qui ne sont pas en html ? (ex: le code source de www.google.com est... différent, ce qui fait que 'scanne' ne nettoie pas comme il le devrait)
+
+Il serait peut-être intéressant de convertir également l'encodage des fichiers scannés? Quoique la liste des mots à chercher (golist) étant écrite en utf-8, cela fausserait les résultats sur un texte en ASCII. Donc serait contre-productif. 
+
+
+

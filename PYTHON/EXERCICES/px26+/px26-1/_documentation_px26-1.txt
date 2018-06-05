@@ -1,0 +1,21 @@
+# Renaud Lizot
+# 14509956
+# px26-1
+# jouer avec X, Y, pas d'angle (1-10), create_text() pour ajouter +1/-1 sur axe ord
+
+Rien à signaler. Il faut juste recopier l'exemple donné dans le cours.
+
+- changer x/y:
+on peut intervenir sur l'échelle à plusieurs endroit:
+	* for angle in xrange(0, int(radians(360) * 100) : changer 100 pour un autre nombre (changer_x_y_3.png).
+	* x = angle / 100. : changer la velur 100. pour autre chose.(changer_x_y_2.png)
+	* changer les 2. (changer_x_y_1.png)
+
+- changer pas d'angle
+pas_d_angle_2.png
+pas_d_angle_6.png
+pas_d_angle_10.png
+
+- ajouter étiquettes sur axe y
+F.create_text(X-10, X, text='+1')						# +1 sur axe ord
+F.create_text(X-10, H-20, text='-1')					# -1 sur axe ord

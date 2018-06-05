@@ -1,0 +1,23 @@
+[px05-2] Essayez explose() avec d'autres mots tels que:
+désespéré
+crève-coeur
+
+
+
+Quel mot ? désespéré
+('d\xc3\xa9ssp\xc3\xa9r\xc3\xa9', 'e')
+valeur ..... ('d\xc3\xa9ssp\xc3\xa9r\xc3\xa9', 'e')
+valeur[0]... désspéré
+valeur[1]... e
+
+Quel mot ? crève-coeur
+('cr\xc3\xa8v-cr', 'eoeu')
+valeur ..... ('cr\xc3\xa8v-cr', 'eoeu')
+valeur[0]... crèv-cr
+valeur[1]... eoeu
+
+
+
+Note: plus d'info page 54 pour le petit souci d'affichage.
+
+

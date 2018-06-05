@@ -1,0 +1,52 @@
+# Renaud Lizot
+# 14509956
+# px18-1
+
+>>> def raccar(n):
+...     r= 1
+...     while (n - r**2) != 0 :
+...             r = (r+n/r)/2.
+...     return r
+... 
+>>> 
+
+Tests
+>>> raccar(250)
+15.811388300841896
+>>> raccar(36)
+6.0
+
+Un cas de figure intéressant:
+>>> raccar(32)
+^CTraceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 3, in raccar
+KeyboardInterrupt
+
+La fonction entre dans une boucle sans fin. Je suppose que c'est dû au nombre de chiffres après la virgule, probablement infini.
+Je vérifie à la calculette: la racine carrée de 32 est 5.65685424949238. La partie décimale est finie. 
+Je reprend les calculs de la fonction étape par étape, à la main (ou plutôt dans un tableur) et je me rends compte qu'à partir d'un certain point (r + n/r)/2 est égal à r, bloquant l'expression r = (r + n/r)/2 sur la même valeur de r. C'est la raison de la boucle infinie.
+
+Comment y remédier?
+J'ajoute dans la boucle la condition suivante, qui reprend mes observations:
+if (r+n/r)/2. == r : return r
+
+Ce qui donne:
+>>> def raccar(n):
+...     r= 1
+...     while (n - r**2) != 0 :
+...             if (r+n/r)/2. == r : return r           
+...             r = (r+n/r)/2.
+...     return r
+... 
+>>> raccar(32)
+5.65685424949238
+>>> raccar(25)
+5.0
+>>> raccar(250)
+15.811388300841896
+>>> 
+
+
+
+

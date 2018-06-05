@@ -1,0 +1,11 @@
+[px04-4]
+coder la fonction freine() avec un paramètre x, de sorte qu!elle ne retourne vrai que si vert(x) n!est
+pas vrai
+
+NB : feu doit être initialisé AVANT de pouvoir être utilisé comme argument...
+
+def vert(x) : return feu is 'vert'
+def freine(x) : return vert(x) != True # ou == False
+feu = 'vert' ; freine(feu) 	# FALSE
+feu = 'orange' ; freine(feu) 	# TRUE
+feu = 'rouge' ; freine(feu) 	# TRUE

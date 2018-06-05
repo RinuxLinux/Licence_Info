@@ -1,0 +1,11 @@
+# Renaud Lizot
+# 14509956
+# px18-3
+
+2000 : 3 
+2001 : 2000
+2002 : 2001
+2003 : 2002
+
+l'op s'appelle elle-même en premiere ligne, c'est une boucle sans fin.
+pour l'instant je vois pqs trop comment integrer ça dans le code alors je laisse. C'est pas à rendre

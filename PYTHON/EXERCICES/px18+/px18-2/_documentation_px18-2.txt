@@ -1,0 +1,127 @@
+# Renaud Lizot
+# 14509956
+# px18-2
+
+#! /usr/bin/env python
+#-*-coding: utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px18-2
+
+# Opérations
+def affecte(valeur, adresse) : m[adresse] = valeur
+def divise(x, y, adresse): m[adresse] = m[x] / m[y]
+def ajoute(x, y, adresse): m[adresse] = m[x] + m[y]
+def encore(adresse): m['pc'] = adresse
+
+# Séquenceur
+def run(fois):
+	for x in range(4*fois):
+		a = m['pc']
+		apply(op[m[a][0]], m[a][1:])
+		if m[a][0] !=3: m['pc'] += 4
+	return m[1000]						
+
+# Définitions m et op		
+m = {}
+m[2997] = [1, 1, 1000]				# placer r initial = 1 en 1000
+m[3001] = [1, 2, 1020]				# placer diviseur = 2 en 1020
+m[3005] = [1, 3006, 2000]			# placer carré en 2000
+m[3009] = [1, 3010, 2001]			# placer tours en 2001
+m[3013] = [2, 2000, 1000, 1010]		# diviser n/r
+m[3017] = [4, 1000, 1010, 1010]		# ajouter r + n/r
+m[3021] = [2, 1010, 1020, 1000]		# diviser (r+n/r)/2
+m[3025] = [3, 3013]					# retour à m[3013]
+m['pc'] = 2997
+
+op = {1: affecte, 2: divise, 3: encore, 4: ajoute}
+
+# Nombre
+m[3005][1] = float(raw_input('Nombre: '))
+# Tours:
+m[3009][1] = int(raw_input('Nombre de tours: '))
+
+print int(run(m[3009][1]))
+
+############
+COMMENTAIRE
+############
+
+Je commence par réécrire les instructions données dans le cours en y incluant le nombre de tours et le nombre dont on veut extraire la racine carrée.
+
+2997 :	1		;;Placer
+2998 :	1		;;r initial
+2999 :	1000	;;En 1000
+3000 :	0		;;
+3001 :	1		;;Placer
+3002 :	2		;;Diviseur
+3003 :	1020	;;En 1020
+3004 :	0		;;
+3005 :	1		;;Placer
+3006 :	3006	;;Nombre
+3007 :	2000	;;En 2000
+3008 :	0		;;
+3009 :	1		;;Placer
+3010 :	3010	;;Tours
+3011 :	2001	;;en 2001
+3012 :	0		;;
+3013 :	2		;;Diviser
+3014 :	2000	;;n/r
+3015 :	1000	;;
+3016 :	1010	;;
+3017 :	4		;;Ajouter
+3018 :	1000	;;r+n/r
+3019 :	1010	;;
+3020 :	1010	;;
+3021 :	2		;;Diviser
+3022 :	1010	;;(r+n/r)/2
+3023 :	1020	;; 
+3024 :	1000	;;
+3025 :	3		;;Retourner 
+3026 :	3005	;;En 3005
+3027 :	0		;;
+3028 :	0		;;
+
+
+Il m'a ensuite suffit de reprendre et d'adapter le code donné dans le cours.
+
+# Nombre
+m[3005][1] = float(raw_input('Nombre: '))
+# Tours:
+m[3009][1] = int(raw_input('Nombre de tours: '))
+
+Le nombre est demandé via raw_input() qui est de type string par défaut, d'où la conversion immédiate en float, de façon à pouvoir effectuer les opérations avec des nombres réels. Par conséquent toutes les opérations ayant pour objet ce nombre seront de type float, sauf spécifications contraires.
+m[3005][1] représente la valeur d'adresse 3006 dans le dictionnaire, comme indiqué dans le tableau ci-dessus.
+Le nombre de tour est également demandé via raw_input mais est converti en entier.
+m[3009][1] représente la valeur d'adresse 3010 dans le dictionnaire.
+
+Tests:
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-2.py'
+Nombre: 32
+Nombre de tours: 50
+5.65685424949
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-2.py'
+Nombre: 250
+Nombre de tours: 10
+15.8113883008
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-2.py'
+Nombre: 36
+Nombre de tours: 6
+6.00025298412
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-2.py'
+Nombre: 10**4
+Traceback (most recent call last):
+  File "px18-2.py", line 36, in <module>
+    m[3005][1] = float(raw_input('Nombre: '))
+ValueError: invalid literal for float(): 10**4
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-2.py'
+Nombre: 10000
+Nombre de tours: 13
+100.0
+
+

@@ -1,0 +1,80 @@
+# Renaud Lizot
+# 14509956
+# px32-1
+# Pendu
+
+Tâches:
+1- prend les mots dans un fichier
+2- peut manipuler les glyphes unicode ; prend les accents
+3- neutralise majuscules/minuscules
+
+
+1- MOTS DANS UN FICHIER
+# Analyse
+On sait comment ouvrir et manipuler le contenu d'un fichier. Ici, je crée un fichier 'f_mots' dans le répertoire './wdir'. 
+J'y écris manuellement une liste de mots. 
+Je vais créer une fonction get_mots() pour rendre les choses plus claires. 
+La variable mots prendra le contenu de ce fichier sous forme de liste. 
+
+# Faisabilité
+On commence par se placer sur le répertoire contenant la liste de mots puis on récupère le contenu dans la variable 'mots'
+
+import os
+def get_mots():
+	os.chdir('./wdir')
+	flux = open('f_mots')
+	mots = flux.read().split()
+	flux.close()
+	return mots
+
+Il faut maintenant gérer les accents.
+
+2- GERER LES ACCENTS
+# Analyse
+La méthode decode('utf-8') me permettra de convertir la lettre entrée.
+La variable concernée se trouve dans actualise(): event.char
+
+# Faisabilité
+
+def actualise(event) :
+	global devine
+	if P and trou in devine :
+		nouveau = valide(event.char.decode('utf-8'), mot, devine)
+		if devine != nouveau : devine = nouveau
+		else : eval(P.pop(0))
+		affiche()
+
+
+3- NEUTRALISER MAJUSCULES
+# Analyse:
+Première remarque: la frappe des touches SHIFT ou CAPSLOCK compte pour une proposition de lettre, au lieu d'être ignorée. Par exemple SHIFT + e pour E, compte pour 2 frappes.
+Comment faire pour ignorer certaines touches? Comment sait-on quelle touche a été pressée? Comment intégrer cela au code: via un test de contrôle et une condition à l'exécution de actualise()? 
+
+Après recherche, je trouve la liste des noms des touches dans Tkinter et je retiens une des méthodes pour récupérer le nom de la touche pressée (keysym).
+
+# Faisabilité
+On commence par créer une fonction pour vérifier si la touche pressée fait partie d'une ignorelist contenant les noms des touches à ignorer.
+Et ce, grâce à la commande event.keysym==???
+
+def check_key(event):
+	ignorelist = 'Shift_L Cancel BackSpace Tab Return Control_L Alt_L Pause Caps_Lock Escape Prior Next End Home Left Up Right Down Print Insert Delete F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Num_Lock Scroll_Lock'.split()
+	for i in ignorelist:
+		if event.keysym==i : return 'ignore'
+	return 'garde'
+
+On ajoute ensuite le contrôle avant l'actualisation, dans actualise():
+
+def actualise(event) :
+	global devine
+	if P and trou in devine :
+		if check_key(event) is 'ignore' : pass
+		else:
+			nouveau = valide(event.char.decode('utf-8').lower(), mot, devine)
+			if devine != nouveau : devine = nouveau
+			else : eval(P.pop(0))
+			affiche()
+
+J'ai ajouté .lower() à event.char.decode('utf-8') parce que, même si certaines touches sont ignorées, il n'en reste pas moins qu'il est possible d'entrer une lettre en majuscule (ex: avec CAPSLOCK activée) et de voir ses tentatives comptées comme des mauvaises propositions.
+
+# Test:
+Voir: ./_screenshots/00_test_final.png

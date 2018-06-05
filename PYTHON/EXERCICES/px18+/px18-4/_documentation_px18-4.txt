@@ -1,0 +1,105 @@
+# Renaud Lizot
+# 14509956
+# px18-3
+
+1997 : 1	;;	Placer
+1998 : 1	;;	1
+1999 : 2999	;;	en 2999
+2000 : 3000	;;	(rien)
+2001 : 1	;;	Placer
+2002 : 0	;;	0
+2003 : 3000	;;	en 3000
+2004 : 2004	;;	(rien)
+2005 : 1	;;	Placer
+2006 : 1	;;	1
+2007 : 3001	;;	en 3001
+2008 : 3001	;;	(rien)
+2009 : 4	;;	Ajouter
+2010 : 3000	;;	3000
+2011 : 3001	;;	3001
+2012 : 3002	;;	en 3002
+2013 : 2	;;	Diviser
+2014 : 3001	;;	3001
+2015 : 2999	;;	2999
+2016 : 3000	;;	mettre en 3000
+2017 : 2	;;	Diviser
+2018 : 3002	;;	3002
+2019 : 2999	;;	2999
+2020 : 3001	;;	mettre en 3001
+2021 : 3	;;	Continuer avec
+2022 : 2009	;;	"Ajouter"
+
+On commence par redéfinir le dictionnaire m avec les instructions données.
+	m = {}
+	m[1997] = [1, 1, 2999, 3000]				
+	m[2001] = [1, 0, 3000, 2004]				
+	m[2005] = [1, 1, 3001, 3001]			
+	m[2009] = [4, 3000, 3001, 3002]		
+	m[2013] = [2, 3001, 2999, 3000]		
+	m[2017] = [2, 3002, 2999, 3001]		
+	m[2021] = [3, 2009]				
+	m['pc'] = 1997
+
+On poursuit en redéfinissant la fonction affecte() pour qu'elle prenne 3 valeurs mais ignore la 3° valeur qui n'est pas utilisée.
+	def affecte(valeur, adr1, adr2) : m[adr1] = valeur
+
+Il faut maintenant capturer les valeurs de m[3000] (le but de l'exercice d'architecture). Nous aurions pu créer une fonction pour ça mais comme ça tient sur 2 lignes, on s'en passera. Nous avons juste à insérer les instructions suivantes dans la fonction run(fois). Les étapes qui définissent une nouvelle valeur à m[3000] sont m['pc'] = 2001 et m['pc'] = 2013. L'emploi d'un tuple est la solution retenue pour afficher toutes les valeurs successives (plutot qu'un print). D'où:
+	resultat = []
+	if a in [2001, 2013] : resultat.append(m[3000])
+
+Tests:
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-4.py
+Nombre de tours: 10
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-4.py
+Nombre de tours: 20
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181]
+
+reno@Jupiter:~/EDF1ILPA/px18$ python px18-4.py
+Nombre de tours: 15
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+reno@Jupiter:~/EDF1ILPA/px18$
+
+
+##########
+#! /usr/bin/env python
+#-*-coding: utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px18-4
+
+# Opérations
+def affecte(valeur, adr1, adr2) : m[adr1] = valeur
+def divise(x, y, adresse): m[adresse] = m[x] / m[y]
+def ajoute(x, y, adresse): m[adresse] = m[x] + m[y]
+def encore(adresse): m['pc'] = adresse
+
+# Séquenceur
+def run(fois):
+	resultat = []
+	for x in range(4*fois):
+		a = m['pc']
+		apply(op[m[a][0]], m[a][1:])
+		if a in [2001, 2013] : resultat.append(m[3000])
+		if m[a][0] !=3: m['pc'] += 4
+	return resultat						
+ 
+# Définitions		
+m = {}
+m[1997] = [1, 1, 2999, 3000]				
+m[2001] = [1, 0, 3000, 2004]				
+m[2005] = [1, 1, 3001, 3001]			
+m[2009] = [4, 3000, 3001, 3002]		
+m[2013] = [2, 3001, 2999, 3000]		
+m[2017] = [2, 3002, 2999, 3001]		
+m[2021] = [3, 2009]				
+m['pc'] = 1997
+
+op = {1: affecte, 2: divise, 3: encore, 4: ajoute}
+
+# Tours:
+tours = int(raw_input('Nombre de tours: '))
+
+print run(tours)
+

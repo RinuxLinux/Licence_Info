@@ -1,0 +1,28 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px30-4 
+# Tkinter
+
+from Tkinter import *
+
+class Salutations :
+
+	def bonjour(self) : print "salut, c'est moi"
+	
+	def aurvoir(self) : print "ciao, a+"
+	
+	def __init__(self, W) :
+		self.stop = Button(W, text='assez', fg='red', command=W.destroy)
+		self.hello = Button(W, text='dis "bonjour"', command=self.bonjour)
+		self.good_bye = Button(W, text='dis "au revoir"', command=self.aurvoir)
+		self.hello.pack()
+		self.good_bye.pack()
+		self.stop.pack()
+
+
+top = Tk()
+prog = Salutations(top)
+top.mainloop()
+

@@ -1,0 +1,93 @@
+# Renaud Lizot
+# 14509956
+# px32-3
+# Pendu
+
+Tâches:
+- bouton start doit réinitialiser le jeu.
+
+
+
+# Analyse
+Les recommendations de cet exercice proposent de créer une script autonome pour cela. 
+J'ai choisi une méthode plus au ras des pâquerettes qui m'a quand même donné du fil à retordre, à cause des variables globales.
+
+Ma méthode s'appuie sur des fonctions au sein du script principal.
+
+- une fonction parametrage() qui définit les variables globales
+- une fonction recommence() qui remet ses variables à zéro et actualise l'affichage.
+- le bouton start appelle cette fonction.
+
+
+# Faisabilité
+ 
+La principale difficulté que j'ai eu, a été de comprendre le fonctionnement des variables dans le script. 
+Comprendre la différence entre variable globale et variable locale et comment les utiliser a été cruciale: 
+
+"If you read a variable, Python looks for it in the entire chain scope.
+If you write to a variable, Python looks for it in the local scope, and if it cannot find a variable with the name you gave at local level, then it creates one.
+If you want to write to your global, you have to explicitly tell Python that you are talking about a global variable that already exists (with 'global' keyword)." 
+(source: Internet)
+
+
+- la fonction parametrage:
+
+def parametrage(mots):
+	mot = random.choice(mots)
+	compteur = len(mots)
+	while isSeen(mot) is True and compteur != 0:
+		mot = random.choice(mots)
+		compteur -= 1
+	if compteur == 0: reset('./wdir/f_dejavu')
+	record(mot)
+	mot = mot.decode('utf-8')
+	taille = len(mot)
+	trou = '-'
+	devine = trou * taille
+	P = [ 'c.create_line(40, 185, 140, 185, width=20, fill="maroon", tags="potence")',
+	'c.create_line(70, 185, 70, 10, width=7, fill="maroon", tags="potence")',
+	'c.create_line(66, 10, 129, 10, width=7, fill="maroon", tags="potence")',
+	'c.create_line(127, 13, 127, 60, width=4, fill="yellow", tags="potence")',
+	'c.create_oval(110, 30, 129, 49, width=1, fill="black", tags="potence")',
+	'c.create_rectangle(116, 50, 136, 100, fill="black", tags="potence")',
+	'c.create_line(120, 50, 100, 100, width=4, fill="black", tags="potence")',
+	'c.create_line(136, 50, 146, 100, width=4, fill="black", tags="potence")',
+	'c.create_line(120, 100, 120, 150, width=7, fill="black", tags="potence")',
+	'c.create_line(133, 100, 133, 150, width=7, fill="black", tags="potence")' ]
+	return P, mot, taille, trou, devine
+
+J'ai ajouté le tag 'potence' aux dessins du pendu pour pouvoir les effacer en cas de recommencement.
+
+
+- la fonction recommence:
+
+def recommence():
+	global P, devine, mot, taille
+	P, mot, taille, trou, devine = parametrage(get_mots('./wdir/f_mots'))
+	c.delete('potence')
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	LM.configure(text='')
+
+
+On a besoin de modifier les variables globales pour qu'elles soient remplacées aussi dans les autres fonctions qui les utilisent.
+On commence par redéfinir les variables, puis on efface les dessins de la potence et enfin on actualise l'affichage avec les nouvelles variables.
+La série des .configure fait un peu 'overkill' mais c'est la façon la plus simple que j'ai trouvé pour réinitilaiser le texte de LM. 
+
+
+- adaptation de affiche() pour qu'elle manipule les variables globales:
+
+def affiche() :
+	global devine, mot, P
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	if not L : LM ['text'] = mot
+
+
+# Tests
+
+- clique start quand perdu: ok
+- clique start quand gagné: ok
+- clique start n'importe quand: ok

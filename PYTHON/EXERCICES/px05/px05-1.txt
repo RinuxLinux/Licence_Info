@@ -1,0 +1,13 @@
+[px05-1]
+Définir la fonction consonne(x) de la façon la plus économique possible, en supposant que son argument sera uniquement constitué de caractères alphabétiques
+
+def consonnes(x):
+	if x not in 'aeiouy' : return True
+	return False
+
+MIEUX:
+
+def consonne(x) : return x not in 'aeiouy'
+
+
+

@@ -1,0 +1,94 @@
+#! /usr/bin/env python
+#-*-coding:utf-8-*-
+# Renaud Lizot
+# 14509956
+# px30-3 
+# class, queue, supermarché
+
+import random
+ran = random.randint
+cho = random.choice
+
+class Magasin(object):
+	"""
+	classe principale
+	contient les methodes push/pop/size
+	"""
+	
+	def __init__(self): 
+		self.stack = []
+		self.dico = dict()
+	
+	def enqueue(self, val) : self.stack.append(val)
+	
+	def dequeue(self) : return self.stack.pop(0)
+	
+	def size(self): return len(self.stack)
+
+
+class Caisse(Magasin):
+	"""
+	classe qui gère les caisses,
+	genere la liste des caisses sous forme de dict (cle = numero de caisse),
+	calcule le temps par clients (50 articles par minutes + 2 minutes de battement),
+	"""
+		
+	def setQueueCaisses(self, nCaisses):
+		for i in range(nCaisses):
+			self.dico[i+1] = 0
+		return self.dico
+
+	def getTemps(self, val) : 
+		return '%s min. %s sec.' % (int(val/50. + 2), (val/50. + 2) %1 * 60)
+
+
+class Client(Magasin):
+	"""
+	classe qui gère les clients, representes par le nombre d'articles dans leur panier
+	genere un panier pour chaque client
+	ajoute ce panier a une liste qui representera la file d'attente
+	"""
+	
+	def getPanier(self): return ran(1, 150)
+	
+	def setQueueClients(self, val):
+		for i in range(val):
+			articles = self.getPanier()
+			self.enqueue(articles)
+		return self.stack
+
+
+#-----------------------------------------------------------------------
+
+# Variables
+ca = 5 		# nombre de caisses
+cl = 10 	# nombre de clients
+
+# Instanciation
+clients = Client()
+caisses = Caisse()
+compteur = Caisse()
+
+# Les files d'attente caisses/clients et le compteur de clients
+queueCaisses = caisses.setQueueCaisses(ca)
+queueClients = clients.setQueueClients(cl) 
+combienClients = compteur.setQueueCaisses(ca)
+
+# Transfert
+while clients.size() != 0:
+	choix = []
+	for cle in queueCaisses.keys():
+		if queueCaisses[cle] == 0 : choix.append(cle)
+	if choix != []: numeroCaisse = cho(choix)
+	else: numeroCaisse = queueCaisses.values().index(min(queueCaisses.values())) + 1
+	print '*** Client suivant, avancez caisse no. %s ***' % numeroCaisse
+	queueCaisses[numeroCaisse] += clients.dequeue()
+	combienClients[numeroCaisse] += 1
+
+# Rapport
+print '\n--------\nRAPPORT:\n--------'
+for cle in queueCaisses.keys():
+	print 'Caisse no. %s : %s articles, %s clients --- temps: %s' % (cle, queueCaisses[cle], combienClients[cle], caisses.getTemps(queueCaisses[cle]))
+print '-' * 20
+print 'Total articles: %s' % sum(queueCaisses.values())
+print '-' * 20

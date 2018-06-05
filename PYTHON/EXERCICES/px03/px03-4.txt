@@ -1,0 +1,6 @@
+[px03-4] en utilisant la fonction double(), définir la fonction unaire quadruple() qui multiplie son argument par quatre"; la tester avec des nombres et des chaînes.
+
+def double(x) : return x * 2
+def quadruple(x) : return double(x) * 2
+quadruple(4)		# 16
+quadruple('cou') 	# 'coucoucoucou'

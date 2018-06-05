@@ -1,0 +1,9 @@
+Un programme qui tourne bien, c'est un plaisir, mais un
+programme qui marche mal ou pas du tout, c'est vraiment
+une ("grosse") frustration. La solution c'est de le coder par
+petits bouts, en testant progressivement chaque expression
+pour avoir la certitude qu'elle retourne bien la valeur
+attendue, avant de s'en servir dans une expression plus
+large, autrement dit une "instruction" du programme. On
+teste alors chaque instruction avec le contexte voulu, ce
+qui, progressivement, garantit le bon fonctionnement "global".

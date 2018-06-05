@@ -1,0 +1,134 @@
+﻿# px06-4
+# LIZOT Renaud
+# 14509956
+
+PREAMBULE: POURQUOI 2 VERSIONS?
+Parce que j'avance à tatons la plupart du temps. Même si j'essaie d'analyser au mieux l'énoncé du problème, il m'arrive de me tromper et de partir dans une voie différente. Cependant j'essaie d'apprendre de mes erreurs ou confusions, c'est pourquoi je vous soumets également la version du code qui m'a mené à la version finale. Ces deux versions font partie de mon raisonnement. Encore aujourd'hui je suis persuadé qu'il y a moyen de faire une seule fonction star pour tous les cas de figures. Ayant passé plus de 20h juste sur cet exercice, je préfère m'arreter à ces deux versions et passer à la suite du cours. Après tout, la fin justifie les moyens: mon code produit le résultat demandé même s'il passe par un chemin detourné pour y arriver. 
+ 
+
+L'exercice propose de créer une fonction star() qui tracerait une étoile avec un nombre de branches, une couleur et une taille quelconques. 
+
+ANALYSE DU PROBLEME
+-------------------
+Note: pour simplifier, on appellera le nombre de branches 'n'
+
+#BRANCHES n
+L'avant-propos de l'exercice propose de tester la fonction précédente avec un nombre de branches pair. On constate que la tortue trace deux figures superposées l'une sur l'autre. Par exemple, une étoile à 6 branches trace deux triangle (3 branches = 6/2) l'un sur l'autre.
+Une solution serait de faire un tracé en deux parties: 
+1 - tracer un polygone à n/2 branches, 
+2 - placer la tortue au point de départ du deuxième polygone à n/2 branches et répéter le tracé du polygone à n/2 branches 
+
+Cela implique des calculs savants de trigonométrie. Ce n’est pas mon fort alors je mets cette idée de cote pour l'instant. Après tout, l'énoncé de cet exercice n'est pas explicite à ce sujet (on parle d'une seule fonction star()).
+Par conséquent on va d'abord se focaliser sur un code qui force l'utilisateur à entrer un nombre de branches impair. Et inférieur à 4, sans quoi le tracé est aberrant.
+
+#TAILLE t
+Rien de nouveau comparé à l'exercice précédent. On va juste reprendre le même bloc de code pour définir la taille.
+
+#COULEUR c
+Je choisis de faire confiance à l'utilisateur et lui demande d'entrer une couleur en anglais. Je reprendrai la boucle de l'exercice précédent.
+
+#ANGLE
+Ici l'angle de rotation de la tortue pour le tracé d'une branche est de 2*360/n soit 720./n.
+
+
+ELABORATION DES FONCTIONS
+-------------------------
+Nous aurons besoin de plusieurs fonctions:
+	- star(taille, nb_cote, couleur) : copiée sur l'exercice précédent, hormis le calcul de l'angle.
+	- branches() : définit le calcul de n. Je choisis d'en faire une fonction pour faciliter les contrôles à faire sur n (impair et supérieur à 4)
+	- isImpair(x) : contrôle la parité de n. Renvoie True ou False.
+	- isInf(x) : contrôle si n est inférieur à 4. Renvoie True ou False.
+
+L'attribution de la taille et de la couleur ne se fait pas par fonctions. Ça fait un peu désordre mais ce n'était pas nécessaire.
+Le calcul de l'angle est intégré à une variable 'angle' pour des soucis de lisibilité.
+
+
+ELABORATION DU CODE V1.0 : n DOIT ETRE IMPAIR
+----------------------------------------
+Le code est, à peu de chose près le même que dans l'exercice précédent. 
+Les fonctions sont simples à définir. Principales nouveautés par rapport à l'exercice précédent:
+	def isImpair(x):
+		if x%2 == 0 : return False
+		else:
+			return True
+		
+	def isInf(x):
+		if x > 4 : return False
+		else:
+			return True
+			
+Le code suivant permet de tester n et renvoie à branches() si besoin est.
+	n = branches()
+	impair = isImpair(n)
+	Inf = isInf(n)
+	while Inf is True or impair is False:
+		n = branches()
+		impair = isImpair(n)
+		Inf = isInf(n)
+	star(t,n,c)
+
+ 
+#LE CAS 'COULEUR'
+Je reprend le contrôle de validité de la couleur donnée. Pour ce faire, j'appelle from turtle import * dès le début du code. Cela me permet de tester turtle.color(couleur) dans la boucle:
+	while True:
+		try: 
+			c = raw_input('Couleur (en anglais, please!): ')
+			color(c)
+			reset()
+			bye()
+			break
+		except:
+			print 'Veuillez donner une couleur en anglais (ex.: red, blue, green, yellow, etc.)'
+			pass
+			
+Note: j'aurais aimé ne pas avoir de fenêtre TKinter qui s'ouvre pendant le test de color(c) mais je n'ai pas trouvé comment effectuer le test off-screen. Je cherche toujours - il y a bien des solutions dispo en ligne mais ça me paraît compliqué.
+
+
+APPROFONDISSEMENTS: COMMENT FAIRE POUR QUE n PUISSE ETRE PAIR OU IMPAIR?
+---------------------------------------------------------------------------
+t = taille
+n = nombre de branches
+
+Mon code fonctionne comme voulu. Les contrôles et renvois vers branches() fonctionnent aussi. Penchons-nous maintenant sur le cas des étoiles à nombre de branches pair.
+A partir de là, je fais mes recherches sur papier uniquement. Je trace des étoiles à 6, 8 et 16 branches et analyse la situation.
+
+Une étoile à 6 branches est constituée de 2 triangles qui se chevauchent. 8 branches = 2 carrée, etc...
+
+Il faut donc une fonction starPair(taille, nb_branches, couleur) qui tracerait dans un premier temps un polygone à n/2 branches, puis placerait la tortue au bon endroit et dans le bon sens pour tracer le deuxième polygone à n/2 branches.
+
+#CALCUL DU POINT DE DEPART (voir: px06-4_croquis.png)
+Plusieurs solutions:
+	- calculer les coordonnées x et y du deuxième point de départ de tortue, sachant qu'elle part de pos(0,0).
+	- avancer la tortue jusqu'au deuxième point de départ. 
+	
+La deuxième solution est la plus simple: 
+	- la distance la plus facile à parcourir est: t/2 + left(90) + hauteur du triangle formé par la pointe "extérieure" de l'étoile (à faire sans tracé grâce à turtle.penup()).
+	- pour placer la tortue dans la bonne direction pour tracer la deuxième partie de l'étoile, il faut trouver l'angle de rotation en jouant avec l'équivalence des angles.
+
+angle_gravite = 360/n donne l'angle du triangle isocèle ABC avec A = centre de gravité, B = pointe de l'étoile, position de départ de tortue et C = pointe de l'étoile où doit se rendre tortue.
+De là on déduit un angle du triangle rectangle dont un des côtés est la distance t/2 et un autre côté est la hauteur qui nous intéresse: angle_isocele = (180-angle_gravite)/2.0
+
+D'après Pythagore: 
+	- dans un triangle rectangle tan(B) = AC/AB, A étant l'angle droit
+	- hypothenuse² = somme des carrés des côtes adjacents
+D'où:
+	Tan = (tan(radians(angle_isocele)))
+	ba = ac/Tan
+	bc = sqrt(ba**2 + ac**2)
+
+La dernière valeur à trouver est l'angle que doit prendre la tortue avant de tracer la deuxième partie: l'équivalence des angles nous donne la formule, une fois factorisée: angle2 = (180 + angle)/2
+	# angle 'interne' = 180 - angle tortue
+	# angle2 = (360 - angle interne)/2
+	# angle2 = (360 - 180 + angle)/2
+	
+
+NOUVEAU CODE V2.0: n PEUT ETRE PAIR OU IMPAIR
+---------------------------------------------
+Finalement il y aura des changements mineurs à faire dans la première version du code: 
+	- importer le module math et ajouter un bloc de calculs trigonométriques dans le corps du code, après l'attribution de n. Créer une fonction pour ça n'est pas nécessaire. 
+	- création d'une fonction starPair(taille, nb_branches, couleur) basée sur les calculs trigo et divisé en 3 parties: 1. tracer le polygone à n/2 branches, 2. suspendre le tracé le temps de placer tortue au bon endroit, 3. tracer à nouveau le polygone à n/2 branches.
+	- modifier la boucle while Inf is True or impair is False : enlever le contrôle impair is False et l'appel de isImpair(n).
+	- ajouter une condition qui contrôle la parité de n et appelle la fonction star adéquate, du type: if impair is True then starImpair, else: starPair
+
+
+

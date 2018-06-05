@@ -1,0 +1,34 @@
+# Renaud Lizot
+# 14509956
+# px33-1
+# morpion : stop si gagne
+
+Tâche:
+- empêcher réception d'un nouveau coup une fois que l'un des joueurs a gagné, à peu de frais
+
+# Analyse
+
+Nous avons déjà une instruction qui teste si une cellule est occupée et empêche la réception.
+La solution la plus simple est de faire croire à cette instruction que M est pleine quand un gagnant est trouvé.
+
+# Faisabilité
+
+Déclarons M global, et remplissons-là si un gagnant est trouvé:
+
+def joue(event) :														# handler lie a <Button-1>
+	global J, M
+	w = event.widget													# le widget actif
+	if M[w.R][w.C] :													# cellule deja occupée
+		return
+	if J :
+		fais_x(w)
+	else :
+		fais_o(w)
+	s = symbole(J)														# joueur symbolique
+	M[w.R][w.C] = s
+	if gagnant(s) :
+		info['text'] = 'joueur %s gagne' % s
+		M = [T * [s] for x in range(T)]
+	J = not J
+
+# Tests : OK

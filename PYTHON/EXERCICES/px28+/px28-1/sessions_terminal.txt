@@ -1,0 +1,2243 @@
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ python px28-1.py art_uk
+	10  : 3, 15
+	9pm  : 21
+	a  : 1, 7, 9, 11, 13, 21, 23, 34-35, 37, 39
+	aback  : 27
+	about  : 37
+	admits  : 5
+	after  : 3
+	agony  : 19-20
+	agreed  : 29
+	all  : 19-21, 29, 34, 39
+	although  : 23
+	amsterdam  : 13
+	an  : 31
+	and  : 3, 7, 9, 11, 13, 15, 17, 19-21, 23, 25-27, 31, 33-34, 39
+	angry  : 23
+	another  : 37
+	any  : 7
+	appears  : 1
+	apricots  : 21
+	are  : 34, 39
+	art  : 3
+	artist  : 5, 7, 35
+	as  : 11, 17, 33
+	aside  : 11, 21
+	asymmetry  : 29
+	at  : 1, 9, 11, 13, 25, 37
+	be  : 1, 13, 23, 26, 29
+	beautiful  : 29
+	because  : 7
+	been  : 3, 15
+	before  : 35
+	best  : 23
+	body  : 3, 29
+	both  : 13
+	breakfast  : 21
+	but  : 4, 13, 19-20, 23, 29, 31
+	by  : 5, 7, 17, 27
+	can  : 21
+	carried  : 20
+	carry  : 19
+	challenging  : 13
+	coke  : 21
+	colour  : 11, 33
+	complete  : 13
+	compliment  : 37
+	concentration  : 19
+	considered  : 37
+	could  : 29
+	course  : 13, 23, 29
+	creates  : 11
+	creative  : 9
+	dark  : 27
+	day  : 13, 21
+	deni  : 34
+	dermadonna  : 13
+	design  : 3, 20
+	detail  : 11
+	details  : 29, 33
+	do  : 29
+	done  : 13
+	down  : 3, 35
+	element  : 37
+	end  : 11
+	enough  : 31
+	essentially  : 11
+	etc  : 29
+	even  : 19, 37
+	ever  : 3
+	every  : 11, 37, 39
+	exhausted  : 26
+	exhaustion  : 1
+	expect  : 27
+	expected  : 29
+	extreme  : 19-20
+	fault  : 31
+	felt  : 33
+	figure  : 31
+	finally  : 23
+	find  : 31, 37
+	finding  : 29
+	finished  : 11, 19-20
+	first  : 1, 3, 23, 26, 29
+	fits  : 31
+	five  : 17
+	for  : 5, 13, 15, 23, 31
+	fortnight  : 13
+	fourth  : 17
+	freehand  : 3, 7, 35
+	freestyle  : 5, 7
+	friends  : 34, 39
+	from  : 9, 11, 21, 37
+	front  : 35
+	general  : 11
+	get  : 37
+	getting  : 11
+	giant  : 1
+	girl  : 5
+	give  : 9
+	glimpse  : 3
+	go  : 23
+	gone  : 33
+	good  : 34, 39
+	got  : 3, 31
+	graphic  : 7
+	had  : 3, 13, 15, 33
+	harmoniously  : 31
+	he  : 19-20, 33, 35
+	heart  : 34, 39
+	her  : 34
+	hid  : 23
+	hints  : 9
+	hip  : 15
+	his  : 7, 9, 33
+	hong  : 7
+	hour  : 17
+	hours  : 3, 15, 23
+	how  : 23
+	hurting  : 23
+	i  : 1, 3-4, 15, 17, 23, 25-27, 29, 31, 35, 37, 39
+	in  : 1, 3, 13, 15, 23, 29, 35
+	incredible  : 31
+	ink  : 17
+	inked  : 3
+	inside  : 23
+	inspiration  : 11
+	instant  : 29
+	instinct  : 31
+	is  : 23, 31, 35
+	it  : 4-5, 7, 11, 13, 19, 21, 23, 26-27, 29, 31, 33, 37, 39
+	its  : 27
+	jay  : 7, 11, 23, 34, 39
+	jonathan  : 7
+	just  : 3, 7, 19, 23
+	kind  : 13
+	knew  : 29, 35
+	laceration  : 1
+	large  : 21
+	lay  : 35
+	length  : 3
+	let  : 19
+	line  : 9
+	look  : 27
+	looking  : 25
+	love  : 4, 39
+	loves  : 34
+	lying  : 15
+	making  : 7
+	marvel  : 37
+	me  : 4, 9, 19, 23, 29
+	meet  : 37
+	methodology  : 9
+	militant  : 19
+	mirror  : 1, 23
+	my  : 1, 3-4, 9, 15, 17, 19-20, 29, 31, 35, 39
+	name  : 7
+	never  : 29
+	new  : 37
+	normally  : 13
+	now  : 4, 25
+	observe  : 1
+	of  : 3, 9, 11, 13, 15, 17, 19-21, 23, 29, 31, 35, 37, 39
+	off  : 33
+	one  : 13
+	only  : 13
+	over  : 13, 31
+	overwhelmed  : 23, 26
+	own  : 33
+	pain  : 17, 23
+	painterly  : 17
+	part  : 23, 39
+	permanent  : 3
+	person  : 37
+	pick  : 29
+	piece  : 3, 7, 9, 31
+	planned  : 33
+	preconditioned  : 23, 26
+	pretty  : 23
+	put  : 35
+	real  : 7
+	requires  : 19
+	result  : 11, 25
+	revealing  : 11
+	ribs  : 15, 17
+	same  : 33
+	saw  : 23, 26, 31
+	scheme  : 33
+	score  : 35
+	scratched  : 17
+	screamed  : 17
+	see  : 19
+	seeing  : 29
+	seen  : 3
+	sees  : 37
+	shaking  : 1
+	she  : 34
+	side  : 1
+	sight  : 1
+	six  : 15, 17
+	size  : 27
+	skin  : 9
+	so  : 11, 27
+	some  : 11, 21
+	soon  : 31
+	soul  : 9
+	spent  : 15
+	splashes  : 17
+	spot  : 11
+	stuck  : 33
+	studio  : 3, 15
+	stumble  : 1
+	style  : 7, 19
+	surprise  : 11
+	survived  : 21
+	symmetry  : 29
+	tailored  : 29
+	taken  : 27
+	tattoo  : 3-5, 7, 11, 13, 34, 39
+	tattooing  : 15
+	that  : 3, 15, 33
+	the  : 3, 7, 11, 13, 17, 20, 23, 25, 29, 33, 35, 37
+	theme  : 11, 33
+	these  : 23
+	they  : 37
+	things  : 23
+	this  : 3, 7, 13, 23
+	though  : 33, 35
+	time  : 3
+	to  : 1, 13, 17, 19, 23, 26-27, 29, 31, 33, 37
+	torso  : 35
+	totally  : 29
+	traumatised  : 4
+	two  : 23
+	unaware  : 19-20
+	unbelievable  : 23
+	uncontrollably  : 17
+	unique  : 7, 19, 29
+	until  : 19-20
+	upper  : 17
+	us  : 13
+	utlimately  : 35
+	vast  : 27
+	volunteers  : 5
+	wailing  : 17
+	waist  : 15
+	wanted  : 19
+	was  : 3, 5, 7, 13, 17, 19-21, 23, 25-27, 29
+	watercolour  : 7
+	waves  : 7
+	we  : 13, 33
+	website  : 9
+	were  : 15, 17
+	what  : 1, 31
+	when  : 23, 26, 29
+	which  : 15, 31, 37
+	whim  : 33
+	who  : 37
+	whom  : 35
+	willingly  : 35
+	with  : 1, 7, 17, 23, 31, 33-34, 39
+	work  : 13, 31, 37
+	working  : 19
+	would  : 13, 29
+	year  : 34, 39
+	you  : 9
+	your  : 9, 11
+	
+###################################################
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ python px28-1.py vh_utf
+	[... coupé dans terminal ...]
+	déjà  : 154
+	démembra  : 134
+	démesurés  : 90
+	désert  : 8, 10
+	désespérés  : 154
+	dômes  : 126
+	d’augmenter  : 156
+	d’avoir  : 154
+	d’engelures  : 154
+	d’ombre  : 154
+	effectue  : 2
+	effrayant  : 80
+	effrayante  : 105
+	elis  : 124
+	encore  : 100
+	endroits  : 155
+	enfant  : 156
+	enfoncés  : 154
+	entend  : 4, 137
+	entennoirs  : 95
+	entière  : 86
+	entre  : 1, 68, 144, 156
+	entrer  : 70
+	erre  : 75
+	escarpement  : 11
+	escarpements  : 76, 99
+	espagnol  : 42
+	esprit  : 1
+	esquissé  : 154
+	essaim  : 115
+	est  : 8, 10, 13, 73, 77, 131
+	etait  : 146
+	eux  : 30, 144
+	execution  : 102
+	exemple  : 4
+	exprimaient  : 156
+	extraits  : 5, 34
+	eût  : 154-155
+	face  : 57
+	faire  : 21, 101, 155
+	faisait  : 154-156
+	fait  : 28, 128, 155
+	faites  : 120
+	fatals  : 104
+	faîte  : 13
+	fers  : 16
+	feu  : 154
+	fierté  : 54
+	figure  : 154
+	fils  : 39
+	fixés  : 17
+	fleur  : 78
+	fleurs  : 51
+	flot  : 49
+	flots  : 144
+	flotterai  : 115
+	fléches  : 93
+	fond  : 103-104, 156
+	font  : 58, 95
+	force  : 154
+	forteresse  : 62
+	forts  : 67
+	forêts  : 62
+	fournaises  : 79
+	frappées  : 97
+	frondrière  : 58
+	front  : 25-26, 60
+	fronton  : 131
+	frères  : 147
+	frémit  : 103
+	fumants  : 100
+	fumée  : 4
+	gardez  : 118
+	gavarnie  : 4, 116
+	gave  : 75
+	gaves  : 4
+	genoux  : 154
+	geste  : 156
+	glacier  : 103
+	glaciers  : 79
+	gloire  : 143
+	grand  : 80
+	grands  : 75, 125, 154
+	granits  : 43
+	gravée  : 4
+	grelotait  : 154
+	gronde  : 88
+	gros  : 37
+	grâce  : 54
+	grêles  : 155
+	guerre  : 88
+	guette  : 92
+	gueules  : 88
+	géant  : 59
+	géants  : 101, 125
+	généses  : 80
+	gêne  : 92
+	habitude  : 156
+	habituelle  : 154
+	haillon  : 155
+	hanches  : 156
+	haut  : 4, 31
+	hautaines  : 106
+	hautes  : 65, 70
+	heureuse  : 154
+	heureux  : 143
+	hideux  : 107
+	hippodrome  : 112
+	hommes  : 146
+	horreur  : 155
+	hugo  : 2
+	huit  : 154
+	humanite  : 150
+	hymne  : 143
+	hélas  : 58, 61
+	hérissés  : 41
+	héritage  : 5
+	ici  : 128
+	idée  : 156
+	important  : 5
+	importun  : 77
+	inclément  : 8, 10
+	inconnu  : 134
+	inconnus  : 20
+	inculte  : 73
+	indiquaient  : 155
+	inoui  : 127
+	inouies  : 147
+	intervalles  : 156
+	jambes  : 155
+	jolie  : 154
+	juliette  : 2
+	jupes  : 156
+	juste  : 55
+	lac  : 49
+	laide  : 154
+	laine  : 155
+	laissait  : 156
+	laisse  : 5
+	laissé  : 31
+	larmes  : 103
+	leur  : 27, 58, 91
+	leurs  : 19-21, 86, 95, 99, 106, 114
+	lever  : 29
+	lieues  : 92
+	linceuls  : 96
+	lions  : 135
+	lisait  : 25-26
+	livre  : 7, 33, 64, 82
+	livrons  : 5
+	loin  : 67, 93
+	londres  : 113
+	long  : 2
+	longs  : 98
+	lorsque  : 61
+	louve  : 74
+	lueurs  : 97
+	lugubre  : 8, 10, 94
+	lui  : 56, 154, 156
+	lumière  : 48
+	là  : 18, 141, 155
+	l’angoisse  : 154
+	l’autre  : 154, 156
+	l’avait  : 154-155
+	l’habitude  : 154
+	l’hiver  : 155
+	l’on  : 155
+	l’un  : 154
+	l’éclairait  : 154
+	l’été  : 155
+	ma  : 1
+	maigre  : 154
+	maigreur  : 154
+	mailles  : 38
+	mains  : 51, 154
+	maintenant  : 112
+	maitresse  : 2
+	malades  : 154
+	malheur  : 61
+	marchaient  : 23
+	masferrer  : 33, 64, 82
+	masque  : 57
+	me  : 19, 29
+	meilleure  : 74
+	memphis  : 113
+	menace  : 92
+	mer  : 42
+	mers  : 143
+	mettant  : 56
+	meurtrières  : 59
+	millions  : 114
+	miracle  : 116
+	misérable  : 55
+	moi  : 15, 27
+	moindre  : 156
+	moins  : 156
+	mois  : 50
+	moise  : 119
+	moment  : 154
+	mon  : 1
+	monde  : 1
+	monstreux  : 123
+	mont  : 31, 61
+	montagne  : 17, 44, 74, 137, 140
+	monts  : 58, 79, 122
+	monté  : 140
+	monuments  : 125
+	morceau  : 133
+	mot  : 156
+	muets  : 104
+	murmurait  : 24
+	murmure  : 146
+	mystères  : 1
+	mystérieux  : 48
+	mère  : 154
+	méchants  : 85
+	médite  : 60
+	mémoire  : 4
+	même  : 23
+	n"mes  : 124
+	nature  : 46, 150
+	navarre  : 89
+	ne  : 156
+	neige  : 95
+	noir  : 8, 10
+	noires  : 155
+	noirs  : 96, 125
+	nom  : 2
+	noms  : 117
+	noueds  : 38
+	noyés  : 4
+	nue  : 101
+	nues  : 155
+	nus  : 14
+	nécessaire  : 156
+	n’avait  : 155
+	n’était  : 155
+	o  : 47
+	observe  : 154
+	oiseaux  : 52
+	ombre  : 62
+	ont  : 18, 60, 86, 94, 101, 107
+	oppresse  : 67
+	os  : 154
+	ouvrant  : 88
+	où  : 48, 113, 115, 122, 145, 155-156
+	pagode  : 122
+	palais  : 126
+	pans  : 68, 96, 130
+	panthéons  : 120
+	parfum  : 78
+	paris  : 115
+	parlaient  : 144
+	partout  : 155
+	parts  : 11
+	parténons  : 120
+	passants  : 28
+	passe  : 1
+	passés  : 18
+	pattison  : 4
+	pauvres  : 121
+	pays  : 37
+	peau  : 155
+	peine  : 154
+	penché  : 141
+	pend  : 76
+	pendant  : 18
+	pense  : 24
+	perdues  : 154
+	personne  : 156
+	perthuis  : 87
+	petite  : 154
+	peu  : 56
+	peuple  : 61
+	peur  : 58
+	peut  : 68
+	peut-être  : 103, 154
+	pics  : 39
+	pieds  : 14
+	pitié  : 155
+	pitons  : 39
+	place  : 105, 156
+	plafonds  : 123
+	plaindre  : 4
+	plaines  : 34, 105
+	plateaux  : 106
+	pleines  : 51
+	pleurer  : 155
+	pleuré  : 154
+	plis  : 75, 96
+	point  : 1
+	pointes  : 43
+	portent  : 108
+	possible  : 156
+	pourraient  : 114
+	pourrait  : 156
+	presque  : 154
+	princes  : 37
+	printemps  : 47
+	pris  : 21, 154
+	profils  : 72
+	profonde  : 154
+	prophétes  : 121
+	propices  : 50
+	prouvent  : 15
+	provinces  : 36
+	prunelle  : 156
+	près  : 154
+	précipices  : 51
+	prés  : 52, 91
+	présence  : 140
+	publique  : 105
+	puissants  : 69
+	pyrénées  : 2, 5
+	pyrénées(extraits  : 83
+	quand  : 68
+	que  : 4, 18, 20, 99, 155-156
+	quelque  : 102
+	quelquefois  : 139
+	quelques  : 5
+	quoi  : 46, 49-50, 53, 55
+	qu’on  : 154, 156
+	qu’un  : 155
+	ramenait  : 156
+	rampe  : 56
+	rauque  : 73
+	ravins  : 53
+	rayon  : 78
+	rayonnant  : 20
+	refaisant  : 47
+	regard  : 156
+	regardais  : 27
+	regarde  : 112
+	regards  : 19
+	renaisant  : 148
+	rendait  : 154
+	ressemble  : 98
+	reste  : 133
+	retirait  : 156
+	retrouve  : 73
+	ride  : 60
+	rien  : 38, 126
+	rivages  : 40
+	rocher  : 71
+	rocs  : 68
+	rome  : 113
+	rouges  : 155
+	rude  : 13
+	répandue  : 156
+	réseau  : 37
+	rêve  : 116
+	sa  : 2, 154-156
+	sacrait  : 119
+	sacré  : 131
+	saillir  : 154
+	sanctuaire  : 80
+	sans  : 117, 148, 156
+	sapin  : 54
+	sapinière  : 76
+	sauvage  : 73
+	sauvages  : 41
+	se  : 4, 90, 144
+	secret  : 118
+	seigneur  : 14
+	semant  : 51
+	sembla  : 19
+	semblent  : 59
+	sentier  : 23
+	sereine  : 46
+	serrer  : 154
+	ses  : 4, 88, 154-156
+	seul  : 31, 67
+	seule  : 156
+	si  : 19, 56
+	signatures  : 117
+	signe  : 28
+	silence  : 156
+	silencieux  : 139, 142
+	sinistre  : 135
+	six  : 154
+	soir  : 115
+	soleil  : 50
+	solitude  : 12
+	solitudes  : 70
+	sombre  : 11, 102, 154
+	sombres  : 123
+	sommes  : 145
+	sommet  : 8, 10
+	son  : 74, 155-156
+	songe  : 132
+	sont  : 15, 30, 100
+	sorte  : 154
+	souffle  : 156
+	souillé  : 77
+	sources  : 52
+	sous  : 20, 156
+	souterrains  : 123
+	splendeur  : 46
+	stades  : 124
+	stamboul  : 113
+	suivis  : 30
+	sur  : 4-5, 13, 17, 23, 25-26, 31, 44, 57, 62, 89, 106, 131, 137, 140-141, 155-156
+	sécoulent  : 4
+	sévères  : 28
+	ta  : 46
+	taches  : 155
+	taillée  : 130
+	talons  : 156
+	tel  : 37
+	temple  : 48
+	temples  : 119, 126
+	tenant  : 40
+	tenir  : 156
+	terre  : 145
+	terres(extraits  : 65
+	terreur  : 34, 156
+	théatre  : 113
+	thébe  : 124
+	thénardier  : 155
+	tirée  : 130
+	titre  : 8, 34, 65, 83, 110
+	tiède  : 100
+	toile  : 45, 155
+	tombe  : 62
+	tombeau  : 4
+	tombeaux  : 126
+	torrent  : 4, 49
+	torrents  : 97
+	touchée  : 155
+	toujours  : 154
+	tour  : 85
+	tournoyant  : 4
+	tous  : 23, 47, 101, 107
+	tout  : 73, 89, 155
+	toute  : 89, 156
+	toutes  : 11
+	traces  : 14
+	traduisaient  : 156
+	tranges  : 147
+	tranquille  : 132
+	trente  : 92
+	triste  : 77, 146
+	trop  : 77
+	trouve  : 14
+	trouée  : 155
+	tyr  : 113
+	témoins  : 125
+	ténébreux  : 36
+	tête  : 98
+	vague  : 135
+	vallons  : 91
+	variation  : 156
+	venait  : 143
+	vent  : 43, 49
+	vents  : 7
+	venus  : 15
+	vertigineux  : 39
+	vie  : 1
+	ville  : 133
+	villes  : 93
+	vingt  : 92
+	visible  : 154
+	vision  : 94
+	vivent  : 122
+	voiles  : 20
+	voir  : 72
+	vois  : 128
+	voit  : 16, 93
+	voix  : 144, 147, 156
+	votre  : 118
+	voue  : 1
+	voyage  : 2
+	voyait  : 155
+	vérité  : 26
+	vêtement  : 155
+	y  : 15-16, 155-156
+	yeux  : 17, 21, 154
+	«  : 154
+	»  : 154
+	à  : 1, 4, 12, 29, 51, 75, 78, 92, 130, 154-155
+	âmes  : 121
+	âpre  : 13, 73
+	çà  : 155
+	échafauds  : 108
+	éclôt  : 48
+	écouté  : 142
+	écrira  : 4
+	écrit  : 5
+	écumants  : 75
+	élevé  : 4
+	ému  : 27
+	énorme  : 45
+	énormité  : 132
+	éparse  : 97
+	épouvantable  : 4
+	épuisés  : 4
+	étaient  : 154-155
+	était  : 154-156
+	étant  : 55, 71
+	éteints  : 154
+	éternel  : 13
+	étoiles  : 21
+	étonné  : 156
+	étrange  : 133
+	étudier  : 1
+	été  : 154
+	évanouies  : 148
+	évoque  : 4
+	être  : 134
+	êtres  : 18
+	ô  : 14, 46
+	
+###################################################
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ vh_ascii
+	[... coupé dans terminal ...]
+	creuses  : 122
+	creux  : 95, 155
+	crime  : 60
+	crois  : 24
+	croit  : 72
+	cygne  : 29
+	cylindre  : 4
+	debout  : 104
+	deja  : 154
+	dela  : 91
+	demembra  : 134
+	demesures  : 90
+	des  : 4, 14, 16, 21, 34, 38-39, 43, 53, 67, 70, 80, 96-97, 105, 107-108, 122, 135, 140, 143-144, 146, 155
+	desert  : 8, 10
+	desesperes  : 154
+	deux  : 18, 20, 23, 28, 36-37, 40, 68, 147, 154
+	devant  : 36-37, 127
+	devenue  : 156
+	devine  : 154
+	dieu  : 57, 110
+	dirait  : 99
+	dire  : 156
+	disait  : 24, 150
+	distinguait  : 155
+	divins  : 52
+	domes  : 126
+	donjons  : 86
+	donne  : 154
+	dont  : 5, 67, 93
+	doux  : 50
+	douzes  : 4
+	dragon  : 88
+	draps  : 96
+	dressent  : 90
+	drouet  : 2
+	durant  : 149
+	dure  : 56
+	echafauds  : 108
+	eclot  : 48
+	ecoute  : 142
+	ecrira  : 4
+	ecrit  : 5
+	ecumants  : 75
+	effectue  : 2
+	effrayant  : 80
+	effrayante  : 105
+	eleve  : 4
+	elis  : 124
+	emu  : 27
+	encore  : 100
+	endroits  : 155
+	enfant  : 156
+	enfonces  : 154
+	enorme  : 45
+	enormite  : 132
+	entend  : 4, 137
+	entennoirs  : 95
+	entiere  : 86
+	entre  : 1, 68, 144, 156
+	entrer  : 70
+	eparse  : 97
+	epouvantable  : 4
+	epuises  : 4
+	erre  : 75
+	escarpement  : 11
+	escarpements  : 76, 99
+	espagnol  : 42
+	esprit  : 1
+	esquisse  : 154
+	essaim  : 115
+	est  : 8, 10, 13, 73, 77, 131
+	etaient  : 154-155
+	etait  : 146, 154-156
+	etant  : 55, 71
+	ete  : 154
+	eteints  : 154
+	eternel  : 13
+	etoiles  : 21
+	etonne  : 156
+	etrange  : 133
+	etre  : 134
+	etres  : 18
+	etudier  : 1
+	eut  : 154-155
+	eux  : 30, 144
+	evanouies  : 148
+	evoque  : 4
+	execution  : 102
+	exemple  : 4
+	exprimaient  : 156
+	extraits  : 5, 34, 65, 83
+	face  : 57
+	faire  : 21, 101, 155
+	faisait  : 154-156
+	fait  : 28, 128, 155
+	faite  : 13
+	faites  : 120
+	fatals  : 104
+	fers  : 16
+	feu  : 154
+	fierte  : 54
+	figure  : 154
+	fils  : 39
+	fixes  : 17
+	fleches  : 93
+	fleur  : 78
+	fleurs  : 51
+	flot  : 49
+	flots  : 144
+	flotterai  : 115
+	fond  : 103-104, 156
+	font  : 58, 95
+	force  : 154
+	forets  : 62
+	forteresse  : 62
+	forts  : 67
+	fournaises  : 79
+	frappees  : 97
+	fremit  : 103
+	freres  : 147
+	frondriere  : 58
+	front  : 25-26, 60
+	fronton  : 131
+	fumants  : 100
+	fumee  : 4
+	gardez  : 118
+	gavarnie  : 4, 116
+	gave  : 75
+	gaves  : 4
+	geant  : 59
+	geants  : 101, 125
+	gene  : 92
+	geneses  : 80
+	genoux  : 154
+	geste  : 156
+	glacier  : 103
+	glaciers  : 79
+	gloire  : 143
+	grace  : 54
+	grand  : 80
+	grands  : 75, 125, 154
+	granits  : 43
+	gravee  : 4
+	greles  : 155
+	grelotait  : 154
+	gronde  : 88
+	gros  : 37
+	guerre  : 88
+	guette  : 92
+	gueules  : 88
+	habitude  : 156
+	habituelle  : 154
+	haillon  : 155
+	hanches  : 156
+	haut  : 4, 31
+	hautaines  : 106
+	hautes  : 65, 70
+	helas  : 58, 61
+	herisses  : 41
+	heritage  : 5
+	heureuse  : 154
+	heureux  : 143
+	hideux  : 107
+	hippodrome  : 112
+	hommes  : 146
+	horreur  : 155
+	hugo  : 2
+	huit  : 154
+	humanite  : 150
+	hymne  : 143
+	ici  : 128
+	idee  : 156
+	important  : 5
+	importun  : 77
+	inclement  : 8, 10
+	inconnu  : 134
+	inconnus  : 20
+	inculte  : 73
+	indiquaient  : 155
+	inoui  : 127
+	inouies  : 147
+	intervalles  : 156
+	jambes  : 155
+	jolie  : 154
+	juliette  : 2
+	jupes  : 156
+	juste  : 55
+	lac  : 49
+	laide  : 154
+	laine  : 155
+	laissait  : 156
+	laisse  : 5, 31
+	larmes  : 103
+	leur  : 27, 58, 91
+	leurs  : 19-21, 86, 95, 99, 106, 114
+	lever  : 29
+	lieues  : 92
+	linceuls  : 96
+	lions  : 135
+	lisait  : 25-26
+	livre  : 7, 33, 64, 82
+	livrons  : 5
+	loin  : 67, 93
+	londres  : 113
+	long  : 2
+	longs  : 98
+	lorsque  : 61
+	louve  : 74
+	lueurs  : 97
+	lugubre  : 8, 10, 94
+	lui  : 56, 154, 156
+	lumiere  : 48
+	ma  : 1
+	maigre  : 154
+	maigreur  : 154
+	mailles  : 38
+	mains  : 51, 154
+	maintenant  : 112
+	maitresse  : 2
+	malades  : 154
+	malheur  : 61
+	marchaient  : 23
+	masferrer  : 33, 64, 82
+	masque  : 57
+	me  : 19, 29
+	mechants  : 85
+	medite  : 60
+	meilleure  : 74
+	meme  : 23
+	memoire  : 4
+	memphis  : 113
+	menace  : 92
+	mer  : 42
+	mere  : 154
+	mers  : 143
+	mettant  : 56
+	meurtrieres  : 59
+	millions  : 114
+	miracle  : 116
+	miserable  : 55
+	moi  : 15, 27
+	moindre  : 156
+	moins  : 156
+	mois  : 50
+	moise  : 119
+	moment  : 154
+	mon  : 1
+	monde  : 1
+	monstreux  : 123
+	mont  : 31, 61
+	montagne  : 17, 44, 74, 137, 140
+	monte  : 140
+	monts  : 58, 79, 122
+	monuments  : 125
+	morceau  : 133
+	mot  : 156
+	muets  : 104
+	murmurait  : 24
+	murmure  : 146
+	mysteres  : 1
+	mysterieux  : 48
+	nature  : 46, 150
+	navarre  : 89
+	ne  : 156
+	necessaire  : 156
+	neige  : 95
+	nimes  : 124
+	noir  : 8, 10
+	noires  : 155
+	noirs  : 96, 125
+	nom  : 2
+	noms  : 117
+	noueds  : 38
+	noyes  : 4
+	nue  : 101
+	nues  : 155
+	nus  : 14
+	o  : 14, 46-47
+	observe  : 154
+	oiseaux  : 52
+	ombre  : 62
+	ont  : 18, 60, 86, 94, 101, 107
+	oppresse  : 67
+	os  : 154
+	ouvrant  : 88
+	pagode  : 122
+	palais  : 126
+	pans  : 68, 96, 130
+	pantheons  : 120
+	parfum  : 78
+	paris  : 115
+	parlaient  : 144
+	partenons  : 120
+	partout  : 155
+	parts  : 11
+	passants  : 28
+	passe  : 1
+	passes  : 18
+	pattison  : 4
+	pauvres  : 121
+	pays  : 37
+	peau  : 155
+	peine  : 154
+	penche  : 141
+	pend  : 76
+	pendant  : 18
+	pense  : 24
+	personne  : 156
+	perthuis  : 87
+	petite  : 154
+	peu  : 56
+	peuple  : 61
+	peur  : 58
+	peut  : 68
+	peut-etre  : 103, 154
+	pics  : 39
+	pieds  : 14
+	pitie  : 155
+	pitons  : 39
+	place  : 105, 156
+	plafonds  : 123
+	plaindre  : 4
+	plaines  : 34, 105
+	plateaux  : 106
+	pleines  : 51
+	pleure  : 154
+	pleurer  : 155
+	plis  : 75, 96
+	point  : 1
+	pointes  : 43
+	portent  : 108
+	possible  : 156
+	pourraient  : 114
+	pourrait  : 156
+	precipices  : 51
+	pres  : 52, 91, 154
+	presence  : 140
+	presque  : 154
+	princes  : 37
+	printemps  : 47
+	pris  : 21, 154
+	profils  : 72
+	profonde  : 154
+	prophetes  : 121
+	propices  : 50
+	prouvent  : 15
+	provinces  : 36
+	prunelle  : 156
+	publique  : 105
+	puissants  : 69
+	pyrenees  : 2, 5, 83
+	quand  : 68
+	que  : 4, 18, 20, 99, 155-156
+	quelque  : 102
+	quelquefois  : 139
+	quelques  : 5
+	quoi  : 46, 49-50, 53, 55
+	ramenait  : 156
+	rampe  : 56
+	rauque  : 73
+	ravins  : 53
+	rayon  : 78
+	rayonnant  : 20
+	refaisant  : 47
+	regard  : 156
+	regardais  : 27
+	regarde  : 112
+	regards  : 19
+	renaisant  : 148
+	rendait  : 154
+	repandue  : 156
+	reseau  : 37
+	ressemble  : 98
+	reste  : 133
+	retirait  : 156
+	retrouve  : 73
+	reve  : 116
+	ride  : 60
+	rien  : 38, 126
+	rivages  : 40
+	rocher  : 71
+	rocs  : 68
+	rome  : 113
+	rouges  : 155
+	rude  : 13
+	sa  : 2, 154-156
+	sacrait  : 119
+	sacre  : 131
+	saillir  : 154
+	sanctuaire  : 80
+	sans  : 117, 148, 156
+	sapin  : 54
+	sapiniere  : 76
+	sauvage  : 73
+	sauvages  : 41
+	se  : 4, 90, 144
+	secoulent  : 4
+	secret  : 118
+	seigneur  : 14
+	semant  : 51
+	sembla  : 19
+	semblent  : 59
+	sentier  : 23
+	sereine  : 46
+	serrer  : 154
+	ses  : 4, 88, 154-156
+	seul  : 31, 67
+	seule  : 156
+	severes  : 28
+	si  : 19, 56
+	signatures  : 117
+	signe  : 28
+	silence  : 156
+	silencieux  : 139, 142
+	sinistre  : 135
+	six  : 154
+	soir  : 115
+	soleil  : 50
+	solitude  : 12
+	solitudes  : 70
+	sombre  : 11, 102, 154
+	sombres  : 123
+	sommes  : 145
+	sommet  : 8, 10
+	son  : 74, 155-156
+	songe  : 132
+	sont  : 15, 30, 100
+	sorte  : 154
+	souffle  : 156
+	souille  : 77
+	sources  : 52
+	sous  : 20, 156
+	souterrains  : 123
+	splendeur  : 46
+	stades  : 124
+	stamboul  : 113
+	suivis  : 30
+	sur  : 4-5, 13, 17, 23, 25-26, 31, 44, 57, 62, 89, 106, 131, 137, 140-141, 155-156
+	ta  : 46
+	taches  : 155
+	taillee  : 130
+	talons  : 156
+	tel  : 37
+	temoins  : 125
+	temple  : 48
+	temples  : 119, 126
+	tenant  : 40
+	tenebreux  : 36
+	tenir  : 156
+	terre  : 145
+	terres  : 65
+	terreur  : 34, 156
+	tete  : 98
+	theatre  : 113
+	thebe  : 124
+	thenardier  : 155
+	tiede  : 100
+	tiree  : 130
+	titre  : 8, 34, 65, 83, 110
+	toile  : 45, 155
+	tombe  : 62
+	tombeau  : 4
+	tombeaux  : 126
+	torrent  : 4, 49
+	torrents  : 97
+	touchee  : 155
+	toujours  : 154
+	tour  : 85
+	tournoyant  : 4
+	tous  : 23, 47, 101, 107
+	tout  : 73, 89, 155
+	toute  : 89, 156
+	toutes  : 11
+	traces  : 14
+	traduisaient  : 156
+	tranges  : 147
+	tranquille  : 132
+	trente  : 92
+	triste  : 77, 146
+	trop  : 77
+	trouee  : 155
+	trouve  : 14
+	tyr  : 113
+	vague  : 135
+	vallons  : 91
+	variation  : 156
+	venait  : 143
+	vent  : 43, 49
+	vents  : 7
+	venus  : 15
+	verite  : 26
+	vertigineux  : 39
+	vetement  : 155
+	vie  : 1
+	ville  : 133
+	villes  : 93
+	vingt  : 92
+	visible  : 154
+	vision  : 94
+	vivent  : 122
+	voiles  : 20
+	voir  : 72
+	vois  : 128
+	voit  : 16, 93
+	voix  : 144, 147, 156
+	votre  : 118
+	voue  : 1
+	voyage  : 2
+	voyait  : 155
+	y  : 15-16, 155-156
+	yeux  : 17, 21, 154
+###################################################
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ python px28-1.py 13704-r.rtf	
+	[...]
+	voiture  : 1719, 2404, 2422, 2458, 2532, 2645, 2939, 3531
+	voitures  : 2838
+	voix  : 410, 484, 939, 1469, 1489, 1556, 1643, 1761, 2015, 2029, 2134, 2278, 2416, 2437, 3084, 3116, 3273, 3324, 3413, 3473, 3516, 3586, 3596, 3738
+	voix\~  : 1493, 3044, 3766
+	vol\~  : 1130
+	volage  : 3866
+	volcan  : 1892
+	voler  : 535, 2110, 3129
+	volets  : 751
+	volets\~  : 775
+	voleurs  : 2844, 2885
+	volontiers  : 1803
+	voltairienne  : 2287
+	voltiger  : 1122, 1886, 3874
+	volume  : 458, 1333, 3539
+	volumes  : 563, 1608
+	volunteer  : 4290
+	volunteers  : 4142, 4196, 4210, 4213, 4237
+	volvox}{  : 616
+	vomir  : 1920
+	von  : 2893
+	vont  : 1455, 1485, 3731
+	vont-ils  : 1130
+	vos  : 576, 1057, 1070, 1119, 1289, 1308, 1430, 1519, 1772, 1794, 1800, 2464, 2789, 3023, 3100, 3210, 3302, 3395, 3562-3563, 3700, 3773, 3831, 3855
+	votre  : 356, 359, 393, 795, 837, 868, 1056-1058, 1062-1063, 1066, 1068, 1139-1141, 1152, 1214-1216, 1227, 1258, 1281, 1380, 1428, 1514, 1519, 1533, 1552, 1600, 1602, 1606, 1733, 1765, 1800, 1877, 1990-1991, 2032, 2043-2044, 2116, 2138, 2142, 2342, 2399, 2470, 2495, 2539, 2755, 2791, 2795, 2808, 2814, 3098, 3203, 3306, 3399, 3421, 3425, 3439, 3555, 3701, 3732, 3764, 3826, 3828-3831, 3900, 3915
+	voudra  : 1344
+	voudraient  : 1871
+	voudrais  : 590, 698, 2400
+	voudrait  : 580, 820, 1366, 2339
+	voudrez  : 1227, 1275, 1680
+	voudrez\~  : 3577, 3695
+	voudriez  : 3035
+	voulaient  : 1478
+	voulais  : 860, 1939, 2286
+	voulait  : 537, 817, 1099, 1482, 2737, 3054, 3724
+	voulez  : 792, 1273, 1480, 1522, 2312, 2545, 2636, 3064, 3318, 3601
+	voulez-vous  : 2150, 3552
+	voulez\~  : 2129, 3080
+	voulu  : 394, 398, 705, 1282, 2835, 2885, 2963, 3452
+	voulut  : 540, 709, 722, 807, 2217, 2404, 3197, 3525, 3775, 3785, 3788
+	vous\~  : 793, 825, 2031, 2100, 2470, 3351, 3552-3553, 3856
+	voyage  : 478, 1074, 2456, 2943
+	voyage\~  : 415, 2947, 3337
+	voyager  : 1085, 3458
+	voyages  : 464
+	voyageur  : 421
+	voyageurs  : 518
+	voyaient  : 822, 3846
+	voyais  : 833
+	voyait  : 3698
+	voyant  : 1980, 2255, 3512, 3559, 3703
+	voyez  : 1598, 2009, 3555, 3572, 3577
+	voyions  : 1920
+	voyons  : 1258, 1495, 3082
+	vrai  : 389, 409, 454, 479, 781, 1280, 1424, 1426, 1450, 1537, 1729, 2341, 2516, 2693, 2882, 3033, 3430, 3695
+	vrai-t-ou  : 1426
+	vrai\~  : 1656, 3512, 3893
+	vraie  : 396, 896, 3858
+	vraie\~  : 2133
+	vraiment  : 663
+	vraiment\~  : 2626
+	vrais  : 3791
+	vraisemblable  : 467, 1096, 1201
+	vraisemblable\~  : 2241
+	vrier  : 1194
+	vu  : 576, 751, 861, 1180, 1245, 1395, 1476, 1610, 1703, 1914, 2276, 2297-2298, 2325, 2334, 2474, 2663, 2689, 2694, 2734, 2908, 2927, 2941, 2951, 3147, 3465, 3565, 3575, 3593, 3743
+	vu\~  : 1693
+	vue  : 421, 677, 703, 2127, 2801, 3322, 3794
+	vulgaire  : 567
+	vus  : 2687
+	vus\~  : 2764
+	w1);}  : 56, 58-61, 81, 92, 94, 98
+	w1);}{\f169\fswiss\fcharset0\fprq2{\*\panose  : 59
+	w1);}{\f170\fscript\fcharset0\fprq2{\*\panose  : 59
+	w1);}{\f172\froman\fcharset0\fprq2{\*\panose  : 60
+	w1);}{\f173\fswiss\fcharset0\fprq2{\*\panose  : 60
+	w1);}{\f175\froman\fcharset0\fprq2{\*\panose  : 61
+	w1);}{\f176\froman\fcharset0\fprq2{\*\panose  : 61
+	w1);}{\f178\fswiss\fcharset0\fprq2{\*\panose  : 62
+	w1);}{\f179\fswiss\fcharset0\fprq2{\*\panose  : 62
+	w1);}{\f241\fswiss\fcharset238\fprq2{\*\panose  : 83
+	w1);}{\f280\fswiss\fcharset238\fprq2{\*\panose  : 96
+	w1);}{\f284\fswiss\fcharset238\fprq2{\*\panose  : 97
+	w1);}{\f292\fmodern\fcharset238\fprq1{\*\panose  : 100
+	wagon  : 2421, 3235
+	wagons  : 3236
+	wagram  : 1913, 2496, 2737
+	wagram\~  : 2279
+	walhalla  : 2858
+	walks  : 4211
+	warranties  : 4182-4183, 4186
+	warranty  : 4153, 4160
+	was  : 4217
+	waterloo  : 1690, 3887
+	waterloo\~  : 1064, 2687
+	way  : 3986, 4007
+	ways  : 4280
+	we  : 4021, 4024, 4264-4265, 4269-4270, 4274, 4294
+	we);}  : 80, 87-91, 97
+	we);}{\f238\fswiss\fcharset162\fprq2{\*\panose  : 82
+	we);}{\f242\fswiss\fcharset162\fprq2{\*\panose  : 83
+	we);}{\f245\fswiss\fcharset204\fprq2{\*\panose  : 84
+	we);}{\f250\froman\fcharset204\fprq2{\*\panose  : 86
+	we);}{\f271\fmodern\fcharset204\fprq1{\*\panose  : 93
+	we);}{\f277\froman\fcharset162\fprq2{\*\panose  : 95
+	we);}{\f281\fswiss\fcharset162\fprq2{\*\panose  : 96
+	we);}{\f289\fswiss\fcharset162\fprq2{\*\panose  : 99
+	web  : 4089, 4221, 4241, 4278, 4297, 4301
+	wellington  : 1693
+	west  : 4239
+	westphalie  : 944
+	wg);}  : 86, 93
+	wg);}{\f247\fswiss\fcharset162\fprq2{\*\panose  : 85
+	what  : 2500, 4033
+	whatsoever  : 270, 4052
+	when  : 4030
+	whenever  : 4046
+	where  : 4032, 4265, 4269
+	which  : 4046-4047, 4110, 4146, 4199, 4293, 4297
+	while  : 4269
+	who  : 4007, 4117, 4271
+	whom  : 4004
+	wide  : 4252
+	widest  : 4208, 4255
+	wil  : 1920
+	will  : 3949, 3957-3958, 4024, 4070, 4162, 4215
+	wish  : 4133
+	with  : 269, 272, 3969, 3973, 3986-3988, 4007, 4009-4011, 4026-4030, 4033, 4044, 4047, 4051, 4054, 4058, 4061-4062, 4068-4069, 4071, 4076, 4080, 4098, 4125, 4130, 4171-4172, 4181, 4196, 4207, 4213, 4258, 4260, 4264, 4272, 4289-4290, 4295
+	within  : 4110, 4118, 4127, 4168
+	without  : 3962-3963, 4010, 4030, 4059, 4079, 4177, 4252
+	wittemberg  : 943
+	wl);}  : 82, 85, 95, 99
+	wl);}{\f236\fswiss\fcharset0\fprq2{\*\panose  : 81
+	wl);}{\f244\fswiss\fcharset238\fprq2{\*\panose  : 84
+	wl);}{\f254\fscript\fcharset238\fprq2{\*\panose  : 87
+	wl);}{\f257\fswiss\fcharset238\fprq2{\*\panose  : 88
+	wl);}{\f260\fscript\fcharset238\fprq2{\*\panose  : 89
+	wl);}{\f263\fmodern\fcharset238\fprq1{\*\panose  : 90
+	wl);}{\f266\froman\fcharset238\fprq2{\*\panose  : 91
+	wl);}{\f269\fmodern\fcharset0\fprq1{\*\panose  : 92
+	wl);}{\f275\froman\fcharset0\fprq2{\*\panose  : 94
+	wl);}{\f283\fswiss\fcharset0\fprq2{\*\panose  : 97
+	wl);}{\f287\fswiss\fcharset0\fprq2{\*\panose  : 98
+	word  : 292, 3954, 4086
+	work  : 3982, 3985-3986, 3996, 4002, 4007, 4020, 4023, 4028-4029, 4033, 4037-4039, 4046, 4056, 4058, 4060, 4062-4063, 4067, 4072, 4075-4076, 4079, 4084, 4087, 4092, 4126-4128, 4134, 4157, 4168, 4170-4171, 4173-4174, 4176, 4181, 4201-4202
+	works  : 3960-3961, 3965, 3971, 3985, 3993, 4000, 4009, 4012, 4014, 4018, 4023, 4025-4026, 4037, 4071, 4097, 4101, 4105, 4121, 4123, 4131, 4134, 4144, 4146, 4195, 4197, 4208, 4254, 4285, 4288
+	wr);}  : 84
+	wr);}{\f251\froman\fcharset161\fprq2{\*\panose  : 86
+	wr);}{\f272\fmodern\fcharset161\fprq1{\*\panose  : 93
+	writing  : 4118, 4135, 4177
+	written  : 4170, 4172, 4265
+	wt);}  : 83, 96
+	wt);}{\f235\froman\fcharset186\fprq2{\*\panose  : 81
+	wt);}{\f239\fswiss\fcharset186\fprq2{\*\panose  : 82
+	wt);}{\f248\fswiss\fcharset186\fprq2{\*\panose  : 85
+	wt);}{\f253\froman\fcharset186\fprq2{\*\panose  : 87
+	wt);}{\f256\fscript\fcharset186\fprq2{\*\panose  : 88
+	wt);}{\f259\fswiss\fcharset186\fprq2{\*\panose  : 89
+	wt);}{\f262\fscript\fcharset186\fprq2{\*\panose  : 90
+	wt);}{\f265\fmodern\fcharset186\fprq1{\*\panose  : 91
+	wt);}{\f268\froman\fcharset186\fprq2{\*\panose  : 92
+	wt);}{\f274\fmodern\fcharset186\fprq1{\*\panose  : 94
+	wt);}{\f278\froman\fcharset186\fprq2{\*\panose  : 95
+	wt);}{\f286\fswiss\fcharset186\fprq2{\*\panose  : 98
+	wt);}{\f290\fswiss\fcharset186\fprq2{\*\panose  : 99
+	www.gutenberg.net  : 272, 4054, 4089
+	x  : 331, 751, 1454
+	xb  : 98-99
+	xcentrique  : 1003
+	xeuxis  : 2511
+	xi  : 333
+	xii  : 335
+	xiii  : 337
+	xiv  : 339
+	xiv\~  : 3817
+	xix  : 349
+	xv  : 341, 3817
+	xvi  : 343, 2910
+	xvii  : 345
+	xviii  : 347
+	xx  : 351
+	y  : 387, 419, 439, 454, 558, 579, 591, 605, 615, 644, 648, 650, 833, 1073, 1148, 1177, 1204, 1214, 1325, 1340, 1411, 1422, 1450, 1598, 1718, 1823, 2110, 2133, 2190, 2212, 2279, 2353, 2360, 2368, 2669, 2682, 2708, 2827, 2876, 2885, 2938, 3018-3019, 3039, 3056, 3061, 3203, 3212, 3222-3223, 3240, 3258, 3283, 3385, 3454, 3537, 3562, 3788
+	years  : 4289
+	yeu  : 750
+	yeux  : 399, 410, 421, 478, 488, 491, 515, 582, 618-619, 649, 670, 780, 822, 860, 971, 990, 1105, 1112, 1230, 1232, 1266, 1333, 1339, 1461, 1487, 1706, 1710, 1772, 1803, 1836, 1895, 1902, 1907, 1977, 2021, 2028, 2064, 2206, 2213, 2298, 2375, 2432, 2440, 2459, 2472, 2585, 2591, 2630, 2923-2924, 2926, 2944, 3109, 3383, 3480, 3492, 3530, 3595, 3724-3725, 3761, 3824
+	yeux\~  : 2669, 2694, 2905, 3023, 3700
+	york;}{\f13\fswiss\fcharset0\fprq2{\*\panose  : 5
+	you  : 270, 3962, 3967-3968, 3970, 3982, 3987, 3996, 3998-3999, 4001-4004, 4009, 4011-4012, 4020-4021, 4024, 4028, 4030, 4032-4034, 4042, 4052, 4060, 4062, 4084, 4086, 4090, 4098, 4100, 4104, 4106, 4110, 4117-4118, 4120, 4125, 4127, 4130, 4133, 4135, 4158-4159, 4161, 4163-4164, 4167-4172, 4174-4175, 4177, 4181, 4193, 4199, 4202
+	your  : 4000, 4035, 4068, 4106, 4111, 4151, 4172, 4220, 4234
+	yucca  : 3541
+	zinc  : 3066
+	zone  : 1919
+	zoologie  : 927
+	zoologie\~  : 1055
+	zouaves  : 2526
+	{  : 308-309, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350, 352, 375, 379, 404, 498, 566, 643, 748, 758, 761, 872, 917, 947, 1079, 1081, 1084, 1167, 1170, 1298, 1379, 1412, 1416, 1475, 1650, 1717, 1880, 1983, 2412, 2420, 2513, 2538, 2572, 2666, 2731, 2826, 2843, 3162, 3166, 3182, 3280, 3536, 3717, 3879, 3927, 3937, 4307
+	{\*\bkmkend  : 1083, 1474, 2411, 2665
+	{\*\datafield  : 310, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350
+	{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang{\pntxtb  : 265
+	{\chftnsep  : 258, 260
+	{\chftnsepc  : 259, 261
+	{\cs15\ul  : 309-310, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350
+	{\cs20\fs30  : 263
+	{\cs20\fs30\lang1024  : 263
+	{\f102\fdecor\fcharset0\fprq2{\*\panose  : 37
+	{\f105\fscript\fcharset0\fprq2{\*\panose  : 38
+	{\f108\froman\fcharset2\fprq2{\*\panose  : 39
+	{\f111\fswiss\fcharset0\fprq2{\*\panose  : 40
+	{\f114\fnil\fcharset0\fprq2{\*\panose  : 41
+	{\f117\fnil\fcharset0\fprq2{\*\panose  : 42
+	{\f11\fswiss\fcharset0\fprq2{\*\panose  : 5
+	{\f120\fswiss\fcharset2\fprq2{\*\panose  : 43
+	{\f123\fswiss\fcharset2\fprq2{\*\panose  : 44
+	{\f126\fnil\fcharset0\fprq2{\*\panose  : 45
+	{\f129\fswiss\fcharset2\fprq2{\*\panose  : 46
+	{\f132\fnil\fcharset0\fprq2{\*\panose  : 47
+	{\f135\froman\fcharset0\fprq2{\*\panose  : 48
+	{\f1383\fswiss\fcharset161\fprq2  : 157
+	{\f1389\froman\fcharset161\fprq2  : 158
+	{\f138\fmodern\fcharset0\fprq1{\*\panose  : 49
+	{\f1393\froman\fcharset204\fprq2  : 159
+	{\f141\fswiss\fcharset2\fprq2{\*\panose  : 50
+	{\f144\fswiss\fcharset2\fprq2{\*\panose  : 51
+	{\f147\fswiss\fcharset0\fprq2{\*\panose  : 52
+	{\f14\fnil\fcharset2\fprq2{\*\panose  : 6
+	{\f150\froman\fcharset0\fprq2{\*\panose  : 53
+	{\f153\froman\fcharset2\fprq2{\*\panose  : 54
+	{\f156\fnil\fcharset0\fprq2{\*\panose  : 55
+	{\f159\fnil\fcharset0\fprq2{\*\panose  : 56
+	{\f162\froman\fcharset2\fprq2{\*\panose  : 57
+	{\f165\froman\fcharset0\fprq2{\*\panose  : 58
+	{\f168\fswiss\fcharset0\fprq2{\*\panose  : 59
+	{\f171\fmodern\fcharset0\fprq1{\*\panose  : 60
+	{\f174\fswiss\fcharset0\fprq2{\*\panose  : 61
+	{\f177\fscript\fcharset0\fprq2{\*\panose  : 62
+	{\f17\fnil\fcharset129\fprq1{\*\panose  : 7
+	{\f180\froman\fcharset0\fprq2{\*\panose  : 63
+	{\f183\froman\fcharset0\fprq2{\*\panose  : 64
+	{\f186\fswiss\fcharset0\fprq2{\*\panose  : 65
+	{\f189\fswiss\fcharset0\fprq2{\*\panose  : 66
+	{\f192\fscript\fcharset0\fprq2{\*\panose  : 67
+	{\f195\fswiss\fcharset0\fprq2{\*\panose  : 68
+	{\f198\fscript\fcharset0\fprq2{\*\panose  : 69
+	{\f19\fnil\fcharset136\fprq2{\*\panose  : 8
+	{\f201\froman\fcharset0\fprq2{\*\panose  : 70
+	{\f204\froman\fcharset0\fprq2{\*\panose  : 71
+	{\f207\fswiss\fcharset0\fprq2{\*\panose  : 72
+	{\f210\fswiss\fcharset0\fprq2{\*\panose  : 73
+	{\f213\fswiss\fcharset0\fprq2{\*\panose  : 74
+	{\f216\froman\fcharset0\fprq2{\*\panose  : 75
+	{\f219\froman\fcharset2\fprq2{\*\panose  : 76
+	{\f21\fmodern\fcharset129\fprq1{\*\panose  : 9
+	{\f222\froman\fcharset0\fprq2{\*\panose  : 77
+	{\f225\fscript\fcharset0\fprq2{\*\panose  : 78
+	{\f228\fswiss\fcharset0\fprq2{\*\panose  : 79
+	{\f231\froman\fcharset0\fprq2{\*\panose  : 80
+	{\f234\froman\fcharset162\fprq2{\*\panose  : 81
+	{\f237\fswiss\fcharset238\fprq2{\*\panose  : 82
+	{\f23\fmodern\fcharset136\fprq1{\*\panose  : 10
+	{\f240\fswiss\fcharset0\fprq2{\*\panose  : 83
+	{\f243\fswiss\fcharset186\fprq2{\*\panose  : 84
+	{\f246\fswiss\fcharset161\fprq2{\*\panose  : 85
+	{\f249\froman\fcharset238\fprq2{\*\panose  : 86
+	{\f252\froman\fcharset162\fprq2{\*\panose  : 87
+	{\f255\fscript\fcharset162\fprq2{\*\panose  : 88
+	{\f258\fswiss\fcharset162\fprq2{\*\panose  : 89
+	{\f25\froman\fcharset129\fprq1{\*\panose  : 11
+	{\f261\fscript\fcharset162\fprq2{\*\panose  : 90
+	{\f264\fmodern\fcharset162\fprq1{\*\panose  : 91
+	{\f267\froman\fcharset162\fprq2{\*\panose  : 92
+	{\f270\fmodern\fcharset238\fprq1{\*\panose  : 93
+	{\f273\fmodern\fcharset162\fprq1{\*\panose  : 94
+	{\f276\froman\fcharset238\fprq2{\*\panose  : 95
+	{\f2772\fswiss\fcharset238\fprq2  : 160
+	{\f2777\fswiss\fcharset186\fprq2  : 161
+	{\f279\fswiss\fcharset0\fprq2{\*\panose  : 96
+	{\f27\froman\fcharset222\fprq2{\*\panose  : 12
+	{\f282\fswiss\fcharset186\fprq2{\*\panose  : 97
+	{\f285\fswiss\fcharset162\fprq2{\*\panose  : 98
+	{\f288\fswiss\fcharset238\fprq2{\*\panose  : 99
+	{\f291\fmodern\fcharset0\fprq1{\*\panose  : 100
+	{\f294\fmodern\fcharset161\fprq1{\*\panose  : 101
+	{\f296\fmodern\fcharset186\fprq1{\*\panose  : 102
+	{\f298\froman\fcharset204\fprq2{\*\panose  : 103
+	{\f2\fmodern\fcharset0\fprq1{\*\panose  : 2
+	{\f2\fs20  : 290
+	{\f300\froman\fcharset162\fprq2{\*\panose  : 104
+	{\f302\fswiss\fcharset163\fprq2{\*\panose  : 105
+	{\f304\fnil\fcharset255\fprq2{\*\panose  : 106
+	{\f307\froman\fcharset163\fprq2{\*\panose  : 107
+	{\f30\fnil\fcharset0\fprq2{\*\panose  : 13
+	{\f310\fswiss\fcharset163\fprq2{\*\panose  : 108
+	{\f313\fmodern\fcharset163\fprq1{\*\panose  : 109
+	{\f316\froman\fcharset161\fprq2{\*\panose  : 110
+	{\f319\froman\fcharset238\fprq2{\*\panose  : 111
+	{\f321\froman\fcharset161\fprq2{\*\panose  : 112
+	{\f323\froman\fcharset186\fprq2{\*\panose  : 113
+	{\f325\fswiss\fcharset178\fprq2{\*\panose  : 114
+	{\f328\fswiss\fcharset238\fprq2{\*\panose  : 115
+	{\f330\fswiss\fcharset161\fprq2{\*\panose  : 116
+	{\f332\fswiss\fcharset177\fprq2{\*\panose  : 117
+	{\f334\fswiss\fcharset238\fprq2{\*\panose  : 118
+	{\f336\fswiss\fcharset161\fprq2{\*\panose  : 119
+	{\f338\fswiss\fcharset186\fprq2{\*\panose  : 120
+	{\f33\fnil\fcharset0\fprq2{\*\panose  : 14
+	{\f340\froman\fcharset204\fprq2{\*\panose  : 121
+	{\f342\froman\fcharset162\fprq2{\*\panose  : 122
+	{\f344\froman\fcharset163\fprq2{\*\panose  : 123
+	{\f346\fswiss\fcharset161\fprq2{\*\panose  : 124
+	{\f349\fswiss\fcharset204\fprq2{\*\panose  : 125
+	{\f351\fswiss\fcharset162\fprq2{\*\panose  : 126
+	{\f353\fswiss\fcharset178\fprq2{\*\panose  : 127
+	{\f355\fswiss\fcharset222\fprq2{\*\panose  : 128
+	{\f357\froman\fcharset238\fprq2{\*\panose  : 129
+	{\f360\froman\fcharset162\fprq2{\*\panose  : 130
+	{\f363\fswiss\fcharset204\fprq2{\*\panose  : 131
+	{\f366\fswiss\fcharset186\fprq2{\*\panose  : 132
+	{\f369\fscript\fcharset161\fprq2{\*\panose  : 133
+	{\f36\fnil\fcharset0\fprq2{\*\panose  : 15
+	{\f372\fscript\fcharset238\fprq2{\*\panose  : 134
+	{\f374\fscript\fcharset161\fprq2{\*\panose  : 135
+	{\f376\fscript\fcharset186\fprq2{\*\panose  : 136
+	{\f378\fswiss\fcharset204\fprq2{\*\panose  : 137
+	{\f380\fswiss\fcharset162\fprq2{\*\panose  : 138
+	{\f382\fswiss\fcharset238\fprq2{\*\panose  : 139
+	{\f385\fswiss\fcharset162\fprq2{\*\panose  : 140
+	{\f388\fswiss\fcharset186\fprq2{\*\panose  : 141
+	{\f390\fmodern\fcharset238\fprq1{\*\panose  : 142
+	{\f392\fmodern\fcharset162\fprq1{\*\panose  : 143
+	{\f394\fnil\fcharset2\fprq2{\*\panose  : 144
+	{\f397\fmodern\fcharset0\fprq1{\*\panose  : 145
+	{\f39\froman\fcharset0\fprq2{\*\panose  : 16
+	{\f400\froman\fcharset0\fprq2{\*\panose  : 146
+	{\f403\froman\fcharset204\fprq2  : 147
+	{\f408\fswiss\fcharset238\fprq2  : 148
+	{\f414\fmodern\fcharset238\fprq1  : 149
+	{\f42\fmodern\fcharset0\fprq1{\*\panose  : 17
+	{\f45\fswiss\fcharset0\fprq2{\*\panose  : 18
+	{\f48\fswiss\fcharset0\fprq2{\*\panose  : 19
+	{\f492\fswiss\fcharset238\fprq2  : 150
+	{\f51\froman\fcharset2\fprq2{\*\panose  : 20
+	{\f54\fdecor\fcharset0\fprq2{\*\panose  : 21
+	{\f57\froman\fcharset0\fprq2{\*\panose  : 22
+	{\f5\fswiss\fcharset0\fprq2{\*\panose  : 3
+	{\f60\froman\fcharset0\fprq2{\*\panose  : 23
+	{\f63\fdecor\fcharset0\fprq2{\*\panose  : 24
+	{\f654\fmodern\fcharset238\fprq1  : 151
+	{\f666\fswiss\fcharset238\fprq2  : 152
+	{\f66\froman\fcharset0\fprq2{\*\panose  : 25
+	{\f672\fswiss\fcharset238\fprq2  : 153
+	{\f678\fscript\fcharset238\fprq2  : 154
+	{\f683\fscript\fcharset186\fprq2  : 155
+	{\f689\fswiss\fcharset186\fprq2  : 156
+	{\f69\fdecor\fcharset0\fprq2{\*\panose  : 26
+	{\f72\fscript\fcharset0\fprq2{\*\panose  : 27
+	{\f75\froman\fcharset0\fprq2{\*\panose  : 28
+	{\f78\fscript\fcharset0\fprq2{\*\panose  : 29
+	{\f81\fscript\fcharset0\fprq2{\*\panose  : 30
+	{\f84\fnil\fcharset2\fprq2{\*\panose  : 31
+	{\f87\fscript\fcharset0\fprq2{\*\panose  : 32
+	{\f8\froman\fcharset0\fprq2{\*\panose  : 4
+	{\f90\fdecor\fcharset0\fprq2{\*\panose  : 33
+	{\f93\fdecor\fcharset0\fprq2{\*\panose  : 34
+	{\f96\froman\fcharset0\fprq2{\*\panose  : 35
+	{\f99\fdecor\fcharset0\fprq2{\*\panose  : 36
+	{\field\fldedit{\*\fldinst  : 309
+	{\field{\*\fldinst  : 263
+	{\footer  : 262
+	{\fs30  : 262
+	{\fs44  : 294
+	{\i  : 650, 759, 1377, 1413, 1417, 2570, 3163, 3862
+	{\listoverride\listid-126\listoverridecount0\ls12}{\listoverride\listid-127\listoverridecount0\ls13}{\listoverride\listid-128\listoverridecount0\ls14}{\listoverride\listid1385256871\listoverridecount0\ls15}}{\*\revtbl  : 254
+	{\listoverride\listid-130\listoverridecount0\ls7}{\listoverride\listid-131\listoverridecount0\ls8}{\listoverride\listid-132\listoverridecount0\ls9}{\listoverride\listid-119\listoverridecount0\ls10}{\listoverride\listid-125\listoverridecount0\ls11}  : 253
+	{\nofchars-32766}{\*\company  : 256
+	{\rtf1\ansi\ansicpg1252\uc1  : 1
+	{\super  : 1332
+	{\title  : 255
+	{audret  : 1648
+	{bourdonnel  : 3942
+	{ce  : 356
+	{comme  : 2534
+	{e  : 374
+	{end  : 3944
+	{il  : 2510
+	{la  : 762
+	{paris  : 376
+	{table  : 307
+	{the  : 266
+	{un  : 3167
+	{unknown;}}{\info  : 254
+	{{\*\bkmkstart  : 355, 377, 497, 565, 642, 747, 871, 916, 1082, 1169, 1297, 1473, 1716, 1879, 1982, 2410, 2664, 2841, 3180, 3535, 3716
+	}  : 238, 262, 649
+	}\f14\fs20\fbias0  : 243
+	}\listid-119}{\list\listtemplateid1577870418{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0\levelindent0{\leveltext  : 224
+	}\listid-120}{\list\listtemplateid-1001642388\listsimple{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0  : 223
+	}\listid-125}{\list\listtemplateid-36120362\listsimple{\listlevel\levelnfc0\leveljc0\levelfollow0  : 222
+	}\listid-126}{\list\listtemplateid-2059135682\listsimple{\listlevel\levelnfc23\leveljc0  : 221
+	}\listid-127}{\list\listtemplateid883315476\listsimple{\listlevel  : 220
+	}\listid-128}{\list\listtemplateid-1690517892\listsimple  : 219
+	}\listid-129}{\list\listtemplateid421452170  : 218
+	}\listid-130}  : 217
+	}\listid1385256871  : 244
+	}\listid1625647620}}{\*\listoverridetable{\listoverride\listid814377995\listoverridecount0\ls1}{\listoverride\listid862524293  : 251
+	}\listid814377995}  : 230
+	}\listid862524293}{\list\listtemplateid1207218240{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0\levelindent0  : 237
+	}\pard  : 294, 307-308, 374-376, 403-404, 758-759, 761-762, 946-947, 1079, 1081, 1166-1168, 1377, 1379, 1412-1413, 1416-1417, 1648, 1650, 2419-2420, 2570, 2572, 2730-2731, 2825-2826, 3162-3163, 3166-3167, 3279-3280, 3862, 3879, 3926-3927, 3936-3937, 3942
+	}\pard\plain  : 290, 309, 352, 355-356, 377, 379, 497-498, 565-566, 642-643, 747-748, 871-872, 916-917, 1082, 1084, 1169-1170, 1297-1298, 1473, 1475, 1716-1717, 1879-1880, 1982-1983, 2410, 2412, 2510, 2513, 2534, 2538, 2664, 2666, 2841, 2843, 3180, 3182, 3535-3536, 3716-3717, 3944, 4307
+	}{  : 295, 299, 303, 2426
+	}{\b\fs60  : 298
+	}{\endash  : 2506
+	}{\field\fldedit{\*\fldinst  : 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350
+	}{\fs20\ul  : 310, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350
+	}{\fs30  : 263
+	}{\fs34  : 302
+	}{\i  : 395, 525, 545, 548, 616-619, 630, 756-757, 784, 912-913, 1010, 1100, 1182, 1221, 1884, 2261, 2267, 2361, 2374, 2506, 2530, 2555, 2827, 2889, 2900, 3100, 3459, 3705, 3732, 3736, 3838, 3928
+	}{\i\lang2057  : 2500, 2502, 2504
+	}{\lang2057  : 2500
+	}{\levelnumbers  : 242
+	}{\levelnumbers;}  : 229, 232, 246
+	}{\levelnumbers;}\f14\fs20\fbias0  : 226-230, 233-237, 239-243, 247-251
+	}{\levelnumbers;}\f3\fbias0  : 219-222, 224
+	}{\levelnumbers;}\f3\fs20\fbias0  : 225, 231, 238, 245
+	}{\listlevel  : 225
+	}{\listlevel\levelnfc23  : 233, 247
+	}{\listlevel\levelnfc23\leveljc0\levelfollow0  : 231, 241, 245
+	}{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1  : 228
+	}{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0  : 236, 239, 250
+	}{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0\levelindent0  : 226
+	}{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1\levelspace0\levelindent0{\leveltext  : 234, 248
+	}{\listname  : 216-224, 230, 237, 243-244, 251
+	}{\pntxta  : 265-266
+	}{avait  : 1836
+	}{hyperlink  : 309, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350
+	}}  : 264, 4308
+	}}\pard\plain  : 266, 352
+	}}\sectd  : 262
+	}}{\*\aftnsep  : 260
+	}}{\*\aftnsepc  : 261
+	}}{\*\ftnsepc  : 259
+	}}{\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang{\pntxta  : 264
+	}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta  : 264
+	}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang{\pntxta  : 264
+	}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta  : 264
+	}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb  : 265
+	}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb  : 265
+	}}{\*\pnseclvl8  : 265
+	}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb  : 266
+	}}{\fldrslt  : 263, 309
+
+###################################################
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ python px28-1.py 15943.htm
+	[...]
+	content="54146">53 kb</td>  : 325
+	content="61295">60 kb</td>  : 257
+	content="63360">62 kb</td>  : 311
+	content="83981">82 kb</td>  : 269
+	content="@gutenberg_new  : 54
+	content="application/epub+zip  : 267, 281
+	content="application/x-mobipocket-ebook  : 295, 309
+	content="book  : 48
+	content="ebook  : 44
+	content="ebook"></div>  : 86
+	content="en_us  : 41
+	content="fr">  : 154
+	content="free  : 43, 47
+	content="http://www.gutenberg.org/ebooks/15943?msg=welcome_stranger  : 50
+	content="http://www.gutenberg.org/pics/logo-144x144.png  : 49
+	content="in  : 194
+	content="le  : 42, 46
+	content="notranslate  : 60
+	content="pq">  : 158
+	content="project  : 51, 85
+	content="public  : 45
+	content="summary  : 53
+	content="text/css  : 40
+	content="text/html  : 39, 255
+	content="text/plain  : 323
+	content="usd"></span><span  : 194
+	content="width=device-width  : 38
+	cover  : 90
+	data  : 138
+	datatype="dcterms:dcmitype">text</td>  : 174
+	datatype="dcterms:imt  : 255, 267, 281, 295, 309, 323
+	datatype="dcterms:lcc  : 158
+	datatype="dcterms:lcsh">  : 166
+	datatype="dcterms:rfc4646  : 154
+	datatype="xsd:date  : 180
+	days.</td>  : 190
+	dialog_message  : 30
+	dialog_title  : 29
+	digitized  : 43, 47
+	domain  : 186
+	download  : 8, 344
+	download.</div>  : 355
+	download.</td>  : 368
+	downloaded…</span>  : 206
+	downloads  : 190
+	drive  : 274, 288, 302, 316
+	drive."><span  : 247
+	dropbox  : 271, 285, 299, 313
+	dropbox."><span  : 244
+	ebook</h2>  : 226
+	ebook</title>  : 55
+	ebooks  : 30, 44, 77, 355, 368
+	ebooks</span></a>  : 73
+	en_us  : 25-26
+	enctype="multipart/form-data">  : 399
+	epub  : 43, 47
+	except  : 423
+	facebook  : 96, 370
+	faster  : 9
+	fb  : 26
+	fb-share-button">  : 95
+	fb_lang  : 26
+	feed  : 36
+	fiction  : 168
+	file  : 227
+	files…</a></td>  : 335
+	find  : 30
+	first  : 67
+	flattr.">  : 382
+	for  : 4
+	format."><span  : 239
+	fr  : 217
+	free  : 30, 44, 55, 73, 355, 368
+	french  : 161, 511
+	futur  : 42, 46, 55, 82, 151
+	german</td>  : 507
+	get  : 6
+	google  : 247, 274, 288, 302, 316
+	google+  : 104
+	gplus-share-button">  : 103
+	grayed">  : 200, 211
+	gutenberg  : 9, 30, 35, 43, 47, 51, 355, 368, 370, 394, 408
+	gutenberg"></div>  : 85
+	gutenberg</span></a>  : 69
+	hamlet</td>  : 482
+	help  : 411
+	here  : 30
+	how  : 8
+	href="#bibrec">bibrec</a></li>  : 131
+	href="#download">download</a></li>  : 130
+	href="/  : 69
+	href="//m.gutenberg.org/ebooks/15943.mobile?msg=welcome_stranger  : 396
+	href="//www.gutenberg.org/catalog/osd-books.xml  : 35
+	href="//www.gutenberg.org/ebooks/15943.epub.images?session_id=bb5742ed82012762a592fb54444c60ae8fbaf69a  : 267
+	href="//www.gutenberg.org/ebooks/15943.epub.noimages?session_id=bb5742ed82012762a592fb54444c60ae8fbaf69a  : 281
+	href="//www.gutenberg.org/ebooks/15943.kindle.images?session_id=bb5742ed82012762a592fb54444c60ae8fbaf69a  : 295
+	href="//www.gutenberg.org/ebooks/15943.kindle.noimages?session_id=bb5742ed82012762a592fb54444c60ae8fbaf69a  : 309
+	href="//www.gutenberg.org/ebooks/15943.txt.utf-8  : 323
+	href="//www.gutenberg.org/files/15943/15943-h/15943-h.htm  : 255
+	href="/browse/languages/fr">french</a></td>  : 156
+	href="/browse/loccs/pq">pq  : 161
+	href="/css/pg-desktop-one.css?1427540499  : 20
+	href="/ebooks/  : 73
+	href="/ebooks/">search</a>  : 392
+	href="/ebooks/15943.opds?msg=welcome_stranger  : 36
+	href="/ebooks/15943.rdf  : 56
+	href="/ebooks/15943/also/  : 201
+	href="/ebooks/author/6384  : 77, 146
+	href="/ebooks/bookshelf/317  : 212
+	href="/ebooks/search/?sort_order=release_date">latest</a>  : 393
+	href="/ebooks/send/dropbox/15943.epub.images  : 271
+	href="/ebooks/send/dropbox/15943.epub.noimages  : 285
+	href="/ebooks/send/dropbox/15943.kindle.images  : 299
+	href="/ebooks/send/dropbox/15943.kindle.noimages  : 313
+	href="/ebooks/send/gdrive/15943.epub.images  : 274
+	href="/ebooks/send/gdrive/15943.epub.noimages  : 288
+	href="/ebooks/send/gdrive/15943.kindle.images  : 302
+	href="/ebooks/send/gdrive/15943.kindle.noimages  : 316
+	href="/ebooks/send/megaupload/15943.html  : 263
+	href="/ebooks/send/msdrive/15943.epub.images  : 277
+	href="/ebooks/send/msdrive/15943.epub.noimages  : 291
+	href="/ebooks/send/msdrive/15943.kindle.images  : 305
+	href="/ebooks/send/msdrive/15943.kindle.noimages  : 319
+	href="/ebooks/subject/25">  : 167
+	href="/files/15943/  : 335
+	href="/pics/apple-touch-icon  : 37
+	href="/pics/favicon  : 33
+	href="/terms_of_use/">terms  : 394
+	href="/wiki/gutenberg:help_on_bibliographic_record_page#dropbox  : 244
+	href="/wiki/gutenberg:help_on_bibliographic_record_page#format  : 239
+	href="/wiki/gutenberg:help_on_bibliographic_record_page#google_drive  : 247
+	href="/wiki/gutenberg:help_on_bibliographic_record_page#onedrive  : 250
+	href="/wiki/gutenberg:help_on_bibliographic_record_page#table:_bibliographic_record  : 136
+	href="/wiki/gutenberg:project_gutenberg_needs_your_donation  : 395
+	href="/wiki/main_page  : 361
+	href="http://schema.org/instock  : 194
+	href="http://www.gutenberg.org/ebooks/15943?msg=welcome_stranger  : 34
+	href="https://flattr.com/thing/509045/project-gutenberg  : 382
+	href="https://plus.google.com/share?url=http%3a%2f%2fwww.gutenberg.org%2febooks%2f15943%3fmsg%3dwelcome_stranger  : 104
+	href="https://twitter.com/share?related=gutenberg_new%3aproject%20gutenberg%20new%20books&amp;lang=en&amp;text=le%20conte%20futur%20by%20paul%20adam&amp;count=none&amp;url=http%3a%2f%2fwww.gutenberg.org%2febooks%2f15943%3fmsg%3dwelcome_stranger  : 112
+	href="https://www.facebook.com/dialog/feed?app_id=115319388529183&amp;redirect_uri=https%3a%2f%2fwww.gutenberg.org%2ffb_redirect.html&amp;name=le%20conte%20futur%20by%20paul%20adam&amp;description=free%20kindle%20book%20and%20epub%20digitized%20and%20proofread%20by%20project%20gutenberg.&amp;link=http%3a%2f%2fwww.gutenberg.org%2febooks%2f15943%3fmsg%3dwelcome_stranger  : 96
+	href="https://www.facebook.com/project.gutenberg"><span  : 370
+	html  : 1
+	html</a></td>  : 255
+	http-equiv="content-language  : 41
+	http-equiv="content-style-type  : 40
+	http-equiv="content-type  : 39
+	http://www.gutenberg.org/ebooks/15943?msg=welcome_stranger  : 24
+	http://www.gutenberg.org/feeds/  : 8
+	http://www.w3.org/markup/dtd/xhtml-rdfa-1.dtd">  : 1
+	icon  : 18, 33
+	icon_book"></div>  : 89
+	icon_book"></span></td>  : 254, 266, 280, 294, 308, 322
+	icon_bookshelf"></span>  : 214
+	icon_dropbox"></span></a>  : 271, 285, 299, 313
+	icon_facebook"></span>  : 97
+	icon_facebook"></span></a>  : 370
+	icon_file"><a  : 335
+	icon_flattr"></span>  : 383
+	icon_folder"></span></td>  : 334
+	icon_gdrive"></span></a>  : 274, 288, 302, 316
+	icon_gplus"></span>  : 105
+	icon_help  : 136, 239, 244, 247, 250
+	icon_logo"></span>  : 362
+	icon_msdrive"></span></a>  : 277, 291, 305, 319
+	icon_print"></span></a>  : 118
+	icon_save"><a  : 255, 267, 281, 295, 309, 323
+	icon_smsearch"></span>  : 404
+	icon_suggestion"></span>  : 203
+	icon_twitter"></span>  : 113
+	id="bibrec">  : 133
+	id="content  : 64
+	id="cover-social-wrapper">  : 87
+	id="dialog  : 348
+	id="download">  : 224
+	id="fb-badge  : 369
+	id="fb-root"></div>  : 353
+	id="flattr-badge  : 381
+	id="help-button  : 411
+	id="help-button-cell">  : 410
+	id="helpbox  : 419
+	id="id9756  : 362
+	id="logo">  : 360
+	id="menubar">  : 391
+	id="menubar-first  : 392
+	id="menubar-search">  : 390
+	id="more_stuff">  : 198
+	id="mw-head-dummy  : 63
+	id="no-cover">  : 88
+	id="paypal-badge  : 372
+	id="print-head  : 354
+	id="qr">  : 122
+	id="screen-head  : 357
+	id="search">  : 398
+	id="search-button  : 403
+	id="search-button-cell">  : 402
+	id="search-input  : 408
+	id="search-input-cell">  : 407
+	id="social  : 92
+	id="tabs">  : 128
+	id="tabs-wrapper">  : 127
+	id="tagline">project  : 368
+	id="tagline-badges  : 365
+	images)</a></td>  : 267, 281, 295, 309
+	in  : 186, 190, 507, 511
+	indicated  : 423
+	ip  : 6
+	italian  : 161
+	italian</td>  : 511
+	itemprop="availability  : 194
+	itemprop="bookformat  : 86
+	itemprop="creator">adam  : 146
+	itemprop="datepublished">may  : 182
+	itemprop="headline">  : 150
+	itemprop="inlanguage  : 154
+	itemprop="interactioncount">26  : 190
+	itemprop="name">le  : 82
+	itemprop="offers  : 192
+	itemprop="price">$0.00</span><span  : 194
+	itemprop="pricecurrency  : 194
+	itemprop="publisher  : 85
+	itemprop="title">3  : 77
+	itemprop="title">48,528  : 73
+	itemprop="title">project  : 69
+	itemprop="url"><span  : 69, 73, 77
+	itemscope="itemscope  : 64, 67, 71, 75, 192
+	itemtype="http://data-vocabulary.org/breadcrumb">  : 67, 71, 75
+	itemtype="http://schema.org/book">  : 64
+	itemtype="http://schema.org/offer">  : 192
+	jane  : 519
+	javascript  : 102, 110
+	json_search  : 22
+	kindle  : 43, 47
+	l.fr  : 510
+	l.german</td>  : 506
+	l.it  : 510
+	lang  : 25
+	lang="en  : 375-376, 427, 432, 436, 440, 444, 448, 452, 456, 464, 468, 472, 482, 486, 490, 494, 498, 502, 506, 510, 514, 518
+	lang="en_us  : 11
+	language  : 161
+	last  : 190
+	latest  : 393
+	learn  : 8
+	leftcell">  : 202, 213
+	lit  : 507
+	literatures  : 161
+	load  : 27
+	main  : 69, 361
+	match</td>  : 428
+	megaupload  : 263
+	menu  : 411
+	metadata  : 9
+	method="get  : 399
+	method="post">  : 373
+	mobile  : 124, 396
+	mobile_url  : 23
+	money  : 377, 382
+	money.">donate?</a>  : 395
+	more  : 27, 77, 222
+	msg_load_more  : 27
+	much  : 9
+	name="classification  : 45
+	name="cmd  : 375
+	name="description  : 43
+	name="google  : 60
+	name="hosted_button_id  : 376
+	name="keywords  : 44
+	name="query  : 408
+	name="submit  : 377
+	name="title  : 42
+	name="twitter:card  : 53
+	name="twitter:site  : 54
+	name="viewport  : 38
+	navlink  : 200
+	need  : 395
+	new  : 73, 392
+	next  : 71, 75
+	no  : 281, 309, 503
+	no-repeat  : 18, 58
+	no.</td>  : 449, 453
+	nofollow  : 36, 56
+	noprint  : 124, 232-234
+	noprint">  : 65
+	noprint"></span></a>  : 136, 239, 244, 247, 250
+	noscreen"></span>  : 123
+	not  : 487, 515
+	nouvelles</span>  : 217
+	of  : 30, 138, 227, 394
+	offers  : 355, 368
+	onclick="open_share_popup(this.href  : 96, 104, 112
+	onclick="printpage  : 118
+	onedrive  : 277, 291, 305, 319
+	onedrive."><span  : 250
+	online  : 255
+	only  : 6, 26
+	operators  : 461
+	our  : 124, 396
+	page  : 4, 69
+	page"><span  : 118
+	page.">  : 361
+	page_mode  : 28
+	paul  : 42, 46, 55, 77, 82, 146
+	paypal  : 377
+	portuguese</a>  : 161
+	press  : 422
+	profile="http://a9.com/-/spec/opensearch/1.1/">  : 16
+	project  : 8, 30, 35, 43, 47, 394, 408
+	proofread  : 43, 47
+	property="dcterms:extent  : 257, 269, 283, 297, 311, 325
+	property="dcterms:format  : 255, 267, 281, 295, 309, 323
+	property="dcterms:issued  : 180
+	property="dcterms:language  : 154
+	property="dcterms:publisher  : 85
+	property="dcterms:rights">public  : 186
+	property="dcterms:subject  : 158, 166
+	property="dcterms:type  : 174
+	property="fb:app_id  : 52
+	property="og:description  : 47
+	property="og:image  : 49
+	property="og:site_name  : 51
+	property="og:title  : 46
+	property="og:type  : 48
+	property="og:url  : 50
+	public  : 1
+	punctuation  : 423
+	put  : 462
+	qrcode  : 58
+	qrcode-desktop  : 123
+	qrcode-mobile  : 124
+	query</th>  : 478
+	quixote"</td>  : 487
+	read  : 8
+	record  : 135
+	record."><span  : 136
+	rel="alternate  : 36, 56
+	rel="apple-touch-icon  : 37
+	rel="canonical  : 34
+	rel="dcterms:hasformat  : 225
+	rel="marcrel:aut  : 146
+	rel="nofollow  : 201, 212
+	rel="nofollow"></a>  : 263
+	rel="nofollow"><span  : 271, 274, 277, 285, 288, 291, 299, 302, 305, 313, 316, 319
+	rel="search  : 35
+	rel="shortcut  : 33
+	rel="stylesheet  : 20
+	releases  : 393
+	results…  : 27
+	rev="dcterms:isformatof">  : 225
+	romance  : 161
+	rowspan="2  : 360
+	rowspan="3  : 460
+	rowspan="7">prefixes</th>  : 431
+	same  : 77
+	scraping  : 4, 9
+	screen  : 28
+	search  : 73, 392, 403, 421
+	separated  : 421
+	seriously  : 6
+	shakespeare</td>  : 483, 495, 499
+	share  : 102
+	site."></span>  : 124
+	site.">mobile</a>  : 396
+	sizes.">  : 227
+	some  : 395
+	spaces  : 421, 462
+	spanish  : 161
+	src="//www.gutenberg.org/pics/paypal/en_us.gif  : 377
+	src="/js/pg-desktop-one.js?1427540499"></script>  : 32
+	stock"></span></td>  : 194
+	stories  : 514-515
+	stories</td>  : 490-491
+	stuff  : 222
+	style="width  : 460
+	summary="bibliographic  : 138
+	summary="table  : 227
+	tabindex="11  : 392
+	tabindex="22  : 393
+	tabindex="31  : 394
+	tabindex="32  : 395
+	tabindex="33  : 396
+	table  : 136
+	target="_blank  : 382
+	target="_fb_share_popup">  : 96
+	target="_gplus_share_popup">  : 104
+	target="_tw_share_popup">  : 112
+	terms  : 394, 421
+	text  : 323
+	than  : 9
+	the  : 69, 77, 186, 190, 361, 394, 403, 411
+	then  : 422
+	these.</small>  : 462
+	this  : 4, 118, 226, 255
+	this.target  : 96, 104, 112
+	through  : 377, 382
+	title="download">epub  : 267, 281
+	title="download">kindle  : 295, 309
+	title="download">plain  : 323
+	title="download">read  : 255
+	title="execute  : 403
+	title="explain  : 136, 239, 244, 247, 250
+	title="find  : 77
+	title="go  : 69, 124, 361, 396
+	title="learn  : 395
+	title="opds  : 36
+	title="open  : 411
+	title="our  : 393
+	title="print  : 118
+	title="project  : 370
+	title="read  : 394
+	title="search  : 35, 408
+	title="send  : 263, 271, 274, 277, 285, 288, 291, 299, 302, 305, 313, 316, 319, 377, 382
+	title="share  : 96, 104, 112
+	title="start  : 73, 392
+	to  : 8, 30, 69, 124, 263, 271, 274, 277, 285, 288, 291, 299, 302, 305, 313, 316, 319, 355, 361, 368, 396
+	transparent  : 18, 58
+	tweet  : 110
+	twitter  : 112
+	twitter-share-button">  : 111
+	type="application/atom+xml;profile=opds-catalog  : 36
+	type="application/epub+zip  : 267, 281
+	type="application/opensearchdescription+xml  : 35
+	type="application/rdf+xml  : 56
+	type="application/x-mobipocket-ebook  : 295, 309
+	type="button  : 411
+	type="hidden  : 375-376
+	type="image  : 377
+	type="submit  : 403
+	type="text  : 408
+	type="text/css  : 20
+	type="text/css">  : 17, 57
+	type="text/html  : 255
+	type="text/javascript  : 32
+	type="text/javascript">//<![cdata  : 21
+	type="text/plain  : 323
+	typeof="pgterms:agent  : 146
+	typeof="pgterms:ebook  : 134
+	typeof="pgterms:file">  : 253, 265, 279, 293, 307, 321
+	types  : 227
+	url(//www.gutenberg.org/cache/epub/15943/pg15943.qrcode.png  : 58
+	url(/pics/sprite.png?1427540499  : 18
+	us  : 377, 382
+	usa.</td>  : 186
+	use  : 4, 394
+	use</a>  : 394
+	utf-8</a></td>  : 323
+	value=  : 408
+	value="_s-xclick  : 375
+	value="xkal6bzl3ypsn  : 376
+	var  : 22-30
+	verne  : 511
+	version="xhtml+rdfa  : 11
+	we  : 395
+	welcome  : 29-30
+	why  : 395
+	with  : 267, 295
+	without  : 102, 110
+	xhtml+rdfa  : 1
+	xml:lang="en  : 375-376
+	xml:lang="en">  : 472
+	xml:lang="en">!</th>  : 468
+	xml:lang="en">#74</td>  : 502
+	xml:lang="en">#</th>  : 448
+	xml:lang="en">.</th>  : 427
+	xml:lang="en">a.</th>  : 432
+	xml:lang="en">a.shakespeare</td>  : 494
+	xml:lang="en">cat.</th>  : 456
+	xml:lang="en">jane  : 518
+	xml:lang="en">juvenile  : 506
+	xml:lang="en">l.</th>  : 444
+	xml:lang="en">love  : 490, 514
+	xml:lang="en">n.</th>  : 452
+	xml:lang="en">qui.</td>  : 486
+	xml:lang="en">s.</th>  : 440
+	xml:lang="en">s.shakespeare</td>  : 498
+	xml:lang="en">shakespeare  : 482
+	xml:lang="en">t.</th>  : 436
+	xml:lang="en">verne  : 510
+	xml:lang="en">|</th>  : 464
+	xml:lang="en_us  : 11
+	xmlns:dcterms="http://purl.org/dc/terms/  : 11
+	xmlns:ebook="http://www.gutenberg.org/ebooks/  : 11
+	xmlns:marcrel="http://www.loc.gov/loc.terms/relators/  : 11
+	xmlns:og="http://opengraphprotocol.org/schema/  : 16
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#  : 11
+	xmlns:xsd="http://www.w3.org/2001/xmlschema#  : 11
+	xmlns="http://www.w3.org/1999/xhtml  : 11
+	xx_xx  : 26
+	your  : 6, 421
+	{  : 18, 58
+	|  : 510
+	}  : 18, 58
+

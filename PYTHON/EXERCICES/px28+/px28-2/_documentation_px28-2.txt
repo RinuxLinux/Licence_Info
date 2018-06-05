@@ -1,0 +1,141 @@
+# Renaud Lizot
+# 14509956
+# px28-2
+# adapter avec golist en plus d'une stoplist 
+
+#####################################
+OBSERVATIONS: 
+
+L'idée est de rendre optionnel le choix d'un tri par stoplist ou par golist.
+On reprend l'idée de la stop.list: création d'un fichier selon une liste de mots définis dans le code. 
+
+
+# INTEGRER GOLIST
+Dans le même esprit que pour stoplist, on définit golist dans get-list():
+
+def get_list(fichier) :
+	if fichier == 'stop.list':
+		put_list('stop.list', "ce de du en # le la les je tu il elle nous vous ils elles et donc or ou mais ( - , . ) n' j' qu' l' ... .. : ; ? ! [ ] on ou par pas pour qui un une c'est dans s'en plus qu'elle")
+	else: 		
+		put_list('go.list', "bouts frustration global programme progressivement valeur")
+	flux = open(fichier,'r')
+	liste = flux.read().split()
+	flux.close()
+	return liste
+
+
+# ADAPTATION DE INDEXE()
+Nouvelle fonction indexe():
+
+def indexe(dex, mots, ligne, liste, option) :
+	for mot in mots :
+		mot = nettoie(mot)
+		if option == '-stop' :
+			if mot.lower() in liste : pass
+			else : dex = ajoute(dex, mot, ligne)
+		if option == '-go' :
+			if mot.lower() not in liste : pass
+			else : dex = ajoute(dex, mot, ligne)			
+	return dex
+	
+On ajoute ici liste et option dans les arguments. Liste pour savoir si on pioche dans stoplist ou golist. Option pour choisir la procédure adéquate: garder les mots présents dans une liste (-go) ou éliminer les mots présents dans une liste (-stop)
+
+
+# APPEL DE PILOTE()
+On va modifier l'appel de la fonction principale pour qu'elle intègre l'option choisie en LDC. Par exemple, le script sera lancé en LDC comme suit: python px28-2.py indexe-moi -go
+
+Nouvel appel de la fonction principale:
+
+import sys
+entree = len(sys.argv)
+if entree == 3 :
+	option = sys.argv[2]
+	if sys.argv[2] == '-stop':
+		stoplist = get_list('stop.list')
+		pilote(sys.argv[1], {}, stoplist, option)
+	if sys.argv[2] == '-go':
+		golist = get_list('go.list')
+		pilote(sys.argv[1], {}, golist, option)
+else: exit("Erreur. Trop ou pas assez d'arguments. Options possibles: -go ou -stop")
+
+On intègre l'option choisie dans la description de pilote() de façon à pouvoir choisir la bonne procédure dans indexe() sans trop alourdir le code.
+
+# REGLAGES:
+J'aimerais réduire ce paquet de if en jouant avec sys.arg[2] (les options)
+Après tout, le nom du fichier et de la liste se trouve dans ce sys.arg[2]. On pourrait construire le nom du fichier à utiliser à partir de ça. Le nom exacte de la liste utilisée n'a plus d'importance.
+
+Nouvel appel:
+
+import sys
+entree = len(sys.argv)
+if entree == 3 :
+	option = sys.argv[2]
+	fichier = ''.join(list(option)[1:]) + '.list'
+	liste = get_list(fichier)
+	pilote(sys.argv[1], {}, liste, option)
+else: exit("Erreur. Trop ou pas assez d'arguments. Options possibles: -go ou -stop")
+
+
+# TESTS:
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py indexe-moi -stop
+	alors  : 8
+	attendue  : 6
+	autrement  : 7
+	avant  : 6
+	avec  : 8
+	avoir  : 5
+	bien  : 1, 5
+	bon  : 9
+	bouts  : 4
+	certitude  : 5
+	chaque  : 4, 8
+	coder  : 3
+	contexte  : 8
+	dit  : 7
+	expression  : 4, 6
+	fonctionnement  : 9
+	frustration  : 3
+	garantit  : 9
+	global  : 9
+	grosse  : 3
+	instruction  : 7-8
+	large  : 7
+	mal  : 2
+	marche  : 2
+	petits  : 4
+	plaisir  : 1
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	retourne  : 5
+	servir  : 6
+	solution  : 3
+	testant  : 4
+	teste  : 8
+	tourne  : 1
+	tout  : 2
+	valeur  : 5
+	voulu  : 8
+	vraiment  : 2
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py indexe-moi -go
+	bouts  : 4
+	frustration  : 3
+	global  : 9
+	programme  : 1-2, 7
+	progressivement  : 4, 9
+	valeur  : 5
+	
+### art_uk et vh_ascii ne contiennent aucun des termes:
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py art_uk -go
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py vh_ascii  -go
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$
+
+### autres tests:
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py 13704-r.rtf -go
+	bouts  : 1011
+	programme  : 1067
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py 15943.htm - go
+Erreur. Trop ou pas assez d'arguments. Options possibles: -go ou -stop
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ python px28-2.py 15943.htm -go
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-2$ 
+
+  

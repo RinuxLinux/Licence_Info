@@ -1,0 +1,188 @@
+# Renaud Lizot
+# 14509956
+# px33-3
+# morpion : jouer contre ordinateur
+
+Tâches:
+- mettre en place des algorithmes 
+- tracer le résultat sur la grille
+
+# Analyse
+
+- IA:
+Les stratégies sont simples, par ordre de priorité:
+1. jouer le coup gagnant ;
+2. sinon contrer l'adversaire ;
+3. sinon jouer un coup.
+
+Ces stratégies sont très simples. On va étoffer à 10 cas de figures qui, selon leur priorité, déterminera la case à jouer:
+
+stratégie 1 : jouer pour gagner (= compléter une section) ;
+stratégie 2 : contrer adversaire (= l'empêcher de compléter une section);
+stratégie 3 : premier coup : prendre le centre ;
+stratégie 4 : premier coup : prendre un des quatre coins, si le centre est pris ou n'existe pas ;
+stratégies 5-9 : n-ième coup : jouer sur une section sans 'X' (adversaire) mais avec un ou plusieurs 'O' (IA) pour simuler un jeu cohérent (le but étant de compléter une section avec son propre symbole), c'est-à-dire en privilégiant la section ayant le plus de symboles 'O';
+stratégie 10 : dite 'normale', jouer un coup aléatoire parmi les cases libres, si toutes les autres stratégies ont échouée. (= quand la partie ne peut plus être gagnée).
+
+- Tracé:
+Il faut que l'IA retourne les coordonnées de la case à jouer, ici sous forme de tuple  (row, column).
+La méthode grid_slaves(row, column), appliquée à grille, permettra de tracer le symbole de l'IA.
+
+
+# Faisabilité
+
+- IA
+
+D'abord, on crée une fonction IA() qui teste les stratégies énoncées plus haut. 
+Pour faciliter le retour sous forme de coordonnées, la fonction travaillera avec une copie de la matrice M, nommée plateau, qui contiendra les symboles joués mais remplacera les False par les coordonnées de leur case respective. 
+
+	plateau = [[(x,y) for y in range(T)] for x in range(T)]
+	for i in range(len(M)):
+		for j in range(len(M[i])):
+			if M[i][j] : plateau[i][j] = M[i][j]
+
+On explose cette liste 'plateau' pour pouvoir analyser le jeu par lignes, colonnes et diagonales:
+
+	col = [[plateau[x][y] for x in range(T)] for y in range(T)]
+	lig = [[plateau[x][y] for y in range(T)] for x in range(T)]
+	di1 = [plateau[x][x] for x in range(T)]
+	di2 = [plateau[T-x-1][x] for x in range(T)]
+
+Par exemple, avec T = 6:
+M
+>>> [['O', 'O', 'X', False, False, False], [False, False, False, False, False, False], [False, False, False, False, False, False], [False, 'X', 'X', 'X', 'X', False], [False, False, False, False, False, False], [False, 'O', 'O', False, False, False]]
+
+lig
+>>> [['O', 'O', 'X', (0, 3), (0, 4), (0, 5)], [(1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5)], [(2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 5)], [(3, 0), 'X', 'X', 'X', 'X', (3, 5)], [(4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5)], [(5, 0), 'O', 'O', (5, 3), (5, 4), (5, 5)]]
+
+Nous utiliserons un dictionnaire pour recueillir les coups possibles à considérer : 
+
+	dico = {'contrer' : [], 'gagner': [], 'normal' : [], 'priorite1' : [], 'priorite2' : [], 'priorite3' : [], 'priorite4' : [], 'priorite5' : [], 'priorite6' : [], 'priorite7' : []}
+
+Un autre dictionnaire permettra d'analyser le jeu section par section à moindre frais:
+
+	lst = {'col' : col, 'lig' : lig, '[di1]' : [di1], '[di2]' : [di2]}
+
+Vient la partie analyse:
+
+	# ANALYSE des combinaisons possibles, par section:
+	
+	for cle in lst.keys():
+		liste = lst[cle]
+		for i in range(len(liste)):
+		
+			# COMPTER LES CELLULES VIDES dans la section
+			tpl = 0
+			for j in range(len(liste[i])):
+				if type(liste[i][j]) is tuple : tpl += 1
+			
+			# PAS DE CASES LIBRES = on ignore la section
+			if tpl == 0 : continue
+						
+			# STRATEGIE 1 : jouer le coup gagnant
+			if liste[i].count('O') == T-1 : dico['gagner'] += (liste[i])
+			
+			# STRATEGIE 2 : contrer adversaire
+			if liste[i].count('X') == T-1 : dico['contrer'] += (liste[i])
+			
+			# STRATEGIES 3 et 4: premier coup
+			if tour == 1: 
+				# case stratégique: prendre le centre (si existe)
+				if T %2 != 0:
+					if not M[(T-1)/2][(T-1)/2] : dico['priorite1'] = [((T-1)/2, (T-1)/2)]
+				# case stratégique: prendre un coin
+				if not M[0][0] : dico['priorite2'] += [(0, 0)]
+				if not M[0][T-1] : dico['priorite2'] += [(0, T-1)]
+				if not M[T-1][0] : dico['priorite2'] += [(T-1, 0)]
+				if not M[T-1][T-1] : dico['priorite2'] += [(T-1, T-1)]
+		
+			# STRATEGIES 5 à 9 : chercher les sections les plus occupees et sans 'X'
+			if liste[i].count('X') == 0:
+				if liste[i].count('O') > 4 : dico['priorite3'] += (liste[i])
+				if liste[i].count('O') == 4 : dico['priorite4'] += (liste[i])
+				if liste[i].count('O') == 3 : dico['priorite5'] += (liste[i])
+				if liste[i].count('O') == 2 : dico['priorite6'] += (liste[i])
+				if liste[i].count('O') == 1 : dico['priorite7'] += (liste[i])
+				
+			# STRATEGIE 10 : dernier recours: jouer une case libre
+			if liste[i].count('O') > 0 and liste[i].count('X') != 0 : dico['normal'] += (liste[i])
+
+
+Le résultat de l'analyse est un dictionnaire qui contient tous les coups possibles pour chacune des 10 stratégies.
+Nous créons une fonction qui sera chargée de choisir la stratégie à suivre et de retourner les coordonnées de la case choisie. 
+Petit contretemps: après l'analyse, le dictionnaire contient dans ses listes les symboles joués et quelques doublons occasionnels (parce que les sections se croisent sur la grille donc la même case peut sortir plusieurs fois de la moulinette). La fonction choix() sera donc chargée d'un petit filtrage préliminaire.
+
+Nous avons donc notre dictionnaire avec, comme clé, le nom d'une stratégie et comme valeur, les cellules jouables pour la-dite stratégie, dans une liste. 
+Il peut arriver que cette liste contienne plusieurs valeurs. D'où l'utilisation de la méthode choice() du module random. 
+On procède ensuite par ordre stratégique pour arriver au retour final: un tuple avec la ligne et la colonne de la cellule à occuper.
+
+	def choix(dico):
+		import random
+		ran = random.choice
+		
+		# TRI : ne garder que les coordonnees & enlever les doublons
+		for cle in dico.keys():
+			while 'X' in dico[cle] : dico[cle].remove('X')
+			while 'O' in dico[cle] : dico[cle].remove('O')
+			tri = []
+			for i in dico[cle]:
+				if i not in tri: tri.append(i)
+			dico[cle] = tri
+		
+		# CHOIX du coup par priorite // ajouter else if ??
+		
+		# strategie 1: coup gagnant
+		if dico['gagner'] != [] : return ran(dico['gagner']) 
+		
+		# strategie 2: contrer
+		if dico['contrer'] != [] : return ran(dico['contrer'])
+		
+		# strategies 3-4: premier coup strategique
+		if dico['priorite1'] != [] : return ran(dico['priorite1'])
+		if dico['priorite2'] != [] : return ran(dico['priorite2'])
+		
+		# strategies 5-9: n-ieme coup
+		i = 1
+		while i != 8:
+			if dico['priorite' + str(i)] != [] : 
+				k = i
+				i = 8
+				return ran(dico['priorite' + str(k)])
+			else: i += 1
+		# strategie 10 : toutes les autres strategies ont echoue
+		if dico['normal'] != [] : return ran(dico['normal'])
+
+
+Note: dans la fonction IA(), vous remarquerez une nouvelle variable 'tour' (le nombre de... tours). Cette variable globale permet de déclencher l'analyse des stratégies 3 et 4 (prendre le centre ou un coin en premier). Elle est initialisée à 1 au début du code.
+
+
+- TRACE DU DESSIN:
+
+Dans la fonction joue(event), à la place de fais_o(w):
+
+	coup = IA()
+	R = coup[0]
+	C = coup[1]
+	w = grille.grid_slaves(row=R, column=C)[0]
+	fais_o(w)
+
+On récupère le tuple fourni par IA(), sépare chacun des deux éléments (R et C) puis trace le 'O' dans la cellule correspondante, grâce à grid_slaves() qui donne l'instance de w qui correspond à ces coordonnées. 
+
+Inconvénient mineur: il faut encore cliquer n'importe où dans la grille pour déclencher le dessin du coup de l'IA.
+
+
+# TEST
+
+./_captures/00_test_IA.png : test contre et stratégie ; montre que IA contre, et joue là où elle a le plus de chance de gagner
+./_captures/01_test_IA.png : test sur grande grille ; tentative de pièger l'IA dans un double choix.
+./_captures/02_test_IA_et_titre.png : test esthétique ; inclusion titre Frame qui affiche aussi le nombre de coups nécessaires selon la taille del a grille. Non concluant (trop long, pas esthétique)
+
+
+
+# Améliorations futures:
+
+- Dans le cas des grandes grilles, il faudrait réduire le nombre de symboles à aligner. Je ne l'ai pas fait parce que cela compliquerait l'analyse des diagonales. En effet il n'y aurait plus 2 mais un nombre variable de diagonales à analyser. Le principe et les critères d'analyse devraient être adapter sans trop changer.
+C'est faisable mais je manque de temps. 
+
+- Dessin automatique après le coup du joueur humain.
+

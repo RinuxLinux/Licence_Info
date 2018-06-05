@@ -1,0 +1,30 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px28-3
+# module dexlex avec fonctions et donnees globales + coeur du script a part
+
+from dexlex import indexe, get_list, prd
+import sys
+
+def pilote(fichier, dex, liste, option) :
+	flux = open(fichier, 'r')
+	for n, ligne in enumerate(flux) :
+		dex = indexe(dex, ligne.split(), n + 1, liste, option)
+	flux.close()
+	prd(dex)
+	return dex
+
+
+# APPEL PRINCIPAL
+if __name__ == '__main__' :
+	try :
+		if len(sys.argv) == 3 :
+			option = sys.argv[2]
+			fich_list = ''.join(list(option)[1:]) + '.list'
+			liste = get_list(fich_list)
+			pilote(sys.argv[1], {}, liste, option)
+		else: exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")
+	except :
+		exit(" Erreur. Trop ou pas assez d'arguments. \n Options possibles: -go ou -stop \n Exemple : python lit indexe-moi -stop")

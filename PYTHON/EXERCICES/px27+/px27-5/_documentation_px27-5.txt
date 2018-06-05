@@ -1,0 +1,519 @@
+# Renaud Lizot
+# 14509956
+# px27-5
+
+#####################################
+OBSERVATIONS: 
+
+Dans cet exercice, on doit modifier la fonction prd() de façon à afficher le nombre de lignes consecutives à la manière de '1-3, 7-9, 11'. Le tout en environ 10 lignes.
+L'objectif sera de 'borner' les numéros consecutifs, et d'insérer un hyphen.
+
+J'ai passé plusieurs jours sur cet exercice. Je suppose qu'on nous demande une solution fonctionnelle à insérer dans prd() qui borne et affiche les numéros de lignes. Je cherche encore. Je ne vois pas comment faire le test de continuitivité sur une ou deux lignes...
+En attendant, je vais faire une fonction auxilliaire qui fait la même chose.
+
+# BORNER:
+La fonction borner() prend d[c] en argument, c'est-à-dire la liste des lignes pour chaque mot du dictionnaire. 
+Le but est de comparer deux éléments et de garder le premier et le dernier d'une série d'éléments consécutifs ou bien de garder juste l'élément en question.
+Les bornes sont construites dans la liste temporaire grâce à '%s-%s' % (borne1, borne2)
+
+def borner(m):
+	bornes = []
+	borne1 = borne2 = m[0]
+	for element in m[1:]:
+		if element == borne2 +1:
+			borne2 = element
+		else:
+			bornes.append(str(borne1) if borne1 == borne2 else '%s-%s' %(borne1, borne2))
+			borne1 = borne2 = element
+	bornes.append(str(borne1) if borne1 == borne2 else '%s-%s' %(borne1, borne2))
+	return ', '.join(bornes)
+
+Il reste à appeler cette nouvelle fonction dans prd() avec d[c] en argument.
+
+#####################################
+
+reno@Jupiter:~$ cd '/home/reno/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px27/px27-5'
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px27/px27-5$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from os import getcwd, chdir
+>>> chemin = getcwd() + '/wdir'
+>>> chdir(chemin)
+>>> 
+>>> ponctuation = '(, . ") : ; ? ! [ ]'
+>>> 
+>>> def put_list(liste) :
+...     liste = liste.split()
+...     flux = open('stop.list','w')
+...     for mot in liste :
+...                     flux.write(mot + '\n')
+...     flux.close()
+...     return
+...     
+>>> def get_list(fichier) :
+...     put_list("ce de du en le la mais on ou par pas pour qui un une c'est dans s'en plus qu'elle")
+...     flux = open(fichier,'r')
+...     stoplist = flux.read().split()
+...     flux.close()
+...     return stoplist
+... 
+>>> def nettoie(mot):
+...     for i in range(len(mot)):
+...             if mot[-1] in ponctuation : mot = mot[:-1]
+...             if mot[0] in ponctuation : mot = mot[1:]
+...     return mot
+... 
+>>> def indexe(dex, mots, ligne) :
+...     for mot in mots :
+...             mot = nettoie(mot)
+...             if mot.lower() in stoplist : pass
+...             else : dex = ajoute(dex, mot, ligne)
+...     return dex
+...     
+>>> def ajoute(dex, mot, ligne) :
+...     if mot in dex :
+...             if ligne in dex[mot] : pass
+...             else : dex[mot].append(ligne)
+...     else : dex[mot] = [ligne]
+...     return dex
+... 
+>>> def borner(m):
+...     bornes = []
+...     borne1 = borne2 = m[0]
+...     for element in m[1:]:
+...             if element == borne2 +1:
+...                     borne2 = element
+...             else:
+...                     bornes.append(str(borne1) if borne1 == borne2 else '%s-%s' %(borne1, borne2))
+...                     borne1 = borne2 = element
+...     bornes.append(str(borne1) if borne1 == borne2 else '%s-%s' %(borne1, borne2))
+...     return ', '.join(bornes)
+... 
+>>> def prd(d) :
+...     for c in sorted(d) :
+...             print '\t', c, ':', borner(d[c])
+... 
+>>> def pilote(fichier, dex) :
+...     flux = open(fichier, 'r')
+...     for n, ligne in enumerate(flux) :
+...             dex = indexe(dex, ligne.split(), n + 1)
+...     flux.close()
+...     prd(dex)
+...     return dex
+... 
+>>> stoplist = get_list('stop.list')
+>>> pilote('indexe-moi', {})
+	alors : 8
+	attendue : 6
+	autrement : 7
+	avant : 6
+	avec : 8
+	avoir : 5
+	bien : 1, 5
+	bon : 9
+	bouts : 4
+	certitude : 5
+	chaque : 4, 8
+	coder : 3
+	contexte : 8
+	dit : 7
+	expression : 4, 6
+	fonctionnement : 9
+	frustration : 3
+	garantit : 9
+	global : 9
+	grosse : 3
+	instruction : 7-8
+	large : 7
+	mal : 2
+	marche : 2
+	petits : 4
+	plaisir : 1
+	programme : 1-2, 7
+	progressivement : 4, 9
+	retourne : 5
+	servir : 6
+	solution : 3
+	testant : 4
+	teste : 8
+	tourne : 1
+	tout : 2
+	valeur : 5
+	voulu : 8
+	vraiment : 2
+{'certitude': [5], 'progressivement': [4, 9], 'global': [9], 'grosse': [3], 'plaisir': [1], 'retourne': [5], 'coder': [3], 'avec': [8], 'alors': [8], 'attendue': [6], 'bien': [1, 5], 'chaque': [4, 8], 'valeur': [5], 'frustration': [3], 'autrement': [7], 'avoir': [5], 'testant': [4], 'tourne': [1], 'bouts': [4], 'vraiment': [2], 'petits': [4], 'teste': [8], 'garantit': [9], 'mal': [2], 'marche': [2], 'instruction': [7, 8], 'solution': [3], 'large': [7], 'fonctionnement': [9], 'tout': [2], 'voulu': [8], 'bon': [9], 'dit': [7], 'avant': [6], 'servir': [6], 'expression': [4, 6], 'contexte': [8], 'programme': [1, 2, 7]}
+>>> 
+
+#####################################
+Tests effectués:
+#####################################
+
+fichier: vh_utf
+type: extrait de textes de Victor Hugo
+encodage: UTF-8
+Remarques: les caractères diacritiques, la forme de ponctuation et les sauts de ligne posent problèmes à nettoie()
+Résultats:
+>>> pilote('vh_utf',{})
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in pilote
+  File "<stdin>", line 3, in indexe
+  File "<stdin>", line 4, in nettoie
+IndexError: string index out of range
+
+#####################################
+
+fichier: vh_utf_2
+type: extrait de textes écrits par Victor Hugo
+encodage: UTF-8
+Remarques: même nettoyé de l'espace avant la ponctuation et des sauts de lignes, il y a toujours un problème avec nettoie() (à cause des accents?)
+Résultats:
+>>> pilote('vh_utf_2',{})
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in pilote
+  File "<stdin>", line 3, in indexe
+  File "<stdin>", line 4, in nettoie
+IndexError: string index out of range
+
+#####################################
+
+fichier: vh_ascii
+type: extrait de textes écrits par Victor Hugo
+encodage: ASCII
+Remarques: nettoie() y perd son latin. Les ponctuations ne respectent pas le principe de nettoie (espace avant, à la française)
+Résultats:
+>>> pilote('vh_ascii',{})
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 5, in pilote
+  File "<stdin>", line 3, in indexe
+  File "<stdin>", line 4, in nettoie
+IndexError: string index out of range
+
+#####################################
+
+fichier: vh_ascii_2
+type: mêmes extraits, sans saut de lignes et avec une ponctuation sans espace avant.
+encodage: ASCII
+Remarques: ça marche. 
+Résultats:
+>>> pilote('vh_ascii_2',{})
+[la liste est très, très longue]
+
+#####################################
+
+fichier: art_uk
+type: article en anglais
+encodage: UTF-8
+Remarques: 
+- les quotes simples typiquement anglaises ne sont pas filtrées par nettoie()
+- Les mots en majuscules sont différenciés. On pourrait modifie le return de nettoie pour 	return mot.lower() pour parer à ça mais on perdrait du même coup les noms propres (ex.: Amsterdam).
+- le signe '-' est compté comme un élément normal. L'ajouter dans la liste ponctuation pose problème: comment nettoyer un caractère unique? 
+Résultat:
+>>> pilote('art_UK',{})
+	'emotional'  : 5
+	'imperfections'  : 29
+	'surprise'  : 4-5
+	10  : 3, 15
+	9pm  : 21
+	A  : 9, 34, 39
+	Although  : 23
+	Amsterdam  : 13
+	And  : 25, 39
+	Aside  : 11, 21
+	Because  : 7
+	But  : 31
+	By  : 17
+	Coke  : 21
+	Deni  : 34
+	Dermadonna  : 13
+	Freestyle  : 7
+	Girl  : 5
+	He  : 19-20, 33, 35
+	Hong  : 7
+	I  : 1, 3-4, 15, 17, 23, 25-27, 29, 31, 35, 37, 39
+	I'd  : 3, 21
+	I'll  : 9
+	It  : 7, 21
+	Jay  : 7, 11, 23, 34, 39
+	Jay's  : 19
+	Jonathan  : 7
+	My  : 4
+	Normally  : 13
+	Of  : 23, 29
+	Seeing  : 29
+	Shaking  : 1
+	Tattoo  : 13
+	They  : 37
+	Utlimately  : 35
+	When  : 23
+	a  : 1, 7, 9, 11, 13, 21, 23, 35, 37
+	aback  : 27
+	about  : 37
+	admits  : 5
+	after  : 3
+	agony  : 19-20
+	agreed  : 29
+	all  : 19-21, 29, 34, 39
+	an  : 31
+	and  : 3, 7, 9, 11, 13, 15, 17, 19-21, 23, 26-27, 31, 33-34, 39
+	angry  : 23
+	another  : 37
+	any  : 7
+	appears  : 1
+	apricots  : 21
+	are  : 34, 39
+	art  : 3
+	artist  : 5, 7, 35
+	as  : 11, 17, 33
+	asymmetry  : 29
+	at  : 1, 9, 11, 13, 25, 37
+	be  : 1, 13, 23, 26, 29
+	beautiful  : 29
+	been  : 3, 15
+	before  : 35
+	best  : 23
+	body  : 3, 29
+	both  : 13
+	breakfast  : 21
+	but  : 4, 13, 19-20, 23, 29
+	by  : 5, 7, 17, 27
+	can  : 21
+	carried  : 20
+	carry  : 19
+	challenging  : 13
+	colour  : 11, 33
+	complete  : 13
+	compliment  : 37
+	concentration  : 19
+	considered  : 37
+	could  : 29
+	course  : 13, 23, 29
+	creates  : 11
+	creative  : 9
+	dark  : 27
+	day  : 13, 21
+	design  : 3, 20
+	detail  : 11
+	details  : 29, 33
+	didn't  : 27
+	do  : 29
+	done  : 13
+	down  : 3, 35
+	element  : 37
+	end  : 11
+	enough  : 31
+	essentially  : 11
+	etc  : 29
+	even  : 19, 37
+	ever  : 3
+	every  : 11, 37, 39
+	exhausted  : 26
+	exhaustion  : 1
+	expect  : 27
+	expected  : 29
+	extreme  : 19-20
+	fault  : 31
+	felt  : 33
+	figure  : 31
+	finally  : 23
+	find  : 31, 37
+	finding  : 29
+	finished  : 11, 19-20
+	first  : 1, 3, 23, 26, 29
+	fits  : 31
+	five  : 17
+	for  : 5, 13, 15, 23, 31
+	fortnight  : 13
+	fourth  : 17
+	freehand  : 3, 7, 35
+	freestyle  : 5
+	friends  : 34, 39
+	from  : 9, 11, 21, 37
+	front  : 35
+	general  : 11
+	get  : 37
+	getting  : 11
+	giant  : 1
+	give  : 9
+	glimpse  : 3
+	go  : 23
+	gone  : 33
+	good  : 34, 39
+	got  : 3, 31
+	graphic  : 7
+	had  : 3, 13, 15, 33
+	hadn't  : 37
+	harmoniously  : 31
+	he  : 33
+	he'd  : 33
+	heart  : 34, 39
+	her  : 34
+	hid  : 23
+	hints  : 9
+	hip  : 15
+	his  : 7, 9, 33
+	hour  : 17
+	hours  : 3, 15, 23
+	how  : 23
+	hurting  : 23
+	in  : 1, 3, 13, 15, 23, 29, 35
+	incredible  : 31
+	ink  : 17
+	inked  : 3
+	inside  : 23
+	inspiration  : 11
+	instant  : 29
+	instinct  : 31
+	is  : 23, 31, 35
+	it  : 4-5, 11, 13, 19, 23, 26-27, 29, 31, 33, 37, 39
+	its  : 27
+	just  : 3, 7, 19, 23
+	kind  : 13
+	knew  : 29, 35
+	laceration  : 1
+	large  : 21
+	lay  : 35
+	length  : 3
+	let  : 19
+	line  : 9
+	look  : 27
+	looking  : 25
+	love  : 4, 39
+	loves  : 34
+	lying  : 15
+	making  : 7
+	marvel  : 37
+	me  : 4, 9, 19, 23, 29
+	meet  : 37
+	methodology  : 9
+	militant  : 19
+	mirror  : 1, 23
+	my  : 1, 3, 9, 15, 17, 19-20, 29, 31, 35, 39
+	name  : 7
+	never  : 29
+	new  : 37
+	now  : 4, 25
+	observe  : 1
+	of  : 3, 9, 11, 13, 15, 17, 19-21, 23, 31, 35, 37, 39
+	off  : 33
+	one  : 13
+	only  : 13
+	over  : 13, 31
+	overwhelmed  : 23, 26
+	own  : 33
+	pain  : 17, 23
+	painterly  : 17
+	part  : 23, 39
+	permanent  : 3
+	person  : 37
+	pick  : 29
+	piece  : 3, 7, 9, 31
+	planned  : 33
+	preconditioned  : 23, 26
+	pretty  : 23
+	put  : 35
+	real  : 7
+	requires  : 19
+	result  : 11, 25
+	revealing  : 11
+	ribs  : 15, 17
+	same  : 33
+	saw  : 23, 26, 31
+	scheme  : 33
+	score  : 35
+	scratched  : 17
+	screamed  : 17
+	see  : 19
+	seen  : 3
+	sees  : 37
+	she  : 34
+	side  : 1
+	sight  : 1
+	six  : 15, 17
+	size  : 27
+	skin  : 9
+	so  : 11, 27
+	some  : 11, 21
+	soon  : 31
+	soul  : 9
+	spent  : 15
+	splashes  : 17
+	spot  : 11
+	stuck  : 33
+	studio  : 3, 15
+	stumble  : 1
+	style  : 7, 19
+	surprise  : 11
+	survived  : 21
+	symmetry  : 29
+	tailored  : 29
+	taken  : 27
+	tattoo  : 3-5, 7, 11, 34, 39
+	tattooing  : 15
+	that  : 3, 15, 33
+	the  : 3, 7, 11, 13, 17, 20, 23, 25, 29, 33, 35, 37
+	theme  : 11, 33
+	these  : 23
+	things  : 23
+	this  : 3, 7, 13, 23
+	though  : 33, 35
+	time  : 3
+	to  : 1, 13, 17, 19, 23, 26-27, 29, 31, 33, 37
+	torso  : 35
+	totally  : 29
+	traumatised  : 4
+	two  : 23
+	unaware  : 19-20
+	unbelievable  : 23
+	uncontrollably  : 17
+	unique  : 7, 19, 29
+	until  : 19-20
+	upper  : 17
+	us  : 13
+	vast  : 27
+	volunteers  : 5
+	wailing  : 17
+	waist  : 15
+	wanted  : 19
+	was  : 3, 5, 7, 13, 17, 19-21, 23, 25-27, 29
+	wasn't  : 7
+	watercolour  : 7
+	waves  : 7
+	we  : 13, 33
+	website  : 9
+	were  : 15, 17
+	what  : 1, 31
+	when  : 26, 29
+	which  : 15, 31, 37
+	whim  : 33
+	who  : 37
+	whom  : 35
+	willingly  : 35
+	with  : 1, 7, 17, 23, 31, 33-34, 39
+	work  : 13, 31, 37
+	working  : 19
+	would  : 13, 29
+	wouldn't  : 19
+	year  : 34, 39
+	you  : 9
+	you're  : 11
+	your  : 9, 11
+	–  : 3, 9, 11, 29, 31
+{'tattooing': [15], 'things': [23], 'all': [19, 20, 21, 29, 34, 39], 'just': [3, 7, 19, 23], 'Jay': [7, 11, 23, 34, 39], 'over': [13, 31], 'both': [13], 'find': [31, 37], 'soon': [31], 'felt': [33], 'course': [13, 23, 29], "'surprise'": [4, 5], 'go': [23], 'creative': [9], 'put': [35], 'overwhelmed': [23, 26], 'before': [35], 'glimpse': [3], 'now': [4, 25], 'how': [23], 'Freestyle': [7], 'Shaking': [1], 'had': [3, 13, 15, 33], 'watercolour': [7], "he'd": [33], 'to': [1, 13, 17, 19, 23, 26, 27, 29, 31, 33, 37], 'theme': [11, 33], 'permanent': [3], 'about': [37], 'Although': [23], "Jay's": [19], 'he': [33], 'By': [17], 'real': [7], "I'll": [9], 'hurting': [23], 'his': [7, 9, 33], 'fourth': [17], 'Seeing': [29], 'Of': [23, 29], 'dark': [27], 'traumatised': [4], "I'd": [3, 21], 'every': [11, 37, 39], 'surprise': [11], 'front': [35], 'part': [23, 39], 'unique': [7, 19, 29], 'day': [13, 21], 'vast': [27], 'harmoniously': [31], 'screamed': [17], 'Because': [7], 'name': [7], 'artist': [5, 7, 35], 'large': [21], "wasn't": [7], 'fault': [31], 'she': [34], 'spent': [15], 'side': [1], 'unaware': [19, 20], '9pm': [21], 'person': [37], 'revealing': [11], 'whim': [33], 'art': [3], 'who': [37], 'skin': [9], 'some': [11, 21], 'Aside': [11, 21], 'see': [19], 'design': [3, 20], 'result': [11, 25], 'sight': [1], 'mirror': [1, 23], 'freehand': [3, 7, 35], 'Jonathan': [7], "hadn't": [37], 'best': [23], 'even': [19, 37], 'what': [1, 31], 'giant': [1], 'for': [5, 13, 15, 23, 31], 'hid': [23], 'finally': [23], 'your': [9, 11], 'looking': [25], 'enough': [31], 'score': [35], 'got': [3, 31], 'get': [37], 'size': [27], 'ever': [3], 'compliment': [37], 'He': [19, 20, 33, 35], 'body': [3, 29], 'be': [1, 13, 23, 26, 29], 'we': [13, 33], 'preconditioned': [23, 26], 'do': [29], 'aback': [27], 'never': [29], 'style': [7, 19], 'hours': [3, 15, 23], 'its': [27], 'asymmetry': [29], 'carried': [20], 'studio': [3, 15], 'splashes': [17], 'meet': [37], 'instinct': [31], 'wanted': [19], 'My': [4], 'by': [5, 7, 17, 27], 'extreme': [19, 20], 'admits': [5], 'essentially': [11], 'instant': [29], 'working': [19], 'getting': [11], 'of': [3, 9, 11, 13, 15, 17, 19, 20, 21, 23, 31, 35, 37, 39], 'ribs': [15, 17], 'year': [34, 39], 'Dermadonna': [13], 'creates': [11], 'etc': [29], 'length': [3], 'her': [34], 'planned': [33], 'pick': [29], 'let': [19], 'heart': [34, 39], 'Utlimately': [35], 'first': [1, 3, 23, 26, 29], 'Tattoo': [13], 'Hong': [7], 'own': [33], 'love': [4, 39], 'symmetry': [29], 'upper': [17], 'torso': [35], 'When': [23], 'lay': [35], 'one': [13], 'down': [3, 35], 'fits': [31], 'agreed': [29], 'done': [13], 'pretty': [23], 'another': [37], 'carry': [19], 'stumble': [1], 'challenging': [13], 'are': [34, 39], "you're": [11], 'uncontrollably': [17], 'from': [9, 11, 21, 37], 'would': [13, 29], 'stuck': [33], 'friends': [34, 39], 'angry': [23], 'only': [13], 'been': [3, 15], 'appears': [1], 'militant': [19], 'And': [25, 39], 'taken': [27], 'scheme': [33], 'was': [3, 5, 7, 13, 17, 19, 20, 21, 23, 25, 26, 27, 29], 'until': [19, 20], 'exhaustion': [1], 'website': [9], 'complete': [13], 'that': [3, 15, 33], 'freestyle': [5], 'whom': [35], 'tailored': [29], 'but': [4, 13, 19, 20, 23, 29], 'breakfast': [21], 'finished': [11, 19, 20], "'emotional'": [5], 'They': [37], 'survived': [21], 'line': [9], 'an': [31], 'with': [1, 7, 17, 23, 31, 33, 34, 39], 'hints': [9], 'me': [4, 9, 19, 23, 29], '10': [3, 15], 'kind': [13], 'graphic': [7], 'look': [27], 'hour': [17], 'this': [3, 7, 13, 23], 'inside': [23], 'work': [13, 31, 37], 'soul': [9], 'us': [13], 'could': [29], 'can': [21], 'loves': [34], 'were': [15, 17], 'making': [7], 'piece': [3, 7, 9, 31], 'my': [1, 3, 9, 15, 17, 19, 20, 29, 31, 35, 39], "wouldn't": [19], 'expect': [27], 'and': [3, 7, 9, 11, 13, 15, 17, 19, 20, 21, 23, 26, 27, 31, 33, 34, 39], 'hip': [15], 'sees': [37], 'fortnight': [13], 'figure': [31], 'give': [9], 'exhausted': [26], 'is': [23, 31, 35], 'ink': [17], "didn't": [27], 'it': [4, 5, 11, 13, 19, 23, 26, 27, 29, 31, 33, 37, 39], 'general': [11], 'as': [11, 17, 33], 'good': [34, 39], 'at': [1, 9, 11, 13, 25, 37], 'in': [1, 3, 13, 15, 23, 29, 35], 'seen': [3], 'concentration': [19], 'saw': [23, 26, 31], 'any': [7], 'painterly': [17], 'gone': [33], 'tattoo': [3, 4, 5, 7, 11, 34, 39], 'laceration': [1], 'end': [11], 'beautiful': [29], 'incredible': [31], 'agony': [19, 20], 'inked': [3], 'six': [15, 17], 'when': [26, 29], 'detail': [11], 'same': [33], 'apricots': [21], 'methodology': [9], "'imperfections'": [29], 'details': [29, 33], 'which': [15, 31, 37], 'finding': [29], 'new': [37], 'you': [9], 'expected': [29], 'A': [9, 34, 39], 'willingly': [35], 'unbelievable': [23], 'pain': [17, 23], 'though': [33, 35], 'I': [1, 3, 4, 15, 17, 23, 25, 26, 27, 29, 31, 35, 37, 39], 'knew': [29, 35], 'after': [3], 'spot': [11], 'scratched': [17], 'wailing': [17], 'two': [23], 'Deni': [34], 'waves': [7], 'Normally': [13], 'But': [31], 'totally': [29], 'the': [3, 7, 11, 13, 17, 20, 23, 25, 29, 33, 35, 37], 'inspiration': [11], 'a': [1, 7, 9, 11, 13, 21, 23, 35, 37], '\xe2\x80\x93': [3, 9, 11, 29, 31], 'off': [33], 'waist': [15], 'considered': [37], 'colour': [11, 33], 'It': [7, 21], 'element': [37], 'these': [23], 'observe': [1], 'so': [11, 27], 'time': [3], 'five': [17], 'Amsterdam': [13], 'Girl': [5], 'volunteers': [5], 'requires': [19], 'Coke': [21], 'lying': [15], 'marvel': [37]}
+>>> 
+
+
+
+
+
+
+
+
+
+
+
+
+ 

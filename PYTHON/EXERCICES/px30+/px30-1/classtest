@@ -1,0 +1,146 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px30-1 
+# class et objets
+
+class Mammifere(object): prop1 = "j'allaite mes petits ;"
+
+ 
+class Carnivore(Mammifere): prop2 = "je me nourris de chair ;"
+
+
+class Chien(Carnivore): prop3 = "j'aboie..."
+
+
+class Chat(Carnivore): prop3 = "je miaule..."
+
+
+Milou = Chien()
+Gromit = Chien()
+Garfield = Chat()
+
+print 'Milou :', Milou.prop1, Milou.prop2, Milou.prop3
+# Milou : j'allaite mes petits ; je me nourris de chair ; j'aboie...
+print 'Gromit :', Gromit.prop1, Gromit.prop2, Gromit.prop3
+# Gromit : j'allaite mes petits ; je me nourris de chair ; j'aboie...
+print 'Garfield :', Garfield.prop1, Garfield.prop2, Garfield.prop3
+# Garfield : j'allaite mes petits ; je me nourris de chair ; je miaule...
+
+
+
+### TEST ### MODIF PROP, COMPARAISON
+
+Garfield.prop1 = "je n'ai pas de petits ;"
+Garfield.prop2 = "j'adore les lasagnes ;"
+print 'Garfield :', Garfield.prop1, Garfield.prop2, Garfield.prop3
+# Garfield : je n'ai pas de petits ; j'adore les lasagnes ; je miaule...
+
+Cheshire = Chat()
+print "Cheshire Cat :", Cheshire.prop1, Cheshire.prop2, Cheshire.prop3
+# Cheshire Cat : j'allaite mes petits ; je me nourris de chair ; je miaule...
+
+
+
+### TEST ### AJOUT CLASSES - marche pas
+
+class Ovipare(object): prop1 = "je pond des oeufs ;"
+
+
+class Serpent(Carnivore) : prop3 = "je siffle..."
+
+
+Kaa = Serpent()
+print "Kaa :", Kaa.prop1, Kaa.prop2, Kaa.prop3
+# Kaa : j'allaite mes petits ; je me nourris de chair ; je siffle...
+
+
+
+### TEST ### AJOUT CLASS - marche toujours pas
+
+class Carnivore(Ovipare) : prop2 = "je me nourris de chair ;"
+
+
+print "Kaa :", Kaa.prop1, Kaa.prop2, Kaa.prop3
+# Kaa : j'allaite mes petits ; je me nourris de chair ; je siffle...
+
+
+
+### TEST ### DANS UNE NOUVELLE SESSION PYTHON - AJOUT CLASSES - marche
+
+class Ovipare(object): prop1 = "je pond des oeufs ;"
+
+
+class Carnivore(Ovipare): prop2 = "je me nourris de chair ;"
+
+
+class Serpent(Carnivore): prop3 = "je siffle..."
+
+
+Kaa = Serpent()
+print "Kaa :", Kaa.prop1, Kaa.prop2, Kaa.prop3
+# Kaa : je pond des oeufs ; je me nourris de chair ; je siffle...
+
+class Mammifere(object): prop1 = "j'allaite mes petits ;"
+
+
+class Carnivore(Mammifere): prop2 = "je me nourris de chair ;"
+
+
+class Chien(Carnivore): prop3 = "j'aboie..."
+
+
+class Chat(Carnivore): prop3 = "je miaule..."
+
+
+Milou = Chien()
+print 'Milou :', Milou.prop1, Milou.prop2, Milou.prop3
+# Milou : j'allaite mes petits ; je me nourris de chair ; j'aboie...
+print "Kaa :", Kaa.prop1, Kaa.prop2, Kaa.prop3
+# Kaa : je pond des oeufs ; je me nourris de chair ; je siffle...
+
+
+
+### TEST ### AJOUT CLASS
+
+class Autre(Mammifere): prop2 = "je ne mange pas de chair ;"
+
+
+class Cetace(Autre) : prop3 = "je chante..."
+
+
+Moby = Cetace()
+print "Moby Dick :", Moby.prop1, Moby.prop2, Moby.prop3
+# Moby Dick : j'allaite mes petits ; je ne mange pas de chair ; je chante...
+
+
+
+### TEST ### MODIF PROP, COMPARAISON
+
+Moby.prop2 = "je ne me nourris pas de chair, mais faut pas me chercher;"
+Willy = Cetace()
+print "Moby Dick :", Moby.prop1, Moby.prop2, Moby.prop3
+# Moby Dick : j'allaite mes petits ; je ne me nourris pas de chair, mais faut pas me chercher; je chante...
+print "Willy :", Willy.prop1, Willy.prop2, Willy.prop3
+# Willy : j'allaite mes petits ; je ne mange pas de chair ; je chante...
+
+
+
+### TEST ### .PROP PREND-T-IL VARIABLE? - non. 
+
+n = 'Moby Willy Gromit'.split()
+for i in n: 
+    print "%s:", %s.prop1, %s.prop2, %s.prop3 % i
+# File "<stdin>", line 2
+# print "%s:", %s.prop1, %s.prop2, %s.prop3 % i
+#                 ^
+# SyntaxError: invalid syntax
+for i in n: 
+    print "%s:", i.prop1, i.prop2, i.prop3 % i
+
+# %s:
+# Traceback (most recent call last):
+#   File "<stdin>", line 2, in <module>
+# AttributeError: 'str' object has no attribute 'prop1'
+

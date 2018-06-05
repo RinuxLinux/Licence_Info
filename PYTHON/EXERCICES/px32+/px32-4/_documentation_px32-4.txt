@@ -1,0 +1,196 @@
+# Renaud Lizot
+# 14509956
+# px32-4
+# Pimp My Pendu!
+
+
+Tâches:
+- filtrer les lettres déjà jouées.
+
+
+# ANALYSE
+
+Puisque c'est la dermière modification pour le pendu, on va peaufiner:
+
+- FILTRER LES LETTRES: nous avons déjà une fonction qui vérifie si la touche pressée n'est pas dans une ignorelist (touches interdites). 
+Il suffirait d'ajouter une nouvelle liste qui prendrait les lettres jouées et filtrerait selon qu'elle contient ou non la touche pressée.
+
+- AJOUTER UN EVENEMENT 'Gagné!' et 'Perdu'. Pourquoi ne pas créer une fenêtre qui pop-up avec un rappel des boutons start et stop?
+ 
+ 
+# Faisabilité
+
+- FILTRAGE DES LETTRES:
+On crée une variable globale 'lettres', initialisée à lettres = '', à laquelle seront rajoutées les lettres pressées. 
+Si dans check_key(event), event.char est déjà dans la variable 'lettres', on sort et on attend le prochain event.
+
+¤ Modification et adaptation de check_key():
+
+def check_key(event):
+	global lettres
+	check = 'garde'
+	ignorelist = 'Shift_L Cancel BackSpace Tab Return Control_L Alt_L Pause Caps_Lock Escape Prior Next End Home Left Up Right Down Print Insert Delete F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Num_Lock Scroll_Lock'.split()
+	if event.char in lettres:
+		check = 'ignore'
+	else:
+		lettres += event.char
+		check = 'garde'
+	for i in ignorelist:
+		if event.keysym==i : check = 'ignore'
+	return check
+
+lettres est définie dans parametrage() et sera réinitialisée dans recommence().
+
+¤ Affichage dans le cadre:
+Pour bien faire, on affichera les lettres jouées dans le cadre en ajoutant en bas du code:
+LL = Label(top, text='', fg='green') ; LL.pack()
+
+Adaptation de affiche()...
+
+def affiche() :
+	global devine, mot, P, lettres
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	LL.configure(text = lettres)
+	if not L : LM ['text'] = mot
+
+...et de recommence(): ajout de LL.configure(text = '')
+
+
+- BONUS: afficher les lettres jouées mais aussi un message 'lettre déjà jouée' le cas échéant.
+
+¤ Dans le corps du code: ajout des labels nécessaires, entassés en bas de cadre:
+LT = Label(top, text=devine, fg='red') ; LT.pack()
+LM = Label(top, text='', fg='red') ; LM.pack()
+LP = Label(top, text=str(len(P)), fg='blue') ; LP.pack()
+LH = Label(top, text='', fg='red') ; LH.pack(side=BOTTOM) 		# message: 'lettre deja jouee'
+LL = Label(top, text='', fg='green') ; LL.pack(side=BOTTOM) 	# liste des lettres
+LJ = Label(top, text='LETTRES JOU\xc3\x89E(S):', fg='forest green'); LJ.pack(side=BOTTOM) # juste un label
+
+¤ Dans check_event(): ajout de if event.char in lettres: LH.configure(text =event.char + " : d\xc3\xa9j\xc3\xa0 jou\xc3\xa9e") 		# affichage du message dans le cadre
+
+¤ Dans recommence()
+LH.configure(text ="") 		# réinit.
+
+¤ Dans affiche(): instructions pour effacer le message 'lettre déjà jouée' dès l'event suivant.
+	if P and trou in devine :
+		if check_key(event) is 'ignore' : pass
+		else:
+			LH.configure(text ="")
+			etc.
+
+
+- GAGNE / PERDU:
+
+C'est gagné quand mot == devine.
+C'est perdu quand len(P) == 0.
+
+Il faut maintenant que ces conditions provoquent l'action adéquate.
+
+¤ Creation de la fonction adéquate: score()
+Commençons par créer la fonction qui créera la fenêtre qui contiendra le message 'gagné' ou 'perdu' et les boutons 'Rejouer' et 'Quitter'
+
+On crée une fenêtre spécialement pour cela. Le résultat sera affiché sur un fond rouge ou vert selon que c'est gagné ou perdu.
+Un bouton 'Rejouer' fermera la fenêtre et réinitialisera le jeu. Le bouton 'Quitter' détruira la fenêtre principale (le jeu) et tout ce qui va avec.
+
+def score(resultat):
+	toplevel = Toplevel()
+	toplevel.title(resultat)
+	background = 'IndianRed1' if resultat is "PERDU" else 'lightgreen'
+	msg = Message(toplevel, text=resultat, width=150)
+	msg.config(bg=background, font=('times', 20, 'italic'))
+	msg.pack()
+	b1 = Button(toplevel, text='Rejouer', command=lambda: rejoue(toplevel))
+	b2 = Button(toplevel, text='Quitter', command=top.destroy)
+	b1.pack(side=LEFT)
+	b2.pack(side=RIGHT)
+	toplevel.mainloop()
+
+Toplevel() permet d'ajouter une fenêtre en plus de la principale.
+Message() reçoit le résultat transmis à la fonction score().
+Le bouton 'Rejouer' m'a donné du fil à retordre: comment utiliser un seul bouton pour envoyer 2 commandes (destroy et recommence) ? 
+La solution réside dans une fonction lambda qui permet de passer des arguments en commande de Button. 
+Pour cela je dois créer un fonction spécialement à cet effet, fonction qui prend toplevel en argument (c'est le seul moyen que j'ai trouvé pour pouvoir utiliser toplevel en dehors de score()).
+
+def rejoue(x):
+	x.destroy()
+	recommence()
+
+Le bouton Quitter reprend la variable top décrite au niveau global, cela fermera toutes les fenêtres Tk(). 
+J'en profite pour remplacer le top.quit de la command du bouton 'Quitter' du code fourni dans le cours. Cela provoquait une erreur (non-fatale) du type:
+_tkinter.TclError: can't invoke "destroy" command: application has been destroyed
+
+Plus de quit, que des destroy!
+
+¤ Intégration de l'appel de score():
+Placé dans affiche() - un peu au pif, à vrai dire, il me semble qu'il y a d'autres endroits où j'aurai pu le mettre.
+
+def affiche() :
+	global devine, mot, P
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	LL.configure(text = lettres)
+	if not L : LM ['text'] = mot
+	if len(P) == 0: score("PERDU")
+	if devine == mot : score("GAGN\xc3\x89 !")
+
+
+# TESTS:
+- Premiers test sur le comportement des fenêtres et des boutons: OK
+Voir: ./_screenshots/
+
+- Test sur le jeu lui-même: PAS OK
+PROBLEME: lorsqu'il faut presser une combinaison de touches pour faire des mots avec accents (ex: ^ + e = ê): le jeu sépare les 2 touches au lieu de prendre la lettre produite.
+
+Je me demande également si ça ne va pas poser problème sur des systèmes où les combinaisons sont complétement différentes (clavier non-azerty, paramètrage personnalisé, Linux...)
+Note: J'ai testé ce code avec un clavier azerty.
+
+ORIGINE: la fonction check_key(event) et la ignorelist qui a besoin d'une mise à jour (manque au moins Shift_R).
+
+SOLUTIONS: 
+1. ignorelist: boucher les trous.
+La liste des keysym à ignorer est si longue que, pour faciliter le débuggage, je mets les codes keysym qui m'intéressent dans un fichier (./wdir/ignkeys.config). 
+Et je fais de ignorelist une variable globale, définie dans parametrage() grâce à get_mots('./wdir/ignkeys.config'). 
+
+Liste trouvée ici: http://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm
+	"The following list enumerates the keysyms that will be recognized by Tk. 
+	Note that not all keysyms will be valid on all platforms. 
+	For example, on Unix systems, the presence of a particular keysym is dependant on the configuration of the keyboard modifier map." 
+	(j'ai la réponse à ma question, au passage)
+
+2. revoir le type de ma variable lettres (?) :
+Une conséquence du problème soulevé est que mon Label qui affiche '<key> : lettre déjà jouée', affichait un blanc quand <key> est une touche à double pression (je sais pas comment on dit: par ex. ^). 
+Ce blanc venait du fait que ma variable 'lettres', de type <str>, enregistrait le premier blanc, ce qui invoquait le Label sus-cité à chaque n-ième blanc. 
+Donc, j'aurai pu revoir la variable dès le parametrage mais bon, une seule petite instruction me débarasse de ce blanc ; 
+et puis j'ai besoin de 'lettres' en tant que <str> de toute façon (je fais ainsi l'économie d'une boucle): lettres = ''.join(lettres.split()) en début de check_key()
+
+Nouvelle version :
+
+def check_key(event):
+	global lettres, ignorelist
+	lettres = ''.join(lettres.split())
+	check = 'garde'
+	for i in ignorelist:
+		if event.keysym==i : return 'ignore'
+	if event.char.lower() not in lettres:
+		lettres += event.char.lower()
+		return 'garde'
+	else:
+		LH.configure(text =event.char.lower() + " : d\xc3\xa9j\xc3\xa0 jou\xc3\xa9e")
+		return 'ignore'
+
+Les ajustements adequats sont également faits sur recommence() et parametrage(), ainsi que le corps du code ("# Globales").
+[DERNIERE MINUTE] Egalement, est prise en compte l'instruction de l'exercice: 'insensible à la casse', jusqu'ici ignorée. (= ajout de event.char.lower())
+
+- Test finaux: OK
+Voir: ./_screenshots/01_test_final.png
+Voir: ./_screenshots/02_test_final.png
+Voir: ./_screenshots/03_test_final_gagne.png
+Voir: ./_screenshots/03_test_final_perdu.png
+
+
+# CONCLUSION
+Je manque de temps mais je vois maintenant comment j'aurai pu diviser le script en modules autonomes (enfin, je crois)... Peut-être une prochaine fois...
+Je vois aussi qu'un système de class et d'objets auraient été un meilleur choix au lieu de toutes ces fonctions. Dommage qu'à l'heure actuelle, le concept des class soit encore trop flou pour moi.

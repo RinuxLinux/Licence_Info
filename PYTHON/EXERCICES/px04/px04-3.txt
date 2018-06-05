@@ -1,0 +1,12 @@
+[px04-3]
+coder une fonction unaire roule() avec un paramètre x, de sorte qu!elle ne retourne vrai que si vert(x)
+retourne vrai, ou que orange(x) retourne vrai.
+
+NB : feu doit être initialisé AVANT de pouvoir être utilisé comme argument...
+
+def roule(x) : return feu is 'vert' or feu is 'orange'
+
+feu = 'vert' ; roule(feu)		# TRUE
+feu = 'orange' ; roule(feu)		# TRUE
+feu = 'rouge' ; roule(feu)		# FALSE
+

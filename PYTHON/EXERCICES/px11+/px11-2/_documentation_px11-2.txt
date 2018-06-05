@@ -1,0 +1,35 @@
+# Renaud Lizot 
+# 14509956 
+# px11-2
+
+>>> def pluriel(mot):
+...     exceptions = ['œil', 'yeux', 'ail', 'aulx', 'vieil', 'vieux', 'ciel', 'cieux', 'aïeul', 'aïeux', 'oeil', 'yeux']
+...     if mot in exceptions: return exceptions[exceptions.index(mot) +1]
+...     elif mot in ['bleu', 'pneu', 'emeu', 'bancal', 'banal', 'portail', 'étal', 'serval', 'caracal', 'régal', 'naval', 'glacial', 'natal', 'bal', 'carnaval', 'chacal', 'festival', 'récital']: return mot + 's'
+...     elif mot in ['hibou', 'pou', 'caillou', 'genou', 'bijou', 'joujou', 'chou']: return mot + 'x'
+...     elif mot in ['bail', 'corail', 'émail', 'soupirail', 'travail', 'vantail', 'vitrail', 'bétail', 'portail']:
+...             if mot == 'bétail': return 'bestiaux'
+...             else: return mot[0:-2] + 'ux'
+...     else:
+...             if mot[-3:] == 'eau': return mot + 'x'
+...             elif mot[-3:] in ['eil', 'iel', 'eul', 'ail', 'uil']: return mot + 's'
+...             else:
+...                     if mot[-2:] == 'al': return mot[0:-2] + 'aux'
+...                     elif mot[-2:] == 'eu': return mot + 'x'
+...                     elif mot[-2:] in ['ou', 'au', 'el', 'il', 'ru', 'tu', 'pu', 'su', 'du', 'lu', 'vu', 'nu', 'mu']: return mot + 's'
+...                     else:
+...                             if mot[-1] in ['z', 'x', 's']: return mot
+...                             else: return mot + 's'
+...
+>>> mots = ["hors-d'œuvre", 'bal', 'régal', 'banal', 'canal', 'étal', 'pascal', 'portail', 'bétail', 'travail', 'œil', 'écœuré', 'hameçon', 'ex-æquo', 'niño', 'mépris', 'landau', 'rideau', 'jeu', 'bleu', 'clou', 'genou', 'prix', 'bocal', 'bancal', 'roux', 'pou', 'soleil', 'ciel', 'écureuil', 'fonctionnel', 'fonction', 'auroch', 'riz', 'souris', 'signet', 'long', 'nef', 'blond', 'jockey', 'papa', 'risotto', 'ventru', 'métier', 'aïeul']
+>>> 
+>>> mots
+["hors-d'\xc5\x93uvre", 'bal', 'r\xc3\xa9gal', 'banal', 'canal', '\xc3\xa9tal', 'pascal', 'portail', 'b\xc3\xa9tail', 'travail', '\xc5\x93il', '\xc3\xa9c\xc5\x93ur\xc3\xa9', 'hame\xc3\xa7on', 'ex-\xc3\xa6quo', 'ni\xc3\xb1o', 'm\xc3\xa9pris', 'landau', 'rideau', 'jeu', 'bleu', 'clou', 'genou', 'prix', 'bocal', 'bancal', 'roux', 'pou', 'soleil', 'ciel', '\xc3\xa9cureuil', 'fonctionnel', 'fonction', 'auroch', 'riz', 'souris', 'signet', 'long', 'nef', 'blond', 'jockey', 'papa', 'risotto', 'ventru', 'm\xc3\xa9tier', 'a\xc3\xafeul']
+>>> [pluriel(x) for x in mots]
+["hors-d'\xc5\x93uvres", 'bals', 'r\xc3\xa9gals', 'banals', 'canaux', '\xc3\xa9tals', 'pascaux', 'portails', 'bestiaux', 'travaux', 'yeux', '\xc3\xa9c\xc5\x93ur\xc3\xa9s', 'hame\xc3\xa7ons', 'ex-\xc3\xa6quos', 'ni\xc3\xb1os', 'm\xc3\xa9pris', 'landaus', 'rideaux', 'jeux', 'bleus', 'clous', 'genoux', 'prix', 'bocaux', 'bancals', 'roux', 'poux', 'soleils', 'cieux', '\xc3\xa9cureuils', 'fonctionnels', 'fonctions', 'aurochs', 'riz', 'souris', 'signets', 'longs', 'nefs', 'blonds', 'jockeys', 'papas', 'risottos', 'ventrus', 'm\xc3\xa9tiers', 'a\xc3\xafeux']
+>>>
+
+NOTES:
+La liste des pluriels est affichée selon la représentation interne des glyphes. 
+Toutefois si on nommait cette liste 'reponse' et qu'on demandait un print reponse[0] par exemple, on obtiendrait alors la représentation externe, contrairement à reponse[0]. Magie du print.
+Pour un programmeur, la représentation interne suffit.

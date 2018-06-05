@@ -1,0 +1,32 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px30-2 
+# class, size(), try/except
+
+class Stack(object):
+
+	def __init__(self): self.stack = []
+
+	def push(self, val) : self.stack.append(val)
+
+	def pop(self) : 
+			try:
+				return self.stack.pop(0)
+			except IndexError:
+				print 'La Liste est vide'
+
+	def size(self) : return len(self.stack)
+
+
+p = Stack()
+for x in 'un deux trois'.split() : p.push(x)
+
+x = p.pop(); x; p.stack
+p.size()
+x = p.pop(); x; p.stack
+x = p.pop(); x; p.stack
+x = p.pop(); x; p.stack
+p.size()
+

@@ -1,0 +1,12 @@
+Usage:
+	python scanne FICHIER -option
+	python scanne URL1 URL2 ... -option
+
+Options: 
+	-go	cherche les termes contenus dans une liste donnée
+		(par défaut: cherche tous les termes)
+	-aide	affiche l'aide
+
+Note:
+	URL:	peut commencer par http:// ou par www.
+		accepte plusieurs URL

@@ -1,0 +1,104 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# px31-1 LCD
+
+from Tkinter import *
+from sys import argv
+
+# PARAMETRES GLOBAUX
+
+try:
+	zoom = int(argv[2])
+except:
+	zoom = 0
+mot = argv[1]
+
+z = zoom
+t = 1 + z/100.		# coef zoom
+
+offset = 70*t
+ep = 10*t
+couleur = '"blue"'	# attention : une chaine dans une chaine
+decal = 20*t
+
+x = 10*t 				# x de reference
+y = 10*t 				# y de reference
+s = 40*(1 + z/100.) 	# size
+e = 5*t					# espacement
+
+coef_h = y + s*2 + 3*e		# coef hauteur cadre
+coef_w= (s + 2*ep + decal)*len(mot) + x 		# coef largeur cadre (nbr lettres)
+
+segments = \
+[ # X1, Y1, X2, Y2
+	[x + e, y, x + e + s, y], 											#0
+	[x + e, y + 2*e + s, x + s/2., y + 2*e + s], 						#1
+	[x + 2*e + s/2., y + 2*e + s, x + e + s , y + 2*e + s], 			#2 
+	[x + e, y + 4*e + 2*s, x + e + s, y + 4*e + 2*s], 					#3
+	[x, y + e, x, y + e + s], 											#4
+	[x, y + 3*e + s, x, y + 2*s + 3*e], 								#5
+	[x + 2*e + s, y + e, x + 2*e + s, y + e + s], 						#6
+	[x + 2*e + s, y + 3*e + s, x + 2*e + s, y + 3*e + 2*s], 			#7
+	[x + e/2., y + e, (s + e)/2. + x, y + s + e], 						#8
+	[x + e + s/2., y, x + e + s/2., y + e + s], 						#9
+	[x + s/2. + 3*e/2., y + e + s, x + s + 3*e/2., y + e], 				#10
+	[x + e/2., y + 3*e + 2*s, x + (e + s)/2., y + 3*e + s],				#11
+	[x + e + s/2., y + 3*e + s, x + e + s/2., y + 3*e + 2*s],			#12
+	[x + 3*e/2. + s/2., y + 3*e + s, 3.*e/2. + s + x, 3.*e + 2*s + y] 	#13
+]
+
+description = { \
+	'A': [0, 1, 2, 4, 5, 6, 7], 
+	'B': [0, 2, 3, 6, 7, 9, 12], 
+	'C': [0, 3, 4, 5], 
+	'D': [0, 3, 6, 7, 9, 12], 
+	'E': [0, 1, 2, 3, 4, 5], 
+	'F': [0, 1, 2, 4, 5], 
+	'G': [0, 2, 3, 4, 5, 7], 
+	'H': [1, 2, 4, 5, 6, 7],
+	'I': [0, 3, 9, 12], 
+	'J': [3, 5, 6, 7],
+	'K': [1, 4, 5, 10, 13],
+	'L': [3, 4, 5],
+	'M': [4, 5, 6, 7, 8, 10], 
+	'N': [4, 5, 6, 7, 8, 13],
+	'O': [0, 3, 4, 5, 6, 7],
+	'P': [0, 1, 2, 4, 5, 6], 
+	'Q': [0, 3, 4, 5, 6, 7, 13],
+	'R': [0, 1, 4, 5, 6, 2, 13],
+	'S': [0, 8, 2, 7, 3], 
+	'T': [0, 9, 12], 
+	'U': [3, 4, 5, 6, 7], 
+	'V': [4, 5, 10, 11],
+	'W': [4, 5, 11, 13, 7, 6],
+	'X': [8, 13, 10, 11], 
+	'Y': [8, 10, 12],
+	'Z': [0, 10, 11, 3]
+}
+
+# FONCTION
+
+def dessine(mot):
+	global description, segments, decal, ep, couleur, offset
+	for K in mot.upper() :
+		les_segments = description [K]	# les segments pour chaque caractere
+		for SG in les_segments :
+			S = segments [SG]	# les coordonnees pour chaque segment
+			X1 = repr(S [0] + decal) ; Y1 = repr(S [1])	# maintenant, translate les abscisses
+			X2 = repr(S [2] + decal) ; Y2 = repr(S [3])
+			args = '%s, %s, %s, %s' % (X1, Y1, X2, Y2)	# les args pour create_line()
+			args += ', width=%s, fill=%s' % (repr(ep), couleur)
+			eval('canevas.create_line(%s)' % args)
+		decal += offset
+
+
+# DESSIN DES SEGMENTS
+
+top = Tk()
+top.title('LCD -- (zoom : %d%%)' % (100+z))
+
+canevas = Canvas(top, height=50 + coef_h, width=coef_w)
+canevas.pack()
+dessine(mot)
+
+top.mainloop()

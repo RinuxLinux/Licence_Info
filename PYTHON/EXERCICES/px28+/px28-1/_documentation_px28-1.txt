@@ -1,0 +1,155 @@
+# Renaud Lizot
+# 14509956
+# px28-1
+# prend nom fichier en ldc + test sur gros fichiers. 
+# modifier en conséquence.
+
+#####################################
+OBSERVATIONS: 
+
+PREMIERE ETAPE: faire prendre un nom de fichier en ligne de commande.
+Je m'inspire d'un exercice similaire sur la somme des chiffres romain (rd+) et adapte le code au cas présent:
+
+import sys
+entree = len(sys.argv)
+if entree == 2 :
+	stoplist = get_list('stop.list')
+	pilote(sys.argv[1], {})
+else: exit('Erreur')
+
+
+DEUXIEME ETAPE: tests grands formats
+
+# TEST DE art_uk (texte en anglais sans accents)
+On constate les mêmes anomalies que lors des tests de l'exercice précédent:
+- les sauts de ligne et les signe de ponctuation entre deux espaces posent problème à la fonction nettoie()
+- l'encodage pose également problème
+
+Solution la plus simple:
+1) on insère une ligne dans nettoie qui filtre le cas où mot est composé d'un seul élément et que celui-ci se trouve dans ponctuation.
+if len(mot) == 1 and mot[0] in ponctuation : return mot
+2) on laisse faire indexe qui compare le mot à la stoplist et filtre en conséquence. 
+3) Pour que ça fonctionne on insère certains signes de ponctuation dans la-dite stoplist (tous les signes qui pourraient se retrouver entre espace)
+Ca règle le problème des sauts de ligne au passage (en était-ce un au départ?).
+
+# TEST DE vh_ascii (texte en français sans accents avec ponctuation)
+Certaines ponctuations occupe des mots de plus d'un élément ('...!') ce qui conduit à la même erreur de nettoie().
+On va changer de stratégie et truquer un peu la règle du jeu: on ajoute un try... except dans nettoie
+Le try execute les opérations originales de nettoie mais en cas d'erreur (ponctuation toute seule ou en groupe dans un mot) on va remplacer mot par '#'.
+On ajoute alors '#' dans la stoplist pour filtrer. 
+
+# AUTRE PROBLEME: certains mots éludés ne sont pas filtrés (qu' j' n' c' etc.)
+On commence par modifier la fonction nettoie().
+			if mot[0:2].lower() in stoplist : mot = mot[2:].lower()
+			if mot[0:3].lower() in stoplist : mot = mot[3:].lower()
+			
+Problème: les mots commençant par 'ce' (qui est aussi dans la stoplist) sont tronqués
+	ur  : 24, 53, 82
+	urs  : 16-18, 77, 86, 90, 97, 103
+	ux  : 15, 17, 20, 25, 31-32, 35, 61, 134, 138
+	ux-ci  : 72, 76
+	ux-la  : 72, 76
+
+Solution possible: mettre les mots éludés à filtrer... dans ponctuation?
+Les apostrophes sont en conflit avec les bornes de ponctuation. 
+Rien n'y fait, même en changeant les bornes de ' pour ", on a des mots tronqués en raison des instructions de nettoie() qui s'opèrent sur mot[0], mot[-1] etc.
+
+# RETOUR A LA CASE DEPART
+Je reprend sur le code initial (sans les modifications citées plus haut).
+Une autre méthode qui tient sur une ligne: splitter le mot sur "'" et ne garder que mot[1:]
+if "'" in mot: mot = mot.split("'")[1:]
+
+Avantage: on se débarasse des lettres éludées
+Inconvénient: en se débarassant de "s'" on peut perdre le sens de certains verbes pronominaux. 
+
+La fonction nettoie() est donc:
+def nettoie(mot) :
+	try:
+		for i in range(len(mot)) :
+			if mot[-1] in ponctuation : mot = mot[:-1]
+			if mot[0] in ponctuation : mot = mot[1:]
+			if "'" in mot: mot = mot.split("'")[1:]
+		return mot.lower()
+	except:
+		return '#'
+
+# EN RESUME
+if "'" in mot: mot = mot.split("'")[1:] nettoie les lettres éludées.
+try...except: return '#' avec # dans stoplist permet de nettoyer les signes de ponctuation longs et/ou isolés.
+
+
+# TEST DE vh_utf
+Extrait du résultat:
+	l’avait  : 154-155
+	l’habitude  : 154
+	l’hiver  : 155
+	l’on  : 155
+	l’un  : 154
+	l’éclairait  : 154
+	l’été  : 155
+	ma  : 1
+	maigre  : 154
+	maigreur  : 154
+	mailles  : 38
+	mains  : 51, 154
+	[...]
+	voyage  : 2
+	voyait  : 155
+	vérité  : 26
+	vêtement  : 155
+	y  : 15-16, 155-156
+	yeux  : 17, 21, 154
+	«  : 154
+	»  : 154
+	à  : 1, 4, 12, 29, 51, 75, 78, 92, 130, 154-155
+	âmes  : 121
+	âpre  : 13, 73
+	çà  : 155
+	échafauds  : 108
+	éclôt  : 48
+	écouté  : 142
+
+l'apostrophe n'est pas filtré car c'est n'est pas la même utilisée en ASCII. L'ordre "alphabétique" est plutôt l'ordre des caractères dans la charmap.
+Je rajoute les guillemets français dans ponctuation pour voir, même si je me doute bien du résultat:
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px28/px28-1$ python px28-1.py vh_utf
+  File "px28-1.py", line 17
+SyntaxError: Non-ASCII character '\xc2' in file px28-1.py on line 17, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details
+
+Probleme d'encodage. S'il faut prendre en compte tous les caractères unicode dans ponctuation et stoplist, on a pas fini.
+
+
+# TEST de 13704-r.rtf
+extraits du résultat:
+	vu\~  : 1693
+	vue  : 421, 677, 703, 2127, 2801, 3322, 3794
+	vulgaire  : 567
+	vus  : 2687
+	vus\~  : 2764
+	w1);}  : 56, 58-61, 81, 92, 94, 98
+	w1);}{\f169\fswiss\fcharset0\fprq2{\*\panose  : 59
+	w1);}{\f170\fscript\fcharset0\fprq2{\*\panose  : 59
+	w1);}{\f172\froman\fcharset0\fprq2{\*\panose  : 60
+	
+Là, clairement, le script lit plus que le texte proposé. Ca ressemble plus à des métadata.
+
+# TEST de 15943.htm
+extraits du résultat:
+	content="@gutenberg_new  : 54
+	content="application/epub+zip  : 267, 281
+	content="application/x-mobipocket-ebook  : 295, 309
+	content="book  : 48
+	content="ebook  : 44
+	content="ebook"></div>  : 86
+	content="en_us  : 41
+	content="fr">  : 154
+	content="free  : 43, 47
+
+Mêmes observations qu'avec le fichier rtf. 
+
+
+
+
+
+
+
+ 

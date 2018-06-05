@@ -1,0 +1,65 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# px31-2 outil
+# Usage: $ python poly 55 65 60 60 65 65 65 105 60 110 55 105
+# Output:
+#	x + e + s, y+ 3*e + s, x + 2*e + s, y + 2*e + s, x+ 3*e + s, y+ 3*e + s, x+ 3*e + s, y + 3*e +2*s, x + 2*e + s, y + 4*e + 2*s, x + e + s, y + 3*e +2*s
+#	(55.0, 65.0, 60.0, 60.0, 65.0, 65.0, 65.0, 105.0, 60.0, 110.0, 55.0, 105.0)
+
+
+
+x = { \
+	5: 'x - e',
+	10: 'x',
+	15: 'x + e',
+	20: 'x + 2*e',
+	25: 'x + s/2. - e',
+	30: 'x + s/2.',
+	35: 'x + e + s/2.',
+	40: 'x + 2*e + s/2. ',
+	55: 'x + e + s',
+	60: 'x + 2*e + s',
+	65: 'x+ 3*e + s'
+}
+
+y = { \
+	5: 'y - e',
+	10: 'y',
+	15: 'y + e',
+	20: 'y + 2*e',
+	55: 'y + e + s',
+	60: 'y + 2*e + s',
+	65: 'y+ 3*e + s',
+	105: 'y + 3*e +2*s',
+	110: 'y + 4*e + 2*s',
+	115: 'y + 5*e +2*s'
+}
+
+def isImpair(w):
+	if w%2 == 0 : return False
+	else:
+		return True
+
+def process(coords):
+	global x, y
+	x1 = y1 = []	# ... ?!
+	c= 2
+	for i in coords:
+		z= int(i)
+		impair = isImpair(c)
+		if impair is True: y1.append(y[z])
+		else: x1.append(x[z])
+		c += 1
+	return ', '.join(x1)
+
+from sys import argv
+a =  process(argv[1:])
+print a
+t = 1
+x = 10
+y = 10
+s = 40*t
+ep = 10*t
+e = ep/2.
+
+print eval(a)

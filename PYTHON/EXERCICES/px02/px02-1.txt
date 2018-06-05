@@ -1,0 +1,9 @@
+﻿# [px02-1] soit mot = 'cheval'"; exprimer le pluriel de ce mot en remplaçant le 'l' final par 'ux'.
+
+
+
+mot = 'cheval' ;
+
+pluriel = mot[0:len(mot)-1] + 'ux' ; 
+
+mot2

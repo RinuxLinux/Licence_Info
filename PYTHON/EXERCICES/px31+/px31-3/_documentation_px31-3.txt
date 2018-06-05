@@ -1,0 +1,55 @@
+# Renaud Lizot
+# 14509956
+# px30-2
+# LCD polygones
+
+
+Tâches: Réfléchir à la possibilité ou non d'ajouter toutes sorte de caractères (comme le point ou la virgule).
+
+# Analyse:
+Le document 00_14_Segment_LCD_characters.jpg, issu de la page wiki de la représentation en 14 segments d'un écran LCD, montre l'amplitude des possibilités de caractères.
+Le point n'en fait pas partie. Il faudrait ajouter un segment supplémentaire, un carré par exemple. Au lieu de cela, on peut utiliser la virgule.
+Toutefois, plus la taille de l'écran LCD est petit et plus ces caractères spéciaux font illusion (je pense notamment à la virgule).
+
+Essayons.
+
+# Faisabilité
+Je vais ajouter au dictionnaire les chiffres et certains caractères spéciaux, selon le document cité plus haut.
+
+	'0' : [0,4,5,3,7,6],
+	'1' : [10,6,7],
+	'2' : [0,6,2,1,5,3],
+	'3' : [0,6,7,3,2],
+	'4' : [4,1,2,6,7],
+	'5' : [0,4,1,2,7,3],
+	'6' : [0,4,1,2,5,3,7],
+	'7' : [10,12,0],
+	'8' : [0,1,2,3,4,5,6,7],
+	'9' : [0,4,1,2,6,7],
+	'*' : [11,10,8,13,9,12],
+	'+' : [1,2,9,12],
+	'-' : [1,2],
+	'=' : [1,2,3],
+	'/' : [11,10],
+	'>' : [8,11],
+	'<' : [13,10],
+	',' : [11],
+	"'" : [10]
+	
+Testons.
+
+Voir: ./_screenshots/01_test_alphanumerique.png
+Voir: ./_screenshots/02_test_alphanum_zoom_40.png
+
+
+# Conclusion
+Comme je le pensais, certains caractères sont plus 'jolis' sur un plus petit format.
+Certains autres ne sont juste pas représentables via ligne de commande mais c'est un autre problème.
+
+La question est de savoir si on crée les segments qui nous manquent, ou on fait avec ce qu'on a ? 
+Après tout, si on veut faire comme un LCD, le nombres de segments ne sont pas illimités. Il s'agit de segments physiques, après tout... 
+Est-ce qu'un ingénieur du LCD (!) peut modifier l'alimentation d'un segment pour en afficher qu'une partie, de façon à simuler un point, une virgule, etc? 
+A voir le tableau des caractères possibles sur un display LCD, il semble qu'on fait ce peut avec qu'on a. Chaque modèle de représentation par segments à ces limites. 
+Ce qui est suffisant pour afficher des info sur un petit écran LCD. 
+
+Aujourd'hui, l'affichage par segments a été délaissé pour l'affichage par pixels, modulable à volonté.

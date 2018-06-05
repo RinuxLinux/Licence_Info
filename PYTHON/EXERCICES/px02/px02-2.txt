@@ -1,0 +1,11 @@
+# [px02-2] soit z = 'abracadabra'"; définir a et c à partir de z, tel que a ait comme valeur 'abra' et c ait comme valeur
+'cad'"; coder l'expression qui permettrait de reconstituer la valeur de z en utilisant uniquement a et
+c"; sans a ni c, construire 'cadabracad' à partir de z.
+
+z = 'abracadabra' ;
+a = z[0:4] ; # abra
+b = z[4:7] ; # cad
+z2 = a + b +a ; z2 # construire z à partir de a & c
+
+z3 = z[4:7] + z[0:4] + z[4:7] ; z3 # construire b + a + b à partir de z uniquement
+

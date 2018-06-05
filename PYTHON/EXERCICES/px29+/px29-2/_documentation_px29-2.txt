@@ -1,0 +1,997 @@
+# Renaud Lizot
+# 14509956
+# px29-2
+
+#####################################
+OBSERVATIONS:
+
+Objectif: Scanner une ou plusieurs url données, extraire les hyperliens contenus dans ces pages et procéder avec la recherche de termes.
+
+# EXTRACTION DES HYPERLIENS
+On commence par extraire le contenu des pages sous formes d'une liste splittée sur les '"' pour permettre un meilleur repérage des bornes html href, dont la syntaxe diffère selon les sites:
+
+>>> flux = urlopen('http://www.canardpc.com')
+>>> data = flux.read()
+>>> flux.close()
+>>> z = data.split('"')
+
+Dans cette liste, on va repérer la présence de la borne en question et ne garde que l'élément qui la suit (l'hyperlien) grâce à la méthode liste.index(mot):
+
+>>> temp = []
+>>> for el in z:
+...     if el.endswith('href='): temp.append(z[z.index(el)+1])
+... 
+>>> 
+
+Ceci fait, il faut maintenant trier ces liens. On remarque au passage que certains liens sont incomplets: 
+ex: 'css/headerV9.css?a=6'
+Ces liens sont en fait à ajouter à l'url cherchée (dans la plupart des cas). Toutefois vu le nombre de liens trouvés (ici: len(temp) = 257! doublons y compris) je vais me limiter aux hyperliens qui sont donnés en entier, ou au moins précédés d'http:// https:// ou www.
+Cela me permettra de réutiliser ma fonction get_urls().
+
+# TRI DES LIENS NON-VALIDES
+On commence par trier les href qui concernent des liens non-lisibles (ex: *.ico, *.png, mailto:*)
+
+>>> exclu_end = '.css .jpg .js .ico .gif .png'.split()
+>>> exclu_start = 'mailto:'.split()
+>>> hlink_sorted = []
+>>> for link in temp:
+...     for e in exclu_end: 
+...             if link.endswith(e): hlink_sorted.remove(link)
+... 
+>>> 
+>>> for link in hlink_sorted:
+...     for s in exclu_start: 
+...             if link.startswith(s): hlink_sorted.remove(link)
+... 
+>>> 
+
+La nouvelle liste de hlink est longue et fourmille de duplicats. C'est la prochaine étape: se débarasser des doublons.
+
+>>> no_doublon = []
+>>> for x in new_hlink:
+...     if x not in no_doublon: no_doublon.append(x)
+... 
+>>> no_doublon
+['http://www.biendebuter.net', 'http://cpc.cx', 'http://apc.canardpc.com', 'http://www.youtube.com/watch?v=oHg5SJYRHA0', 'http://forum.canardpc.com/register.php', 'http://forum.canardpc.com/private.php', 'http://forum.canardpc.com/login.php?do=lostpw', 'http://twitter.com/#!/canardpcredac', 'http://forum.canardpc.com', 'http://tof.canardpc.com', 'http://www.gandi.net', 'http://www.materiel.net', 'http://www.mondespersistants.com']
+>>> 
+
+Cela réduit considérablement la liste, au point que je me demande si c'est bien judicieux.
+Un test rapide en appliquant le dédoublage avant le 'nettoyage' montre 65 liens trouvés (contre 257 cités plus haut, c'est pas si mal). 
+La plupart de ces liens manquent l'adresse original (ex: 'rubrique-hardware.html') et peut-être serait-il intéressant de réfléchir à un moyen d'exploiter ces liens aussi?
+J'ai un peu peur du temps d'execution du programme entier qui n'était pas très encourageant dans l'exercice précédent, je vais laisser ça sur ma to-do list pour l'instant.
+
+# MISE EN FONCTIONS
+
+def tri_hlinks_junk(list_urls):
+	exclu_end = '.css .jpg .js .ico .gif .png'.split()
+	exclu_start = 'mailto:'.split()
+	hlink_sorted = []
+	# terminaisons
+	for link in list_urls:
+		for e in exclu_end: 
+			if link.endswith(e): hlink_sorted.remove(link)
+	# mailto:
+	for link in hlink_sorted:
+		for s in exclu_start: 
+			if link.startswith(s): hlink_sorted.remove(link)
+	return hlink_sorted
+	
+
+def tri_hlink_doublons(liste):
+	no_duplicate_list = []
+	for x in liste:	
+		if x not in no_duplicate_list: no_duplicate_list.append(x)
+	return no_duplicate_list
+
+
+La fonction autour de laquelle s'articule tout ça:
+
+def get_list_urls(urls):
+	for url in urls:
+		flux = urlopen(url)
+		data_list = flux.read().split('"')
+		flux.close()
+		list_urls = []
+		for el in data:
+			if el.endswith('href='): list_urls.append(data_list[data_list.index(el)+1])
+		list_urls = tri_hlinks_junk(list_urls)
+		list_urls = get_urls(list_urls)
+		list_urls = tri_hlink_doublons(list_urls)
+	return list_urls
+
+
+# TESTS PRELIMINAIRES
+
+Pour faire mes tests fonctions par fonction, j'ai ouvert une session python.
+J'y copie mes fonctions et m'arrange pour remplacer le sys.argv par une variable 'argv' qui reprend le même genre de liste.
+
+Premières vagues de test: je fais quelques ajustement à cause de problèmes de syntaxe ou du choix de nom pour mes variables qui prête à confusion.
+A plusieurs reprise j'ai ce retour d'erreur: TypeError: decode() argument 1 must be string, not None.
+Un print sur charset et l'url concerné dénonce un premier coupable (http://cpc.cx). Après verification, le charset figure bien dans le code-source: content="text/html; charset=utf-8">
+mais pas dans une balise meta, et la methode info() ne trouve pas non plus.
+
+	charset	UTF-8 	 reference	http://www.biendebuter.net
+	charset	None 	 reference	http://cpc.cx
+	Traceback (most recent call last):
+	TypeError: decode() argument 1 must be string, not None.
+	
+	>>> url = 'http://cpc.cx'
+	>>> dict(urlopen(url).info())['content-type'].split()[1].split('=')[1]
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	IndexError: list index out of range
+
+Je vais donc m'inspirer de get_hlinks() et mettre à jour la deuxième méthode:
+
+def get_charset(url): 
+	try:
+		return dict(urlopen(url).info())['content-type'].split()[1].split('=')[1]
+	except: 
+		flux = urlopen(url)
+		data = flux.read()
+		flux.close()
+		if data.find('charset=') != -1: return (data[data.find('charset=')+8:data.find('charset=')+23]).split('"')[0]
+		else: return 'utf-8'
+
+C'est un peu tiré par les cheveux : data étant une chaine, la methode find('charset=') s'applique. On ne garde les 15 caractères suivant 'charset=' (pas besoin de garder toute le reste de la page, une quinzaine de lettres devraient suffire à l'affaire). Il reste à splitter sur '"' et on a notre charset en position 0 de la chaîne (en supposant que l'ensemble content="text/html; charset=utf-8" soit toujours bien borné par des doubles quotes...)
+Aussi, je rajoute un else qui retournera 'utf-8' si jamais le charset n'est vraiment pas trouvé. L'utilisateur final n'y verra que du feu. C'est mon coté Bill Gates.
+
+Le test suivant montre que le code à des faiblesses pour le cas où charset est écrit <meta charset="iso-8859-1" /> (coupable: 'http://www.dlgamer.fr'). 
+Dans ce cas, (data[data.find('charset=')+8:data.find('charset=')+23]).split('"')[0] renvoie ' ' et plante le programme. 
+Tirons encore un peu plus sur ces cheveux avec: 
+if data.find('charset=') != -1: return ''.join((data[data.find('charset=')+8:data.find('charset=')+20]).split('"')[0:3]).split()[0]
+Traduction: on prend les 3 'mots' qui suivent 'charset=' pour être sûr d'avoir le charset, on joint pour enlever le premier '' de la chaîne et on re-split derrière. Le charset est en position 0.
+
+Nouveau code:
+def get_charset(url): 
+	try:
+		return dict(urlopen(url).info())['content-type'].split()[1].split('=')[1]
+	except: 
+		flux = urlopen(url)
+		data = flux.read()
+		flux.close()
+		if data.find('charset=') != -1: return ''.join((data[data.find('charset=')+8:data.find('charset=')+20]).split('"')[0:3]).split()[0]
+		else: return 'utf-8'
+		
+
+# TEST GRANDEUR NATURE
+
+J'intègre tout ça aux scripts scanne et dexlex, et commence les tests.
+
+#Premier test: 
+
+reno@Jupiter:~/mytz$ time python scanne  http://www.canardpc.com
+	[...]
+	£59.49  :  http://www.dlgamer.com
+	£6.99  :  http://www.dlgamer.com
+	£69.99  :  http://www.dlgamer.com
+	£8.79  :  http://www.dlgamer.com
+	£9.34  :  http://www.dlgamer.com
+	£9.99  :  http://www.dlgamer.com
+	©  :  http://www.biendebuter.net ; http://www.canardpc.com/news-53249-canard_pc_317___gta__moi_non_plus.html ; http://www.dlgamer.com
+	«  :  http://forum.canardpc.com/register.php
+	»  :  http://forum.canardpc.com/register.php
+	Ã   :  http://www.materiel.net ; http://www.mondespersistants.com
+	Ã©cologie  :  http://www.materiel.net
+	Ã©conomie  :  http://www.materiel.net
+	Ã©conomiser  :  http://www.materiel.net
+	Ã©ditorial  :  http://www.mondespersistants.com
+	[...]	
+	électrique  :  http://forum.canardpc.com/private.php ; http://forum.canardpc.com/login.php?do=lostpw ; http://forum.canardpc.com
+	émis  :  http://forum.canardpc.com/register.php
+	équipe  :  http://www.materiel.net
+	été  :  http://forum.canardpc.com/register.php ; http://www.dlgamer.com ; http://www.materiel.net
+	êtes  :  http://forum.canardpc.com/register.php ; http://forum.canardpc.com/private.php
+	être  :  http://forum.canardpc.com/register.php ; http://www.materiel.net
+	Русский  :  http://twitter.com/#!/canardpcredac
+	עִבְרִית  :  http://twitter.com/#!/canardpcredac
+	العربية  :  http://twitter.com/#!/canardpcredac
+	فارسی  :  http://twitter.com/#!/canardpcredac
+	हिन्दी  :  http://twitter.com/#!/canardpcredac
+	ภาษาไทย  :  http://twitter.com/#!/canardpcredac
+	日本語  :  http://twitter.com/#!/canardpcredac
+	正體中文  :  http://www.gandi.net
+	简体中文  :  http://twitter.com/#!/canardpcredac ; http://www.gandi.net
+	한국어  :  http://twitter.com/#!/canardpcredac
+
+real	0m13.705s
+user	0m1.023s
+sys	0m0.058s
+
+Ormis quelques caractères spéciaux qui apparaissent sur mon terminal mais pas dans le code source de la page web, c'est satisfaisant. Le temps d'execution est encourageant.
+
+
+# TEST 2 : site IED sans http:// et avec -go
+reno@Jupiter:~/mytz$ time python scanne www.iedparis8.net/ied -go
+	informatique  :  http://foad.iedparis8.net
+	paris  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	université  :  http://accueil.iedparis8.net
+
+real	0m3.254s
+user	0m0.104s
+sys	0m0.031s
+
+# TEST 3: Test 2 sans -go (et quelques prints pour verifier si tout va bien)
+reno@Jupiter:~/mytz$ time python scanne www.iedparis8.net/ied
+cibles 1	['http://www.iedparis8.net/ied']
+switch	url
+dir	/home/reno/mytz/wdir
+cibles 2	['https://preins.iedparis8.net/', 'http://accueil.iedparis8.net', 'http://foad.iedparis8.net', 'https://webmail-foad.iedparis8.net/']
+charset	utf-8 	 reference	https://preins.iedparis8.net/
+charset	UTF-8 	 reference	http://accueil.iedparis8.net
+charset	iso-8859-1 	 reference	http://foad.iedparis8.net
+charset	UTF-8 	 reference	https://webmail-foad.iedparis8.net/
+	&copy  :  https://preins.iedparis8.net/ ; http://foad.iedparis8.net
+	0  :  http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	00  :  https://preins.iedparis8.net/
+	01  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	02  :  https://preins.iedparis8.net/
+	04  :  http://accueil.iedparis8.net
+	1  :  http://foad.iedparis8.net
+	2  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	2001  :  http://foad.iedparis8.net
+	2006-2013  :  https://preins.iedparis8.net/
+	2015  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	2016  :  https://preins.iedparis8.net/
+	209  :  http://accueil.iedparis8.net
+	3  :  http://foad.iedparis8.net
+	40  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	49  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	51  :  https://preins.iedparis8.net/
+	526  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	7  :  http://foad.iedparis8.net
+	72  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	766  :  http://accueil.iedparis8.net
+	8  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	820  :  http://accueil.iedparis8.net
+	9  :  http://foad.iedparis8.net
+	93  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	accompagnera  :  https://preins.iedparis8.net/
+	accueil  :  http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	accéder  :  https://preins.iedparis8.net/
+	administrateur  :  http://foad.iedparis8.net
+	administrative  :  https://preins.iedparis8.net/
+	afin  :  https://preins.iedparis8.net/
+	agit  :  https://preins.iedparis8.net/
+	aide  :  http://foad.iedparis8.net
+	année  :  https://preins.iedparis8.net/
+	art-thérapie  :  http://foad.iedparis8.net
+	at  :  http://foad.iedparis8.net
+	authentification  :  http://foad.iedparis8.net
+	automatique  :  http://accueil.iedparis8.net
+	aux  :  http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	avez  :  https://preins.iedparis8.net/
+	besoin  :  http://foad.iedparis8.net
+	bienvenue  :  https://preins.iedparis8.net/
+	candidature  :  https://preins.iedparis8.net/
+	cedex  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	cet  :  https://preins.iedparis8.net/
+	ci-dessous  :  https://preins.iedparis8.net/
+	claroline  :  http://foad.iedparis8.net
+	cliquant  :  https://preins.iedparis8.net/
+	code  :  http://foad.iedparis8.net
+	commun  :  http://foad.iedparis8.net
+	compte  :  https://preins.iedparis8.net/
+	connecter  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	connexion  :  http://accueil.iedparis8.net
+	copyright  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	cours  :  https://preins.iedparis8.net/
+	créer  :  https://preins.iedparis8.net/
+	cursus  :  https://preins.iedparis8.net/
+	demandées  :  https://preins.iedparis8.net/
+	des  :  https://preins.iedparis8.net/
+	devez  :  https://preins.iedparis8.net/
+	df  :  http://foad.iedparis8.net
+	différentes  :  https://preins.iedparis8.net/
+	diplômes  :  http://foad.iedparis8.net
+	disposer  :  https://preins.iedparis8.net/
+	disposez  :  https://preins.iedparis8.net/
+	distance  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	dossier  :  https://preins.iedparis8.net/
+	dp  :  http://foad.iedparis8.net
+	dr  :  http://foad.iedparis8.net
+	droit  :  http://foad.iedparis8.net
+	droits  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	ds  :  http://foad.iedparis8.net
+	débouchés  :  https://preins.iedparis8.net/
+	dédié  :  http://accueil.iedparis8.net
+	déjà  :  https://preins.iedparis8.net/
+	ead  :  http://foad.iedparis8.net
+	ecafied  :  http://foad.iedparis8.net
+	enseignement  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	espace  :  https://preins.iedparis8.net/ ; http://foad.iedparis8.net
+	est  :  https://preins.iedparis8.net/
+	fax  :  http://accueil.iedparis8.net
+	fire-soft-board  :  http://accueil.iedparis8.net
+	foad  :  http://foad.iedparis8.net
+	formation  :  http://foad.iedparis8.net
+	formations  :  http://foad.iedparis8.net
+	forum  :  http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	france  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	futurs  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	gestion  :  https://preins.iedparis8.net/
+	guide  :  http://foad.iedparis8.net
+	gérer  :  https://preins.iedparis8.net/
+	identifiant  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	identifiants  :  https://preins.iedparis8.net/
+	ied  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	impression  :  https://preins.iedparis8.net/
+	index  :  http://accueil.iedparis8.net
+	informations  :  https://preins.iedparis8.net/
+	informatique  :  http://foad.iedparis8.net
+	inscription  :  https://preins.iedparis8.net/
+	inscriptions  :  http://foad.iedparis8.net
+	inscrit(e  :  https://preins.iedparis8.net/
+	institut  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	intention  :  https://preins.iedparis8.net/
+	intraied  :  http://foad.iedparis8.net
+	intranet  :  http://foad.iedparis8.net
+	invisible  :  http://accueil.iedparis8.net
+	liberté  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	lien  :  https://preins.iedparis8.net/
+	ligne  :  https://preins.iedparis8.net/
+	lors  :  https://preins.iedparis8.net/
+	messagerie  :  http://foad.iedparis8.net
+	mon  :  https://preins.iedparis8.net/
+	mot  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	ne  :  https://preins.iedparis8.net/
+	nom  :  https://preins.iedparis8.net/
+	nombre  :  http://foad.iedparis8.net
+	nécessaires  :  https://preins.iedparis8.net/
+	obligatoire  :  https://preins.iedparis8.net/
+	oublié  :  https://preins.iedparis8.net/
+	paris  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	passe  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	password  :  https://webmail-foad.iedparis8.net/
+	perdu  :  http://foad.iedparis8.net
+	personnel  :  https://preins.iedparis8.net/
+	plateforme  :  https://preins.iedparis8.net/ ; http://foad.iedparis8.net
+	postes  :  https://preins.iedparis8.net/
+	pourquoi  :  https://preins.iedparis8.net/
+	poursuivre  :  https://preins.iedparis8.net/
+	première  :  https://preins.iedparis8.net/
+	procédure  :  https://preins.iedparis8.net/
+	préinscription  :  https://preins.iedparis8.net/
+	préinscrire  :  https://preins.iedparis8.net/
+	présentation  :  https://preins.iedparis8.net/
+	psychologie  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net ; http://foad.iedparis8.net
+	public  :  http://foad.iedparis8.net
+	puis  :  https://preins.iedparis8.net/
+	renseignez  :  https://preins.iedparis8.net/
+	roundcube  :  https://webmail-foad.iedparis8.net/
+	rue  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	réinscription  :  https://preins.iedparis8.net/
+	réservés  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	saint-denis  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	sciences  :  http://foad.iedparis8.net
+	se  :  http://accueil.iedparis8.net
+	ses  :  https://preins.iedparis8.net/
+	si  :  https://preins.iedparis8.net/
+	site  :  https://preins.iedparis8.net/ ; http://foad.iedparis8.net
+	souche  :  http://foad.iedparis8.net
+	standard  :  https://preins.iedparis8.net/
+	standart  :  http://accueil.iedparis8.net
+	suivre  :  https://preins.iedparis8.net/
+	sur  :  https://preins.iedparis8.net/
+	to  :  https://webmail-foad.iedparis8.net/
+	tous  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	téléphonique  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	universitaire  :  https://preins.iedparis8.net/
+	université  :  http://accueil.iedparis8.net
+	username  :  https://webmail-foad.iedparis8.net/
+	utilisateur  :  https://preins.iedparis8.net/
+	utilisation  :  http://foad.iedparis8.net
+	utiliser  :  https://preins.iedparis8.net/
+	veuillez  :  https://preins.iedparis8.net/
+	visite  :  https://preins.iedparis8.net/
+	vos  :  https://preins.iedparis8.net/
+	votre  :  https://preins.iedparis8.net/
+	webmail  :  https://webmail-foad.iedparis8.net/
+	webmaster  :  http://foad.iedparis8.net
+	welcome  :  https://webmail-foad.iedparis8.net/
+	©  :  http://accueil.iedparis8.net
+	à  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+	éducation  :  http://foad.iedparis8.net
+	équivalence  :  https://preins.iedparis8.net/
+	étapes  :  https://preins.iedparis8.net/
+	état  :  https://preins.iedparis8.net/
+	étiez  :  https://preins.iedparis8.net/
+	études  :  https://preins.iedparis8.net/
+	étudiant  :  http://foad.iedparis8.net
+	étudiants  :  https://preins.iedparis8.net/ ; http://accueil.iedparis8.net
+
+real	0m4.482s
+user	0m0.104s
+sys	0m0.033s
+
+
+# TEST 4 : la 'Bête Noire': Wiki Mandriva (17 minutes: record à battre!)
+reno@Jupiter:~/mytz$ time python scanne https://fr.wikipedia.org/wiki/Mandriva_Linux
+cibles 1	['https://fr.wikipedia.org/wiki/Mandriva_Linux']
+switch	url
+dir	/home/reno/mytz/wdir
+cibles 2	None
+Traceback (most recent call last):
+  File "scanne", line 51, in <module>
+    prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+  File "scanne", line 24, in pilote
+    for element in cibles:
+TypeError: 'NoneType' object is not iterable
+
+real	0m0.305s
+user	0m0.077s
+sys	0m0.015s
+reno@Jupiter:~/mytz$ 
+
+Cibles 2, qui est la liste du lien principal et des hyperliens que la cible contient, renvoie None. 
+Reprenons pas à pas les étapes :
+
+# Même test dans une session Python - pas à pas:
+>>> flux = urlopen('https://fr.wikipedia.org/wiki/Mandriva_Linux')
+>>> data = flux.read()
+>>> flux.close()
+>>> get_charset('https://fr.wikipedia.org/wiki/Mandriva_Linux')
+'UTF-8'
+>>> test = ['https://fr.wikipedia.org/wiki/Mandriva_Linux']
+>>> liste = []
+>>> for url in test:
+...     data2 = data.split('"')
+...     for el in data2:
+...             if el.endswith('href='): liste.append(data2[data2.index(el)+1])
+... 
+>>> liste
+[fonctionne ok mais la liste est tres longue... à vue de nez aucunes des urls ne sont qualifiables selon mes critères, ce qui expliquerait le None?]
+>>> list_urls = tri_hlinks_doublons(liste)
+[OK]
+>>> list_urls = tri_hlinks_junk(list_urls)
+[OK...]
+>>> list_urls = get_urls(list_urls)
+>>> list_urls
+>>> 
+
+Voilà mon None: aucune url trouvée dans le code source n'est qualifiable selon mes critères. J'ai juste oublié d'inclure l'url de départ dans la liste des cibles: list_urls.append(url) dans get_hlinks() résout le problème.
+
+Nouveau code:
+def get_hlinks(urls):
+	list_urls = []
+	for url in urls:
+		list_urls.append(url)
+		flux = urlopen(url)
+		data_list = flux.read().split('"')
+		flux.close()
+		for el in data_list:
+			if el.endswith('href='): list_urls.append(data_list[data_list.index(el)+1])
+	list_urls = tri_hlinks_doublons(list_urls)
+	list_urls = tri_hlinks_junk(list_urls)
+	list_urls = get_urls(list_urls)
+	return list_urls
+
+
+# TEST 5 : Wiki Mandriva - le Retour.
+reno@Jupiter:~/mytz$ time python scanne https://fr.wikipedia.org/wiki/Mandriva_Linux
+	[...]
+	xfcelive  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	xgl  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	xorg  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	xp  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	y  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	yellowdog  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	yum  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	z/os  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	zeta  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	   :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«cooker»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«entreprise»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«gelée»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«grappe»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«liste  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«mandrake  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«spring»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	µc/os-ii  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	·  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	À  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Élément  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	État  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	États  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	États-unis  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	à  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écoles  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	économique  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écrire  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écriture  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	édition  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éditions  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éditée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éducation  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	édutice  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	également  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	époque  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	équivalents  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étaient  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	était  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étendre  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étincelles  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étoile  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	été  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éventuellement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éventuels  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éviter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolue  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolution  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évoquée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	être  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Čeština  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Ελληνικά  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Беларуская  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Български  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Русский  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Српски  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Українська  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	עברית  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	العربية  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	فارسی  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	मराठी  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	മലയാളം  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	—  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	…  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	↑  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	中文  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	日本語  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	한국어  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+
+real	0m1.442s
+user	0m0.768s
+sys	0m0.042s
+
+Test positif, sauf quelques caractères étranges et cet espace vide:
+	zeta  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	   :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+Peut-etre un caractère html ou autre qui échappe au filtre? Ca va être difficile à traquer.
+
+Le temps d'execution est beaucoup plus acceptable que les 17 minutes de l'exercice précédent pour la même URL. Je pense que les pages web sont gérées plus efficacement avec ce code-ci.
+
+# TEST 6: URL multiples
+reno@Jupiter:~/mytz$ time python scanne https://fr.wikipedia.org/wiki/Mandriva_Linux www.metronews.fr http://community.linuxmint.com/tutorial/view/100
+charset	utf-8><met 	 reference	http://www.metronews.fr
+Traceback (most recent call last):
+  File "scanne", line 51, in <module>
+    prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+  File "scanne", line 30, in pilote
+    X = indexe(X, data.split(), url, liste, switch, option)
+  File "/home/reno/mytz/dexlex.py", line 84, in indexe
+    mot = dec_enc(mot, charset)
+  File "/home/reno/mytz/dexlex.py", line 40, in dec_enc
+    def dec_enc(mot, charset): return mot.decode(charset).encode('utf-8')
+LookupError: unknown encoding: utf-8><met
+
+real	0m46.130s
+user	0m1.171s
+sys	0m0.020s
+
+Encore un problème avec le charset... Il va falloir splitter sur le '>' aussi. Et peut-être envisager une autre approche du problème au passage, avec une configuration plus facile à mettre à jour.
+
+>>> exclusion = '= " >'.split()
+>>>     
+... if data.find('charset=') != -1: 
+...     x = data[data.find('charset=')+8:data.find('charset=')+20]
+...     for ex in exclusion:
+...             x = x.replace(ex, ' ')
+... 
+>>> x
+' utf-8  <met'
+>>> x = x.split()[0]
+>>> x
+'utf-8'
+
+Nouveau code:
+def get_charset(url): 
+	try:
+		return dict(urlopen(url).info())['content-type'].split()[1].split('=')[1]
+	except: 
+		flux = urlopen(url)
+		data = flux.read()
+		flux.close()
+		exclusion = '= " >'
+		if data.find('charset=') != -1: 
+			x = data[data.find('charset=')+8:data.find('charset=')+20]
+			for ex in exclusion:
+				x = x.replace(ex, ' ')
+			return x.split()[0]
+		else: return 'utf-8' 
+		
+Nouveau test:
+
+reno@Jupiter:~/mytz$ time python scanne https://fr.wikipedia.org/wiki/Mandriva_Linux www.metronews.fr http://community.linuxmint.com/tutorial/view/100
+charset	UTF-8 	 reference	https://fr.wikipedia.org/wiki/Mandriva_Linux
+charset	utf-8 	 reference	http://www.metronews.fr
+charset	UTF-8 	 reference	http://sport.metronews.fr/football/ligue-1
+charset	utf-8 	 reference	http://jeux.metronews.fr/
+charset	UTF-8 	 reference	http://clubmetro.metronews.fr
+charset	utf-8 	 reference	http://astrocenter.metronews.fr/metro/
+charset	utf-8 	 reference	http://meteo.metronews.fr/
+charset	utf-8 	 reference	http://dossiers.metronews.fr
+charset	utf-8 	 reference	http://actualites.metronews.fr/
+charset	UTF-8 	 reference	http://lci.tf1.fr/
+charset	UTF-8 	 reference	http://sport.metronews.fr/football/direct
+Traceback (most recent call last):
+  File "scanne", line 51, in <module>
+    prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+  File "scanne", line 26, in pilote
+    flux = urlopen(element)
+  File "/usr/lib/python2.7/urllib.py", line 87, in urlopen
+    return opener.open(url)
+  File "/usr/lib/python2.7/urllib.py", line 208, in open
+    return getattr(self, name)(url)
+  File "/usr/lib/python2.7/urllib.py", line 346, in open_http
+    errcode, errmsg, headers = h.getreply()
+  File "/usr/lib/python2.7/httplib.py", line 1117, in getreply
+    response = self._conn.getresponse()
+  File "/usr/lib/python2.7/httplib.py", line 1045, in getresponse
+    response.begin()
+  File "/usr/lib/python2.7/httplib.py", line 409, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python2.7/httplib.py", line 365, in _read_status
+    line = self.fp.readline(_MAXLINE + 1)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+IOError: [Errno socket error] [Errno 104] Connection reset by peer
+
+real	2m54.123s
+user	0m3.512s
+sys	0m0.048s
+
+Trop de liens sur metronews... Connection perdue. Essayons autre chose.
+
+# TEST 7 : Multiple URL - 2
+reno@Jupiter:~/mytz$ time python scanne www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx http://fr.wikipedia.org/wiki/Luddisme https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+[...]
+charset	utf-8 	 reference	http://www-sop.inria.fr/members/Arnaud.Legout/
+Traceback (most recent call last):
+  File "scanne", line 51, in <module>
+    prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+  File "scanne", line 30, in pilote
+    X = indexe(X, data.split(), url, liste, switch, option)
+  File "/home/reno/mytz/dexlex.py", line 89, in indexe
+    mot = dec_enc(mot, charset)
+  File "/home/reno/mytz/dexlex.py", line 40, in dec_enc
+    def dec_enc(mot, charset): return mot.decode(charset).encode('utf-8')
+  File "/usr/lib/python2.7/encodings/utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0xe8 in position 0: unexpected end of data
+
+real	0m51.116s
+user	0m19.953s
+sys	0m0.160s
+
+Problème avec l'encodage, pour changer. (Coupables: dec_enc() avec http://www-sop.inria.fr/members/Arnaud.Legout/)
+Le code source de la page en question donne <!--meta charset="utf-8" -->.
+
+Rapide recherche internet sur le message d'erreur: ça pourrait venir d'un caractère du dico dans trad_code_html qui serait faux ou un lien non valide?
+Pour verifier la derniere hypothèse, j'ajoute .mobi (référencé dans le code source de la page) à la liste des sites à exclure.
+Test : Nope, même erreur, même adresse, même message, même tout.
+
+Je repère dans le code source un lien vers un pdf qui ne s'affiche pas correctement, même sur mon écran. A titre préventif: blacklistés, les .pdf.
+
+Test : Je re-teste pour le sport, mais le test ne donnera rien puisque le problème vient de http://www-sop.inria.fr/members/Arnaud.Legout/
+
+Test du dico des caractères html à traduire: une erreur dans les caractères?
+>>> a = ''
+>>> dico = {'&agrave;' : '\xc3\xa0', '&acirc;' : '\xc3\xa2', '&eacute;' : '\xc3\xa9', '&egrave;' : '\xc3\xa8', '&ecirc;' : '\xc3\xaa', '&ucirc;' : '\xc3\xbb', '&ugrave;' : '\xc3\xb9', '&icirc;' : '\xc3\xae', '&ocirc;' : '\xc3\xb4', '&ccedil;' : '\xc3\xa7', '&aelig;' : '\xc3\xa6', '&euml;' : '\xc3\xab', '&uuml;' : '\xc3\xbc', '&iuml;' : '\xc3\xaf', '&oelig;' : '\xc5\x93', '&laquo;' : '"', '&raquo;' : '"', '&rsquo;' : "'", '&euro;' : '\xe2\x82\xac', '&nbsp;' : '|', '&#160;' : '', '&#8217;' : "'", '&#39;': "'"}
+>>> for valeur in dico.values():
+...     a += valeur.decode('utf-8').encode('utf-8') + " "
+... 
+>>> print a
+" æ î è ë ï ù û | é à ô ' ü  â ê ' € œ " ' ç 
+>>> 
+Rien d'anormal a priori.
+
+Recherche plus poussée: un post sur StackOverflow me met la puce à l'oreille:
+"You cannot randomly partition the bytes you've received and then ask UTF-8 to decode it. UTF-8 is a multibyte encoding, meaning you can have a series of 2-6 bytes to represent one character. If you chop that in half, and ask Python to decode it, it will throw you the unexpected end of data error."
+J'ai besoin de savoir quels mots posent problème, et surtout leur représentation.
+
+Retour vers Python: essayons d'identifier les mots problématiques
+>>> flux = urlopen('http://www-sop.inria.fr/members/Arnaud.Legout/')
+>>> data = flux.read()
+>>> flux.close()
+>>> d = []
+>>> for mot in (nettoie_html(data)).split():
+... 	d.append(nettoie(trad_code_html(mot)))
+... 
+>>> e = []
+>>> for i in d:
+... 	try:
+... 		i.decode('utf-8').encode('utf-8')
+... 	except:
+... 		e.append(i)
+... 
+>>> e
+['\xe8s', 'Universit\xe9', 'ma\xeetrise', 'math\xe9matiques', 'Universit\xe9', 'Fran\xe7ais', '\xeates', 'int\xe9ress\xe9s', 'fran\xe7ais', 'h\xe9sitez', '\xe0']
+
+>>> print u'\xe8s', '\n', u'Universit\xe9', '\n', u'ma\xeetrise', '\n', u'math\xe9matiques', '\n', u'Universit\xe9', '\n', u'Fran\xe7ais', '\n', u'\xeates', '\n', u'int\xe9ress\xe9s', '\n', u'fran\xe7ais', '\n', u'h\xe9sitez', '\n', u'\xe0'
+ès 
+Université 
+maîtrise 
+mathématiques 
+Université 
+Français 
+êtes 
+intéressés 
+français 
+hésitez 
+à
+
+
+Voilà, ces codes ne sont pas dans mon dico. Est-ce que ça veut dire que je dois modifier mon dico pour qu'il prenne en compte TOUTES les versions 'tronquée' possibles? Je pourrais le réarranger pour faciliter les mises à jour?
+
+Nouveau dico réarrangé:
+d = {'\xc3\xa0' : ['&agrave;', '\xe0'], '\xc3\xa2' : ['&acirc;'], '\xc3\xa9' : ['&eacute;', '\xe9'], '\xc3\xa8' : ['&egrave;', '\xe8'], '\xc3\xaa' : ['&ecirc;', '\xea'], '\xc3\xbb' : ['&ucirc;'], '\xc3\xb9' : ['&ugrave;'], '\xc3\xae' : ['&icirc;', '\xee'], '\xc3\xb4' : ['&ocirc;'], '\xc3\xa7' : ['&ccedil;', '\xe7'], '\xc3\xa6' : ['&aelig;'], '\xc3\xab' : ['&euml;'], '\xc3\xbc' : ['&uuml;'], '\xc3\xaf' : ['&iuml;'], '\xc5\x93' : ['&oelig;'], '"' : ['&laquo;', '&raquo;'], '\xe2\x82\xac' : ['&euro;'], ' ' : ['&nbsp;', '&#160;'], "'" : ['&#8217;', '&#39;', '&rsquo;']}
+
+Je suis conscient que cela ne couvre pas tous les cas de figures que l'on peut rencontrer. Ca devrait suffire pour l'instant. J'y reviendrai peut-être plus tard.
+
+En attendant, cette nouvelle configuration du dico pose un problème: comment extraire la clé pour une valeur donnée comprise dans une liste de valeurs?
+Une solution: la méthode item() qui convertit en tuple les listes et valeurs d'un dict. 
+
+>>> mot
+'ma\xeetrise'
+>>> for i in range(len(d)):
+...     valeurs = d.items()[i][1]
+...     cle = d.items()[i][0]
+...     for v in valeurs:
+...             if mot.find(v) != -1 : mot = mot.replace(v, cle)
+... 
+>>> mot
+'ma\xc3\xaetrise'
+
+Les méthodes encode()/decode() ne fonctionnent pas dans le cas présent, et puis j'ai besoin de cette fonction pour des termes qui n'ont rien à voir avec unicode, comme &laquo ou n'importe quel autre terme.
+
+
+# TEST 8 : multiple URL sans le site problématique du Test 7 (avant modif ci-dessus)
+reno@Jupiter:~/mytz$ time python scanne www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx http://fr.wikipedia.org/wiki/Luddisme 
+	[...]
+real	0m44.790s
+user	0m19.789s
+sys	0m0.133s
+
+
+# TEST 9: multiple URL avec le site cité plus haut
+reno@Jupiter:~/mytz$ time python scanne www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx http://fr.wikipedia.org/wiki/Luddisme https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+charset	UTF-8 	 reference	http://fr.wikipedia.org/wiki/Luddisme
+Traceback (most recent call last):
+  File "scanne", line 51, in <module>
+    prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+  File "scanne", line 30, in pilote
+    X = indexe(X, data.split(), url, liste, switch, option)
+  File "/home/reno/mytz/dexlex.py", line 89, in indexe
+    mot = dec_enc(mot, charset)
+  File "/home/reno/mytz/dexlex.py", line 40, in dec_enc
+    def dec_enc(mot, charset): return mot.decode(charset).encode('utf-8')
+  File "/usr/lib/python2.7/encodings/utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0xaa in position 8: invalid start byte
+
+real	0m52.093s
+user	0m22.006s
+sys	0m0.210s
+
+Cette fois c'est la page wiki qui pose problème. On refait le test vu plus haut:
+>>> e
+['\xe6\x97\xa5\xe6\x9c\xac\xc3\xa8\xaa\x9e', '\xed\x95\x9c\xc3\xaa\xb5\xad\xec\x96\xb4']
+>>> print u'\xe6\x97\xa5\xe6\x9c\xac\xc3\xa8\xaa\x9e'
+æ¥æ¬Ã¨ª
+>>> print u'\xed\x95\x9c\xc3\xaa\xb5\xad\xec\x96\xb4'
+íÃªµ­ì´
+>>> 
+
+C'est clairement pas utile à la suite du programme. 
+La technique print u'\xed\x95...' me donne une idée: un try except qui, en cas d'erreur, sort u'expression.decode('utf-8'). 
+(...)
+Cela n'est pas possible sur une variable. Un peu de recherche plus tard et je mets à jour dec_enc():
+
+def dec_enc(mot, charset): 
+	try: 
+		return mot.decode(charset).encode('utf-8')
+	except:
+		return unicode(mot, errors='replace').encode('utf-8')
+
+
+# TEST 10: wiki luddisme
+reno@Jupiter:~/mytz$ time python scanne http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	yorkshire  :  http://fr.wikipedia.org/wiki/Luddisme
+	zerzan  :  http://fr.wikipedia.org/wiki/Luddisme
+	   :  http://fr.wikipedia.org/wiki/Luddisme
+	«  :  http://fr.wikipedia.org/wiki/Luddisme
+	« au  :  http://fr.wikipedia.org/wiki/Luddisme
+	« bris  :  http://fr.wikipedia.org/wiki/Luddisme
+	« captain  :  http://fr.wikipedia.org/wiki/Luddisme
+	« ciblées »  :  http://fr.wikipedia.org/wiki/Luddisme
+	« conflit  :  http://fr.wikipedia.org/wiki/Luddisme
+	« dans  :  http://fr.wikipedia.org/wiki/Luddisme
+	« general  :  http://fr.wikipedia.org/wiki/Luddisme
+	« hautes  :  http://fr.wikipedia.org/wiki/Luddisme
+	« kevin  :  http://fr.wikipedia.org/wiki/Luddisme
+	« king  :  http://fr.wikipedia.org/wiki/Luddisme
+	« luddisme »  :  http://fr.wikipedia.org/wiki/Luddisme
+	« tueuses  :  http://fr.wikipedia.org/wiki/Luddisme
+	« une  :  http://fr.wikipedia.org/wiki/Luddisme
+	« vincent  :  http://fr.wikipedia.org/wiki/Luddisme
+	»  :  http://fr.wikipedia.org/wiki/Luddisme
+	À  :  http://fr.wikipedia.org/wiki/Luddisme
+	Ère  :  http://fr.wikipedia.org/wiki/Luddisme
+	Écologiste  :  http://fr.wikipedia.org/wiki/Luddisme
+	Éditions  :  http://fr.wikipedia.org/wiki/Luddisme
+	Élément  :  http://fr.wikipedia.org/wiki/Luddisme
+	État  :  http://fr.wikipedia.org/wiki/Luddisme
+	États-unis  :  http://fr.wikipedia.org/wiki/Luddisme
+	Été  :  http://fr.wikipedia.org/wiki/Luddisme
+	à  :  http://fr.wikipedia.org/wiki/Luddisme
+	ère  :  http://fr.wikipedia.org/wiki/Luddisme
+	è®e  :  http://fr.wikipedia.org/wiki/Luddisme
+	échappée  :  http://fr.wikipedia.org/wiki/Luddisme
+	échoue  :  http://fr.wikipedia.org/wiki/Luddisme
+	économie  :  http://fr.wikipedia.org/wiki/Luddisme
+	économique  :  http://fr.wikipedia.org/wiki/Luddisme
+	éd  :  http://fr.wikipedia.org/wiki/Luddisme
+	éditions  :  http://fr.wikipedia.org/wiki/Luddisme
+	étend  :  http://fr.wikipedia.org/wiki/Luddisme
+	études »  :  http://fr.wikipedia.org/wiki/Luddisme
+	été  :  http://fr.wikipedia.org/wiki/Luddisme
+	Čeština  :  http://fr.wikipedia.org/wiki/Luddisme
+	Ελληνικά  :  http://fr.wikipedia.org/wiki/Luddisme
+	Български  :  http://fr.wikipedia.org/wiki/Luddisme
+	Русский  :  http://fr.wikipedia.org/wiki/Luddisme
+	Српски  :  http://fr.wikipedia.org/wiki/Luddisme
+	Українська  :  http://fr.wikipedia.org/wiki/Luddisme
+	עברית  :  http://fr.wikipedia.org/wiki/Luddisme
+	العربية  :  http://fr.wikipedia.org/wiki/Luddisme
+	فارسی  :  http://fr.wikipedia.org/wiki/Luddisme
+	–  :  http://fr.wikipedia.org/wiki/Luddisme
+	—  :  http://fr.wikipedia.org/wiki/Luddisme
+	↑  :  http://fr.wikipedia.org/wiki/Luddisme
+	中文  :  http://fr.wikipedia.org/wiki/Luddisme
+	����������  :  http://fr.wikipedia.org/wiki/Luddisme
+
+real	0m0.789s
+user	0m0.339s
+sys	0m0.012s
+
+Quelques réglages à faire:
+- « kevin  :  http://fr.wikipedia.org/wiki/Luddisme
+Dans le code source: >François Jarrige, «&#160;Kevin Binfield
+J'ajoute une liste à trier dans nettoie() avec les caractères unicode correspondant au guillemets français.
+
+J'apporte aussi quelques petits modification ici et là:
+
+Nouveau test:
+reno@Jupiter:~/mytz$ time python scanne http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	bienfaisance  :  http://fr.wikipedia.org/wiki/Luddisme
+	body{behavior:url("/w/static/1.26wmf3/skins/Vector/csshover.min.htc  :  http://fr.wikipedia.org/wiki/Luddisme
+	bokmål  :  http://fr.wikipedia.org/wiki/Luddisme
+	bouleverse  :  http://fr.wikipedia.org/wiki/Luddisme
+	bras  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	d’utilisation  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	hommes  :  http://fr.wikipedia.org/wiki/Luddisme
+	http://fr.wikipedia.org/w/index.php?title=Luddisme&amp;oldid=114631889  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	l&#039;encyclopédie  :  http://fr.wikipedia.org/wiki/Luddisme
+	labourer  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	l’histoire  :  http://fr.wikipedia.org/wiki/Luddisme
+	l’identique  :  http://fr.wikipedia.org/wiki/Luddisme
+	machine  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+	y  :  http://fr.wikipedia.org/wiki/Luddisme
+	   :  http://fr.wikipedia.org/wiki/Luddisme
+	«  :  http://fr.wikipedia.org/wiki/Luddisme
+	»  :  http://fr.wikipedia.org/wiki/Luddisme
+	À  :  http://fr.wikipedia.org/wiki/Luddisme
+	Ère  :  http://fr.wikipedia.org/wiki/Luddisme
+	[...]
+
+real	0m0.672s
+user	0m0.200s
+sys	0m0.027s
+
+- le bout de code commençant par body: Je peux pas y faire grand chose pour l'instant (pas balisé comme le html).
+
+- les apostrophes spéciales : Ajout de \xe2\x80\x99 et &#039; au dico de trad_code_html()
+>>> n = 'd’utilisation'
+>>> n.decode(charset).encode(charset)
+'d\xe2\x80\x99utilisation'
+
+- le lien url qui se retrouve dans la liste: Je comprend pas, il est pourtant balisé dans le code source, il ne devrait pas être là. Je laisse de côté pour l'instant.
+<a dir="ltr" href="http://fr.wikipedia.org/w/index.php?title=Luddisme&amp;oldid=114631889">
+
+- les guillemets sont ajoutés au dico
+>>> n = '«&#160;bris de machines&#160;»'
+>>> n.decode(charset).encode(charset)
+'\xc2\xab&#160;bris de machines&#160;\xc2\xbb'
+
+# TEST 11: multiple url
+reno@Jupiter:~/mytz$ time python scanne www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx http://fr.wikipedia.org/wiki/Luddisme 
+	[...]
+real	1m20.966s
+user	0m20.526s
+sys	0m0.179s
+
+Beaucoup de résultats, beaucoup de caractères spéciaux. J'ajuste le dico du mieux que je peux mais j'ai le sentiment que même si j'y passait les 6 prochains mois, mon script ne sera jamais optimal.
+
+
+# TEST 12: multiple urls avec -go
+reno@Jupiter:~/mytz$ time python scanne www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx http://fr.wikipedia.org/wiki/Luddisme https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about -go
+	chocolat  :  http://www.marmiton.org/recettes/recette_gloubi-boulga_14504.aspx ; http://www.marmiton.org/pratique/bonnes-bouteilles_blaye-cotes-de-bordeaux-des-rouges-de-classe-et-de-charme_1.aspx ; http://www.marmiton.org/recettes/recette_hachis-parmentier-aux-legumes-du-soleil_170879.aspx ; http://www.marmiton.org/magazine/tendances-gourmandes_les-secrets-d-un-pain-reussi_1.aspx ; http://www.marmiton.org/recettes/recette_muffins-aux-fruits-rouges_41909.aspx ; http://www.marmiton.org/recettes/recette_petits-choux-a-la-creme-patissiere_20914.aspx ; http://www.marmiton.org/recettes/recette_poulet-au-four-en-romertopf_33618.aspx ; http://www.marmiton.org/recettes/recette_quiche-surimi-poireaux_52371.aspx ; http://www.marmiton.org/recettes/recette_tarte-thon-tomate-improvisee_72067.aspx ; http://www.marmiton.org/recettes/recette_nems_21488.aspx ; http://www.marmiton.org/recettes/recette_noix-de-st-jacques-flambees-sauce-2-fromages_42792.aspx ; http://www.marmiton.org/recettes/recette_tortilla-de-pommes-de-terre_24594.aspx ; http://www.marmiton.org/recettes/ ; http://www.marmiton.org/video/ ; http://www.marmiton.org/dossiers/recherche.aspx ; http://www.marmiton.org/forum/ ; http://www.marmiton.org/question/recherche.aspx ; http://www.marmiton.org/pratique/mentions-legales_donnees-personnelles_1.aspx ; http://www.casimirland.com/casimirland/gloubi-boulga/index.php ; http://www.marmiton.org/pratique/techniques-culinaires-video-cuisine_realiser-des-makis-originaux.aspx ; https://plus.google.com/+marmiton ; https://www.youtube.com/user/marmitonofficiel ; http://www.marmiton.org/part/marmiton-magazine/kiosque.aspx
+	informatique  :  https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+	paris  :  http://www.marmiton.org/recettes/recette_hachis-parmentier-aux-legumes-du-soleil_170879.aspx
+	programmation  :  https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+	programme  :  https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+	python  :  https://twitter.com/universite_num
+	technologie  :  http://fr.wikipedia.org/wiki/Luddisme ; https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+	travail  :  http://www.marmiton.org/recettes/recette_nems_21488.aspx ; http://www.marmiton.org/pratique/techniques-culinaires-video-cuisine_realiser-des-makis-originaux.aspx ; http://fr.wikipedia.org/wiki/Luddisme ; https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about
+	université  :  https://www.france-universite-numerique-mooc.fr/courses/inria/41001/Trimestre_4_2014/about ; https://twitter.com/universite_num
+
+real	1m4.115s
+user	0m20.564s
+sys	0m0.208s
+
+
+# TEST Message d'erreur et -aide
+reno@Jupiter:~/mytz$ time python scanne www.iedparis8.net/ied -go
+	informatique  :  http://www.iedparis8.net/ied
+	travail  :  http://www.iedparis8.net/ied
+
+real	0m7.507s
+user	0m0.136s
+sys	0m0.033s
+
+reno@Jupiter:~/mytz$ time python scanne waris8.net/ied -go
+Une erreur est survenue. 
+Usage: 
+	python scanne FICHIER -option 
+	python scanne URL1 URL2 -option 
+Option: -go 
+Pour plus de détails: python scanne -aide
+
+real	0m0.083s
+user	0m0.047s
+sys	0m0.003s
+
+reno@Jupiter:~/mytz$ time python scanne qdfqsf qdfq -aide
+Usage:
+	python scanne FICHIER -option
+	python scanne URL1 URL2 ... -option
+
+Options: 
+	-go	cherche les termes contenus dans une liste donnée
+		(par défaut: cherche tous les termes)
+	-aide	affiche l'aide
+
+Note:
+	URL:	peut commencer par http:// ou par www.
+		accepte plusieurs URL
+
+real	0m0.097s
+user	0m0.040s
+sys	0m0.011s
+
+
+
+# CONCLUSION
+
+Cette série d'exercices est très intéressante à beaucoup de points de vue. 
+Je suis plutôt satisfait de mon code, même s'il n'est pas parfait. 
+Il y a encore beaucoup de petits ajustements à faire, principalement sur les caractères spéciaux du html.
+Malheureusement je manque de temps pour peaufiner comme je le voudrais.
+
+Ce que j'aimerais ajuster:
+ - les filtres nettoie(), etc à améliorer: 
+		des bouts de code (html ou autre) sont parfois dans la liste finale en mode -stop.
+		les caractères spéciaux ne sont pas tous référencés dans trad_code_html()
+- code redondant à certain endroit (pas le temps de modifier et re-tester)
+- faire un message d'erreur plus précis. Un pour chaque type d'erreur? (erreur d'encodage, d'adresse internet, connection perdue, etc.)

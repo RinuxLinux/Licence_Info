@@ -1,0 +1,72 @@
+#! /usr/bin/env python
+#-*-coding:utf-8-*-
+# Renaud Lizot
+# 14509956
+# px33-1
+# morpion
+
+J = True																# joueur initial
+T = 3																	# taille de grille
+H = 60																	# taille de cellule
+M = [T * [False] for x in range(T)]										# toutes cellules initialement libres
+
+def joue(event) :														# handler lie a <Button-1>
+	global J, M
+	w = event.widget													# le widget actif
+	if M[w.R][w.C] :													# cellule deja occupée
+		return
+	if J :
+		fais_x(w)
+	else :
+		fais_o(w)
+	s = symbole(J)														# joueur symbolique
+	M[w.R][w.C] = s
+	if gagnant(s) :
+		info['text'] = 'joueur %s gagne' % s
+		M = [T * [s] for x in range(T)]
+	J = not J
+
+def fais_x(w) :
+	w.create_polygon(10, 10, 20, 10, 55, 45, 55, 55, 45, 55, 10, 20, fill = 'red')
+	w.create_polygon(10, 55, 10, 45, 45, 10, 55, 10, 55, 20, 20, 55, fill = 'red')
+
+def fais_o(w) : w.create_oval(10, 10, 55, 55, width = 10)
+
+def symbole(j) : return ['O', 'X'][j]									# j ne peut valoir que 0 ou 1
+
+def gagnant(s) : 
+	global info
+	for x in range(T) :
+		if [M[x][0], M[x][1], M[x][2]].count(s) is T :					# ligne x
+			return True
+		if [M[0][x], M[1][x], M[2][x]].count(s) is T :					# colonne x
+			return True
+		if [M[0][0], M[1][1], M[2][2]].count(s) is T :					# diagonale \
+			return True
+		if [M[0][2], M[1][1], M[2][0]].count(s) is T :					# diagonale /
+			return True
+		if False not in M[0] + M[1] + M[2] :
+			info ['text'] = 'GAME OVER'
+
+
+
+# ~~~~~~~~~~~~~~  
+
+from Tkinter import *
+morpion = Tk() 
+morpion.title('MORPION 1.1')											# cosmetique
+grille = Frame(morpion)
+
+for R in range(T) : 
+	for C in range(T) :
+		Cell = Canvas(grille, bg = 'light grey', width = H, height = H) 
+		Cell.bind("<Button-1>", joue)
+		Cell.grid(row = R, column = C)
+		Cell.R, Cell.C = R, C											# localisation de chaque cellule
+
+grille.pack()
+stop = Button(morpion, text='ASSEZ', command = morpion.destroy)
+stop.pack()
+info = Label(morpion)
+info.pack()
+morpion.mainloop()

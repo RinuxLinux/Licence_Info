@@ -1,0 +1,187 @@
+# Renaud Lizot
+# 14509956
+# px30-3 
+# class, queue, supermarché
+
+# ANALYSE
+
+"...simuler plusieurs queues aux caisses d'un supermarché". Voyons ce qu'on peut faire de ce concept avec ce qu'on a compris de la POO.
+
+Imaginons un magasin avec une file de clients qui attendent pour accèder à une caisse parmi d'autres; caisse choisie en fonction du nombre d'articles déjà sur le tapis. On va considérer que les caissières scannent toutes à la même vitesse et que les clients arrivent tous aux caisses au même moment. Par conséquent, c'est la caisse qui comptera le moins d'articles sur son tapis qui aura la faveur du client suivant.
+
+Avant de commencer, identifions les objets dont nous aurons besoin.
+Pour coller au réel, disons que nous aurons une classe Caisse et une classe Client, qui hériteront des méthodes d'une classe Magasin. 
+La classe Caisse génèrera la liste des caisses avec le nombre d'articles que chacunes d'elles ont scannés. La classe Client s'occupera de générer un panier pour chaque client et de mettre ces clients en file d'attente.
+On pourra, en fin d'execution, produire un petit rapport avec le nombre d'articles scannés et le nombre de clients pour chaque caisse. Ainsi qu'un chrono symbolique?
+
+Voyons maintenant les méthodes et les variables dont nous aurons besoin:
+
+- La classe Magasin 
+	- clonée sur la classe Stack du cours, elle contiendra les mêmes méthodes.
+
+- La classe Caisse 
+	- variable: un dictionnaire avec les numéros de caisses et le total des articles sur leur tapis respectif.
+	- méthode: générateur de dict du type {caisse: total articles} en fonction du nombre de caisses ouvertes (ex: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0})
+	- méthode: chronomètre caissière (temps final)
+	
+- La classe Client:
+	- variables: le panier, la file de clients
+	- méthodes: générateur de panier (aléatoire), générateur de file d'attente en fonction du panier de chacun (on pourra se servir des méthodes héritées)
+
+
+# FAISABILITE
+
+On commence par importer le module random, puis on assigne une variable à sa méthode randint():
+
+import random
+ran = random.randint
+
+Vient ensuite la classe principale, ersatz de Stack():
+NOTE: j'ajoute l'initialisation de mon dictionnaire {caisseNo. : totalArticles}
+
+class Magasin(object):
+
+	def __init__(self): 
+		self.stack = []
+		self.dico = dict()
+	
+	def enqueue(self, val) : self.stack.append(val)
+	
+	def dequeue(self) : return self.stack.pop(0)
+	
+	def size(self): return len(self.stack)
+
+
+Passons maintenant à la caisse: le chrono est calculé arbitrairement en comptant 50 articles scannés par minutes + 2 minutes de battement (le temps que le client libère la caissière pour le client suivant). 
+La conversion temps décimal vers temps en minutes et secondes se fait en prenant l'entier du résultat pour les minutes, puis en multipliant la partie décimale par 60 pour avoir les secondes.
+
+class Caisse(Magasin):
+		
+	def setQueueCaisses(self, nCaisses):
+		for i in range(nCaisses):
+			self.dico[i+1] = 0
+		return self.dico
+
+	def getTemps(self, val) : 
+		return '%s min. %s sec.' % (int(val/50. + 2), (val/50. + 2) %1 * 60)
+
+
+Au tour du client: au lieu d'intégrer son unique instruction à la méthode qui la suit, la méthode getPanier() apporte plus de lisibilité. La méthode setQueueClients génère la file de clients/articles en se servant de la méthode précédente et de la méthode enqueue() héritée de la classe Magasin.
+
+
+class Client(Magasin):
+	
+	def getPanier(self): return ran(1, 100)
+	
+	def setQueueClients(self, val):
+		for i in range(val):
+			articles = self.getPanier()
+			self.enqueue(articles)
+		return self.stack
+
+
+
+Enfin, le rapport de fin:
+j'aime bien les dictionnaires, ils permettent de collecter des données sans se fouler. C'est pourquoi, pour mon rapport final, je vais utiliser un dict pour collecter le nombre de clients pour chaque caisse.
+Je peux me servir de la méthode setQueueCaisses() pour initialiser ce dictionnaire. Mais pour cela, il semble que je doive déclarer une instance de Caisse à part. 
+
+Voici donc ce que cela donne:
+
+ca = 5 		# nombre de caisses
+cl = 10 	# nombre de clients
+
+# Instanciation
+clients = Client()
+caisses = Caisse()
+compteur = Caisse()
+
+# Les listes et dictionnaires dont on aura besoin
+queueCaisses = caisses.setQueueCaisses(ca)
+queueClients = clients.setQueueClients(cl) 
+combienClients = compteur.setQueueCaisses(ca)
+
+# Transfert
+while clients.size() != 0:
+	numeroCaisse = queueCaisses.values().index(min(queueCaisses.values())) + 1		# cherche le numéro de la caisse avec le moins d'articles
+	print '*** Client suivant, avancez caisse no. %s ***' % numeroCaisse			# dit 'client suivant, avance caisse numéro x'
+	queueCaisses[numeroCaisse] += clients.dequeue()									# passe les articles du client à cette caisse et soustrait le client à la file d'attente
+	combienClients[numeroCaisse] += 1												# compte un client pour la caisse en question
+
+# rapport
+print '\n--------\nRAPPORT:\n--------'
+for cle in queueCaisses.keys():
+	print 'Caisse no. %s : %s articles, %s clients -- temps: %s' % (cle, queueCaisses[cle], combienClients[cle], caisses.getTemps(queueCaisses[cle]))
+print '-' * 20
+print 'Total articles: %s' % sum(queueCaisses.values())
+print '-' * 20
+
+# TEST
+
+reno@Jupiter:~/mytz$ python caisse
+*** Client suivant, avancez caisse no. 1 ***
+*** Client suivant, avancez caisse no. 2 ***
+*** Client suivant, avancez caisse no. 3 ***
+*** Client suivant, avancez caisse no. 4 ***
+*** Client suivant, avancez caisse no. 5 ***
+*** Client suivant, avancez caisse no. 3 ***
+*** Client suivant, avancez caisse no. 2 ***
+*** Client suivant, avancez caisse no. 4 ***
+*** Client suivant, avancez caisse no. 1 ***
+*** Client suivant, avancez caisse no. 1 ***
+
+--------
+RAPPORT:
+--------
+Caisse no. 1 : 119 articles, 3 clients --  temps: 4 min. 22.8 sec.
+Caisse no. 2 : 88 articles, 2 clients --  temps: 3 min. 45.6 sec.
+Caisse no. 3 : 88 articles, 2 clients --  temps: 3 min. 45.6 sec.
+Caisse no. 4 : 128 articles, 2 clients --  temps: 4 min. 33.6 sec.
+Caisse no. 5 : 90 articles, 1 clients --  temps: 3 min. 48.0 sec.
+--------------------
+Total articles: 513
+
+
+# PEAUFINAGE
+
+A y regarder de plus près, on voit que les caisses vides sont toujours prises dans le même ordre par les clients: caisse no. 1 puis 2, puis 3, etc.
+On pourrait rendre le choix des caisses aléatoires tant qu'elles sont vides. 
+Pour ce faire, il faudrait intégrer à la boucle while quelque chose comme ça:
+
+avec: cho = random.choice
+
+	choix = []
+	for cle in queueCaisses.keys():
+		if queueCaisses[cle] == 0 : choix.append(cle)
+	if choix != []: numeroCaisse = cho(choix)
+	else: numeroCaisse = queueCaisses.values().index(min(queueCaisses.values())) + 1
+
+OUTPUT:
+
+reno@Jupiter:~/mytz$ python caisse
+*** Client suivant, avancez caisse no. 3 ***
+*** Client suivant, avancez caisse no. 5 ***
+*** Client suivant, avancez caisse no. 4 ***
+*** Client suivant, avancez caisse no. 2 ***
+*** Client suivant, avancez caisse no. 1 ***
+*** Client suivant, avancez caisse no. 1 ***
+*** Client suivant, avancez caisse no. 4 ***
+*** Client suivant, avancez caisse no. 5 ***
+*** Client suivant, avancez caisse no. 4 ***
+*** Client suivant, avancez caisse no. 2 ***
+
+--------
+RAPPORT:
+--------
+Caisse no. 1 : 74 articles, 2 clients --  temps: 3 min. 28.8 sec.
+Caisse no. 2 : 145 articles, 2 clients --  temps: 4 min. 54.0 sec.
+Caisse no. 3 : 71 articles, 1 clients --  temps: 3 min. 25.2 sec.
+Caisse no. 4 : 84 articles, 3 clients --  temps: 3 min. 40.8 sec.
+Caisse no. 5 : 101 articles, 2 clients --  temps: 4 min. 1.2 sec.
+--------------------
+Total articles: 475
+--------------------
+reno@Jupiter:~/mytz$
+
+
+# REMARQUES
+J'aurais pu m'économiser une instance et un dict en utilisant des tuples pour les valeurs de mon dictionnaire de caisses...

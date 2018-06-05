@@ -1,0 +1,292 @@
+# Renaud Lizot
+# 14509956
+# px31-1 
+# LCD
+# usage : $ python lcd mots 20
+# $ python lcd [mots] [zoom: 20 = 120%]
+
+
+Tâches:
+1. augmenter le dictionnaire description pour pouvoir afficher les mots DESCRIPTION et SEGMENT
+2. modifier la taille des segments pour pouvoir afficher des caractères 20% plus grands
+3. créer une fonction pour afficher le nom
+
+
+1 - ETENDRE DICTIONNAIRE
+# Analyse:
+La représentation à 7 segments limite le nombre de lettres représentables. 
+On pourrait rester sur cette configuration et représenter du mieux que l'on peut certaines lettres M, N, O, D, T, X etc.
+Je préfère devancer l'exercice px31-3 et préparer une configuration à 14 segments dès maintenant.
+
+# Faisabilité
+On va donc devoir ajouter 2 segments verticaux, 4 segments diagonaux et couper le segment n°1 en 2.
+Voir: ./_screenshots/00_14-segments.png
+Voir: ./_screenshots/00_Common_segment_displays.png
+
+Les segments diagonaux sont les seuls à demander un peu plus de réflexion. 
+Ces segments sont en fait deux droites qui relient respectivement les points de coordonnées (10, 10) et (60, 110), (60, 10) et (10,110). 
+Ces droites font une "pause" au point central, de coordonnées (35, 60).
+
+Pour donner l'illusion de segments, on va devoir décaler le point de départ et le point d'arrivée pour que les segments ne donnent pas l'impression de dépasser du cadre. 
+Aussi, ces droites ne doivent pas passer par le point central du template pour faire 2 segments par droite.
+Concernant les points de départ et d'arrivée des droites, on va se servir de l'équation de chaque droite pour calculer les coordonnées de ces points. 
+Je décide de décaler les extrémités des droites de 2.5 pixel par rapport au point de référence et au point central.
+Les équations des droites sont respectivement: y = 2x - 10 et y = -2x + 130.
+
+Ceci fait, nous avons maintenant notre modèle complet. Il faut encore renuméroter les segments et reconstruire la liste "segments".
+
+segments = \
+[ # X1, Y1, X2, Y2
+	[15, 10, 55, 10], 		# 0
+	[15, 60, 30, 60],	  	# 1 vert milieu1
+	[40, 60, 55, 60], 	 	# 2 vert milieu2
+	[15, 110, 55, 110],		# 3
+	[10, 15, 10, 55], 	 	# 4
+	[10, 65, 10, 105],	 	# 5 
+	[60, 15, 60, 55], 	 	# 6
+	[60, 65, 60, 105], 		# 7
+	[12.5, 15, 32.5, 55],	# 8 diag 1A
+	[35, 10, 35, 55], 	 	# 9 horiz milieu1
+	[37.5, 55, 57.5, 15],	# 10 diag 2A
+	[12.5, 105, 32.5, 65],	# 11 diag 2B
+	[35, 65, 35, 105],		# 12 horiz milieu2
+	[37.5, 65, 57.5, 105]	# 13 diag 1B
+]
+
+Redéfinition du dictionnaire 'description'
+
+# description des lettres en termes de leurs segments
+description = { \
+	'A': [0, 1, 2, 4, 5, 6, 7], 
+	'B': [0, 2, 3, 6, 7, 9, 12], 
+	'C': [0, 3, 4, 5], 
+	'D': [0, 3, 6, 7, 9, 12], 
+	'E': [0, 1, 2, 3, 4, 5], 
+	'F': [0, 1, 2, 4, 5], 
+	'G': [0, 2, 3, 4, 5, 7], 
+	'H': [1, 2, 4, 5, 6, 7],
+	'I': [0, 3, 9, 12], 
+	'J': [3, 5, 6, 7],
+	'K': [1, 4, 5, 10, 13],
+	'L': [3, 4, 5],
+	'M': [4, 5, 6, 7, 8, 10], 
+	'N': [4, 5, 6, 7, 8, 13],
+	'O': [0, 3, 4, 5, 6, 7],
+	'P': [0, 1, 2, 4, 5, 6], 
+	'Q': [0, 3, 4, 5, 6, 7, 13],
+	'R': [0, 1, 4, 5, 6, 2, 13],
+	'S': [0, 8, 2, 7, 3], 
+	'T': [0, 9, 12], 
+	'U': [3, 4, 5, 6, 7], 
+	'V': [4, 5, 10, 11],
+	'W': [4, 5, 11, 13, 7, 6],
+	'X': [8, 13, 10, 11], 
+	'Y': [8, 10, 12],
+	'Z': [0, 10, 11, 3]
+}
+
+
+# Tests
+Voir: ./_screenshots/01_test_segment.png
+Voir: ./_screenshots/02_test_description.png
+
+Le mot dépasse le cadre. On règlera ça pendant l'étape suivante
+
+
+2. AJOUTER ZOOM +20%
+# Analyse:
+Pour faciliter la manipulation des coordonnées, je décide de tout factoriser en fonction de variables:
+
+
+# Faisabilité
+from Tkinter import *
+top = Tk()
+canevas = Canvas(top, height=500, width=1400)
+canevas.pack()
+
+z = 0 				# zoom
+x = 10 				# x origin
+y = 10 				# y origin
+s = 40*(1+z/100.) 	# size
+e = 5				# espacement
+
+canevas.create_line(x + e, y, x + e + s, y, width=10) #0
+canevas.create_line(x, y + e, x, y + e + s, width=10) #4
+canevas.create_line(x, y + 3*e + s, x, y + 2*s + 3*e, width=10) #5
+canevas.create_line(x + e, y + 4*e + 2*s, x + e + s, y + 4*e + 2*s, width=10) #3
+canevas.create_line(x + 2*e + s, y + e, x + 2*e + s, y + e + s, width=10) #6
+canevas.create_line(x + 2*e + s, y + 3*e + s, x + 2*e + s, y + 3*e + 2*s, width=10) #7
+canevas.create_line(x + e, y + 2*e + s, x + s/2., y + 2*e + s, width=10) #1
+canevas.create_line(x + 2*e + s/2., y + 2*e + s, x + e + s , y + 2*e + s, width=10) #2
+canevas.create_line((y+e+10)/2., y+e, (y+e+s+10)/2., y+e+s, width=10) #8
+canevas.create_line(x+e+s/2.,y,x+e+s/2.,y+e+s, width=10) #9
+canevas.create_line(x+e+s/2., y+3*e+s, x+e+s/2., y+3*e+2*s, width=10) #12
+...
+
+Je me rends compte que les diagonales #8 #13 et #10 #11 posent un léger problème. Les équations pour calculer les extrémités des diagonales sont faites pour un point de référence situé en (10, 10).
+On pourrait avoir envie de décaler l'affichage dans le cadre... Par conséquent je cherche à améliorer mes équations. 
+Pour rappel, ces équations sont : y = 2x - 10 et y = -2x + 130
+
+Voici ce que je trouve (à coups de systèmes d'équations*):
+Diagonales #8 #13: y = 2x - 2*x1 + y1
+Diagonales #10 #11: y = -2x + 2*x2 + y2
+
+* exemple:
+pour équation y = -2x + 130
+(x2, y2) : (10, 110) et (60, 10)
+130 = 10a + 110b = 60a + 10b
+Solutions: a = 2 ; b = 1
+
+A partir de là, je retravaille les coordonnées pour chaque ligne.
+canevas.create_line(x + e, y, x + e + s, y, width=10) #0
+canevas.create_line(x + e, y + 2*e + s, x + s/2., y + 2*e + s, width=10) #1
+canevas.create_line(x + 2*e + s/2., y + 2*e + s, x + e + s , y + 2*e + s, width=10) #2
+canevas.create_line(x + e, y + 4*e + 2*s, x + e + s, y + 4*e + 2*s, width=10) #3
+canevas.create_line(x, y + e, x, y + e + s, width=10) #4
+canevas.create_line(x, y + 3*e + s, x, y + 2*s + 3*e, width=10) #5
+canevas.create_line(x + 2*e + s, y + e, x + 2*e + s, y + e + s, width=10) #6
+canevas.create_line(x + 2*e + s, y + 3*e + s, x + 2*e + s, y + 3*e + 2*s, width=10) #7
+canevas.create_line(x + e/2., y + e, (s + e)/2. + x, y + s + e, width=10) #8.2
+canevas.create_line(x + e + s/2., y, x + e + s/2., y + e + s, width=10) #9
+canevas.create_line(x + s/2. + 3*e/2., y + e + s, x + s + 3*e/2., y + e, width=10) #10.2
+canevas.create_line(x + e/2., y + 3*e + 2*s, x + (e + s)/2., y + 3*e + s, width=10) #11
+canevas.create_line(x + e + s/2., y + 3*e + s, x + e + s/2., y + 3*e + 2*s, width=10) #12
+canevas.create_line(x + 3*e/2. + s/2., y + 3*e + s, 3.*e/2. + s + x, 3.*e + 2*s + y, width=10) #13.2
+
+Tests: 
+Voir: ./_screenshots/03_test_zoom_600.png
+
+
+# Ajustements
+Le test à +500% fait dépasser le dessin du cadre. Maintenant que j'ai la taille, les espacements et les coordonnées de référence, je peux indexer la hauteur du cadre à cela.
+
+Je teste aussi les méthodes de zoom avec des lettres: en grands traits fins ou avec l'épaisseur et l'espacement indexé au zoom. Je choisis la deuxième méthode, plus naturelle.
+
+J'ai également ajouté un titre à la fenêtre, qui donne la valeur du zoom (ex: 120% pour +20%). 
+
+
+Test
+Voir: ./_screenshots/04_test_zoom_combo.png
+Voir: ./_screenshots/05_test_zoom_modele_600_large
+Voir: ./_screenshots/06_test_zoom_600_E_large_E_mince_combo.png
+Voir: ./_screenshots/07_test_zoom_600_M_large_M_mince_combo.png
+
+
+3. CREATION DE FONCTION(S)
+On choisi de regrouper les paramètres globaux en tête de gondole et de créer une fonction dessine(mot) qui reprend les instructions de dessin.
+Le script se lance en ligne de commande comme suit:
+$ python lcd [mot en majuscules ou pas] [zoom, optionel]
+$ python lcd segment 20 		# zoom +20% ou 120%
+$ python lcd description -20	# zomm -20% ou 80%
+$ python lcd description 		# zoom à 100% par défaut)
+
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+# px31-1 LCD
+
+from Tkinter import *
+from sys import argv
+
+# PARAMETRES GLOBAUX
+try:
+	zoom = int(argv[2])
+except:
+	zoom = 0
+mot = argv[1]
+
+z = zoom
+t = 1 + z/100.		# coef zoom
+
+offset = 70*t
+ep = 10*t
+couleur = '"blue"'
+decal = 20*t
+
+x = 10*t 				# x de reference
+y = 10*t 				# y de reference
+s = 40*(1 + z/100.) 	# size
+e = 5*t					# espacement
+
+coef_h = y + s*2 + 3*e						# coef hauteur cadre
+coef_w= (s + 2*ep + decal)*len(mot) + x 	# coef largeur cadre
+
+segments = \
+[ # X1, Y1, X2, Y2
+	[x + e, y, x + e + s, y], 											#0
+	[x + e, y + 2*e + s, x + s/2., y + 2*e + s], 						#1
+	[x + 2*e + s/2., y + 2*e + s, x + e + s , y + 2*e + s], 			#2 
+	[x + e, y + 4*e + 2*s, x + e + s, y + 4*e + 2*s], 					#3
+	[x, y + e, x, y + e + s], 											#4
+	[x, y + 3*e + s, x, y + 2*s + 3*e], 								#5
+	[x + 2*e + s, y + e, x + 2*e + s, y + e + s], 						#6
+	[x + 2*e + s, y + 3*e + s, x + 2*e + s, y + 3*e + 2*s], 			#7
+	[x + e/2., y + e, (s + e)/2. + x, y + s + e], 						#8
+	[x + e + s/2., y, x + e + s/2., y + e + s], 						#9
+	[x + s/2. + 3*e/2., y + e + s, x + s + 3*e/2., y + e], 				#10
+	[x + e/2., y + 3*e + 2*s, x + (e + s)/2., y + 3*e + s],				#11
+	[x + e + s/2., y + 3*e + s, x + e + s/2., y + 3*e + 2*s],			#12
+	[x + 3*e/2. + s/2., y + 3*e + s, 3.*e/2. + s + x, 3.*e + 2*s + y] 	#13
+]
+
+description = { \
+	'A': [0, 1, 2, 4, 5, 6, 7], 
+	'B': [0, 2, 3, 6, 7, 9, 12], 
+	'C': [0, 3, 4, 5], 
+	'D': [0, 3, 6, 7, 9, 12], 
+	'E': [0, 1, 2, 3, 4, 5], 
+	'F': [0, 1, 2, 4, 5], 
+	'G': [0, 2, 3, 4, 5, 7], 
+	'H': [1, 2, 4, 5, 6, 7],
+	'I': [0, 3, 9, 12], 
+	'J': [3, 5, 6, 7],
+	'K': [1, 4, 5, 10, 13],
+	'L': [3, 4, 5],
+	'M': [4, 5, 6, 7, 8, 10], 
+	'N': [4, 5, 6, 7, 8, 13],
+	'O': [0, 3, 4, 5, 6, 7],
+	'P': [0, 1, 2, 4, 5, 6], 
+	'Q': [0, 3, 4, 5, 6, 7, 13],
+	'R': [0, 1, 4, 5, 6, 2, 13],
+	'S': [0, 8, 2, 7, 3], 
+	'T': [0, 9, 12], 
+	'U': [3, 4, 5, 6, 7], 
+	'V': [4, 5, 10, 11],
+	'W': [4, 5, 11, 13, 7, 6],
+	'X': [8, 13, 10, 11], 
+	'Y': [8, 10, 12],
+	'Z': [0, 10, 11, 3]
+}
+
+def dessine(mot):
+	global description, segments, decal, ep, couleur, offset
+	for K in mot.upper() :
+		les_segments = description [K]	# les segments pour chaque caractere
+		for SG in les_segments :
+			S = segments [SG]	# les coordonnees pour chaque segment
+			X1 = repr(S [0] + decal) ; Y1 = repr(S [1])	# maintenant, translate les abscisses
+			X2 = repr(S [2] + decal) ; Y2 = repr(S [3])
+			args = '%s, %s, %s, %s' % (X1, Y1, X2, Y2)	# les args pour create_line()
+			args += ', width=%s, fill=%s' % (repr(ep), couleur)
+			eval('canevas.create_line(%s)' % args)
+		decal += offset
+
+top = Tk()
+top.title('LCD -- (zoom : %d%%)' % (100+z))
+canevas = Canvas(top, height=100 + coef_h, width=coef_w)
+canevas.pack()
+dessine(mot)
+
+top.mainloop()
+
+
+Résultats:
+./_screenshots/08_resultat_segment_zoom_100.png
+./_screenshots/09_resultat_description_zoom_120.png
+./_screenshots/10_resultat_azertyuiop_zoom_100.png
+./_screenshots/11_resultat_qsjkmwxvbn_zoom_90.png
+
+
+Je me demande s'il y a un intérêt à ramasser tous les paramètres globaux dans une fonction, puisque les variables sont utilisées par la fonction dessine() et le widget.
+A voir...
+
+A faire: ajouter les chiffres...

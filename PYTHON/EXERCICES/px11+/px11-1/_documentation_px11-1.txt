@@ -1,0 +1,66 @@
+#Renaud Lizot
+#14509956
+#px11-1
+
+L'exercice consiste à créer une fonction pluriel() qui gère les pluriels réguliers et irréguliers.
+
+ANALYSE
+-------
+
+Une série de if en escalier permettra de tester chaque terminaison de mot (de 3 à 1 lettres) pour y attribuer la forme du pluriel correspondant.
+On commencera par les terminaisons à 3 lettres (-eau, -uil, etc.) pour descendre graduellement vers les terminaisons à 1 lettre (-e, -t, -r, etc.) On testera avant tout les exceptions pour chaque cas de terminaison afin d'éviter les redondances.
+
+CODE
+----
+
+STRUCTURE
+Pour pouvoir tester chaque cas de figure tout en évitant les redondances, je choisis une série de if en escalier accompagnée de elif (else if) afin de verrouiller la valeur de retour dès la première condition if... is True rencontrée.
+Les exceptions seront testé en tête de la fonction pour ces mêmes raisons.
+
+Donc on aura, pour chaque type de terminaison:
+- premier niveau: test si mot parmi exception ; si vrai alors return terminaison correspondante ;
+- niveaux suivants: sinon, tests sur autres terminaisons de mots (en allant de 3 à 1 lettres finales)
+
+GESTION DES CAS PARTICULIERS
+Pour les cas très particuliers (yeux, aulx, cieux, aïeux), je préfère créer une liste nommée exceptions, contenant les mots au singulier suivi de leur pluriel. La méthode index() appliquée sur la liste exception permettra de trouver la position de ce pluriel (index(mot) +1) et donc de sortir ce dernier de la liste grâce à liste[liste.index(mot)+1].
+Pour les autres cas particuliers, on teste si mot est dans la liste correspondante: si oui alors on retourne la terminaison correspondante.
+
+GESTION DES CAS COURANTS
+On peut faire des listes plus large puisque les exceptions sont déjà couvertes plus haut dans le code (-eil, -iel, -ail, etc.). Idem, on commence par les 3 dernières lettres de mot puis on descend vers la dernière lettre de façon à couvrir toutes les possibilités.
+
+GESTION DES ACCENTS
+Pour simplifier, j'utilise un fichier executable nommé px11-1.py qui comprendra la ligne #-*- coding: utf-8 -*- en en-tête afin d'afficher correctement les accents.
+
+Notes: il n'est pas possible, sans contexte, de traiter des cas particuliers des mots à double pluriel tels que ail/aulx/ails (plus courant en botanique), ciel/ciels/cieux, banal/banals/banaux (sens différent). Concernant les mots composés, les règles sont plus compliquées et seraient longues à intégrer.
+
+En principe le code ressemblerait à cela:
+
+>>> def pluriel(mot):
+...     exceptions = ['œil', 'yeux', 'ail', 'aulx', 'vieil', 'vieux', 'ciel', 'cieux', 'aïeul', 'aïeux', 'oeil', 'yeux']
+...     if mot in exceptions: return exceptions[exceptions.index(mot) +1]
+...     elif mot in ['bleu', 'pneu', 'emeu', 'bancal', 'banal', 'portail', 'étal', 'serval', 'caracal', 'régal', 'naval', 'glacial', 'natal', 'bal', 'carnaval', 'chacal', 'festival', 'récital']: return mot + 's'
+...     elif mot in ['hibou', 'pou', 'caillou', 'genou', 'bijou', 'joujou', 'chou']: return mot + 'x'
+...     elif mot in ['bail', 'corail', 'émail', 'soupirail', 'travail', 'vantail', 'vitrail', 'bétail', 'portail']:
+...             if mot == 'bétail': return 'bestiaux'
+...             else: return mot[0:-2] + 'ux'
+...     else:
+...             if mot[-3:] == 'eau': return mot + 'x'
+...             elif mot[-3:] in ['eil', 'iel', 'eul', 'ail', 'uil']: return mot + 's'
+...             else:
+...                     if mot[-2:] == 'al': return mot[0:-2] + 'aux'
+...                     elif mot[-2:] == 'eu': return mot + 'x'
+...                     elif mot[-2:] in ['ou', 'au', 'el', 'il', 'ru', 'tu', 'pu', 'su', 'du', 'lu', 'vu', 'nu', 'mu']: return mot + 's'
+...                     else:
+...                             if mot[-1] in ['z', 'x', 's']: return mot
+...                             else: return mot + 's'
+...
+>>> while 1:
+...     mot = raw_input('Mot:      ').lower()
+...     if mot.lower() in ['q', 'exit', 'quit']: break 
+...     print 'Pluriel: ', pluriel(mot)
+>>>
+
+NOTES:
+- La boucle finale est un 'gadget' de confort pour pouvoir entrer des mots à la chaîne. Les mots clés q ou exit permettent d'arrêter le script.
+- La variable mot est la valeur entrée par l'utilisateur mise en minuscule.
+- 'oeil' figure dans la ligure d'exceptions car, soyons honnêtes, il est plus souvent tapés sous cette forme.

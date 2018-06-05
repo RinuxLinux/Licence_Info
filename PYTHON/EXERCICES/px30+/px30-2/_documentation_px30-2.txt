@@ -1,0 +1,44 @@
+# Renaud Lizot
+# 14509956
+# px30-2 
+# class, size(), try/except
+
+
+reno@Jupiter:~$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> class Stack(object):
+...     def __init__(self): self.stack = []
+...     def push(self, val) : self.stack.append(val)
+...     def pop(self) : 
+...             try:
+...                     return self.stack.pop(0)
+...             except IndexError:
+...                     print 'La Liste est vide'
+...     def size(self) : return len(self.stack)
+... 
+>>> 
+>>> p = Stack()
+>>> for x in 'un deux trois'.split() : p.push(x)
+... 
+>>> x = p.pop(); x; p.stack
+'un'
+['deux', 'trois']
+>>> p.size()
+2
+>>> x = p.pop(); x; p.stack
+'deux'
+['trois']
+>>> x = p.pop(); x; p.stack
+'trois'
+[]
+>>> x = p.pop(); x; p.stack
+La Liste est vide
+[]
+>>> p.size()
+0
+>>> 
+
+
+

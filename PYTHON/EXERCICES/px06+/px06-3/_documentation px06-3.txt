@@ -1,0 +1,116 @@
+# px06-3
+# LIZOT Renaud
+# 14509956
+
+
+
+L'exercice propose de créer une fonction qui peut tracer un polygone de taille et de couleur quelconque, avec n'importe quel nombre de cotes.
+
+###################################
+#! \sr\bin\env python
+# px06-3
+# LIZOT Renaud
+# 14509956
+
+from turtle import *
+
+def polygone(taille, nb_cotes, couleur):
+	for x in range(nb_cotes):
+		color(couleur)		
+		forward(taille)
+		left(360/nb_cotes)
+	return
+
+def nb_cote():
+	while True:
+		try:
+			x = int(raw_input('Nombre de cotes (entier superieur ou egal a 3): '))
+			break
+		except:
+			print 'Veuillez entrer un nombre entier superieur ou egal a 3'
+			pass
+	return x
+	
+def isSup(x):
+		if x < 3 : return False
+		else:
+			return True
+
+#taille
+while True:
+	try:
+		t = int(raw_input('Quelle taille: '))
+		break
+	except:
+		print 'Veuillez entrer un nombre entier'
+		pass
+
+# n cotes
+n = nb_cote()
+Sup = isSup(n)
+while Sup is False:
+	n = nb_cote()
+	Sup = isSup(n)
+	
+#couleur
+while True:
+		try:
+			c = raw_input('Quelle couleur (in english please!): ')
+			color(c)
+			reset()
+			break
+		except:
+			print 'Veuillez choisir une couleur en anglais (ex.: red, yellow, green, blue, etc.)'
+			pass
+
+polygone(t, n, c)
+done()
+################################
+
+ANALYSE:
+--------
+La fonction polygone() doit donc prendre 3 variables: taille, couleur et nombre de cotes. Un polygone a minimum 2 cotes.
+On peut reprendre et adapter le code de l'exercice précèdent.
+
+#TAILLE
+doit être un nombre entier. 
+
+#COULEUR
+Cette fois, j'opte pour demander a l'utilisateur de choisir une couleur en anglais. Le contrôle de validité sera peut-être un peu plus dur a mettre en place: le retour d'erreur ne se fait que pendant le passage dans le module turtle. Peut-on intégrer une commande turtle.color() dans une boucle ou une fonction? 
+
+#NOMBRE COTES
+doit être un nombre entier superieur ou egal a 3. Comment combiner les deux conditions?
+
+#ANGLE TORTUE
+est de 360/nombre de cotes
+
+
+MISE EN CODE
+-------------
+#POLYGONE()
+Pas de difficulté. On remplace les constantes de l'exercice précédent avec les variables adéquates. On adapte l'angle de rotation de turtle.
+
+#TAILLE: t
+On prend les mêmes et on recommence.
+
+#COULEUR: c
+Je veux garder l'idée du test de validité. La variable couleur provoque une erreur uniquement lorsqu'elle est passée dans le module turtle. Une recherche sur Internet m'apprend qu'on peut importer le module turtle dès le début du code, ce qui devrait me permettre de tester cette valeur quand je le souhaite.
+Ce que je teste de suite: je reprends l'idée de la boucle while...try...except, avec un raw_input suivi d'un turtle.color(couleur). Si ça provoque une erreur, un simple print rappellera à l'utilisateur de choisir une couleur en anglais et reviendra au raw_input.
+
+#NB COTES: n
+Là aussi je veux garder l'idée du test de validité. A cela je dois ajouter un test pour n > 3. 
+Une série de if? Non, je veux garder la fameuse boucle while...try...except.
+Une fonction pour chaque condition (superieur à 3 et entier)? Je cherche sur papier comment ça pourrait se présenter et s'organiser.
+Je finis par avoir un plan correct. Testons:
+	- une fonction unaire isSup(x) qui teste la condition x < 3 (comme ça j'inclus 3 dans les conditions valides) et renvoie True/False. La variable Sup prend cette valeur.
+	- une fonction 0 nb_cote() qui teste si n est entier et qui contient le raw_input qui attribut sa valeur à n.
+	- une boucle while tourne tant que la variable Sup est False et renvoie à nb_cote() pour redéfinir n.
+
+#APPEL DE POLYGONE()
+L'appel de polygone se fait à la fin: polygone(t,n,c).
+Suivi d'un turtle.done() pour garder la fenêtre ouverte. 
+
+
+TESTS
+-----
+Des tests avec des valeurs normales et aberrantes montrent que le code fonctionne comme voulu.

@@ -1,0 +1,92 @@
+# Renaud Lizot
+# 14509956
+# px27-1
+
+Il suffit ici de recopier le code fourni dans le cours...
+
+
+reno@Jupiter:~$ cd ./wdir/
+reno@Jupiter:~/wdir$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> def pilote(fichier, dex) :
+...     flux = open(fichier, 'r')
+...     for n, ligne in enumerate(flux) :
+...             dex = indexe(dex, ligne.split(), n + 1)
+...     flux.close()
+...     prd(dex)
+...     return dex
+... 
+>>> def indexe(dex, mots, ligne) :
+...     for mot in mots :
+...             mot = nettoie(mot)
+...             if mot.lower() in stoplist : pass
+...             else : dex = ajoute(dex, mot, ligne)
+...     return dex
+... 
+>>> def ajoute(dex, mot, ligne) :
+...     if mot in dex :
+...             if ligne in dex[mot] : pass
+...             else : dex[mot].append(ligne)
+...     else : dex[mot] = [ligne]
+...     return dex
+... 
+>>> def nettoie(x) : return x
+... 
+>>> def prd(d) :
+...     for c in sorted(d) :
+...             print '\t', c, ':', d[c]
+... 
+>>> stoplist = 'ce de du en le la mais on ou par pas pour qui un une'.split()
+>>> pilote('indexe-moi', {})
+	"instruction" : [7]
+	(grosse) : [3]
+	alors : [8]
+	attendue, : [6]
+	autrement : [7]
+	avant : [6]
+	avec : [8]
+	avoir : [5]
+	bien : [5]
+	bien, : [1]
+	bon : [9]
+	bouts, : [4]
+	c'est : [1, 2, 3]
+	certitude : [5]
+	chaque : [4, 8]
+	coder : [3]
+	contexte : [8]
+	dans : [6]
+	dit : [7]
+	expression : [4, 6]
+	fonctionnement : [9]
+	frustration. : [3]
+	garantit : [9]
+	global. : [9]
+	instruction : [8]
+	large, : [7]
+	mal : [2]
+	marche : [2]
+	petits : [4]
+	plaisir, : [1]
+	plus : [6]
+	programme : [1, 2]
+	programme. : [7]
+	progressivement : [4]
+	progressivement, : [9]
+	qu'elle : [5]
+	qui, : [9]
+	retourne : [5]
+	s'en : [6]
+	servir : [6]
+	solution : [3]
+	testant : [4]
+	teste : [8]
+	tourne : [1]
+	tout, : [2]
+	valeur : [5]
+	voulu, : [8]
+	vraiment : [2]
+{'certitude': [5], 'progressivement': [4], 'bien,': [1], 'avant': [6], 'voulu,': [8], 'retourne': [5], 'coder': [3], 'avec': [8], 'alors': [8], "c'est": [1, 2, 3], 'bouts,': [4], 'bien': [5], 'chaque': [4, 8], 'valeur': [5], "s'en": [6], 'autrement': [7], 'avoir': [5], 'large,': [7], 'testant': [4], 'attendue,': [6], 'programme.': [7], 'tourne': [1], 'vraiment': [2], 'global.': [9], 'petits': [4], 'teste': [8], 'frustration.': [3], 'qui,': [9], 'garantit': [9], 'mal': [2], 'marche': [2], '(grosse)': [3], 'progressivement,': [9], 'expression': [4, 6], 'instruction': [8], 'dans': [6], 'solution': [3], 'plaisir,': [1], 'fonctionnement': [9], 'plus': [6], '"instruction"': [7], 'bon': [9], 'dit': [7], 'tout,': [2], 'servir': [6], "qu'elle": [5], 'contexte': [8], 'programme': [1, 2]}
+>>> 

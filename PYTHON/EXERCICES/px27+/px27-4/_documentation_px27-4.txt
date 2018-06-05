@@ -1,0 +1,186 @@
+# Renaud Lizot
+# 14509956
+# px27-4
+
+#####################################
+OBSERVATIONS: "global" / ("grosse")
+
+Résultat:
+	"grosse" : [3]
+	[...]
+	global" : [9]
+	[...]
+
+La fonction nettoie() ne teste qu'une fois si le premier et le dernier caractères se trouvent dans la liste des ponctuations. Autrement dit, elle ne nettoie que 2 caractères par mot. Or dans le cas de ("grosse"), il y a 4 caractères à supprimer. Dans "global". il y en 3. 
+
+
+# PREMIER JET
+Mon premier réflexe est de modifier nettoie() de la façon suivante:
+- on explose chaque mot en liste de lettres
+- on teste contre une liste contenant l'alphabet (on profite que le texte soit codé en ASCII donc pas de caractères diacritiques à gérer)
+- si la lettre est dans l'alphabet, on garde. Sinon on jette.
+- Cela rend inutile la variable ponctuation.
+
+def nettoie(mot):
+	mot_explose = list(mot)
+	mot_temp = []
+	alphabet = "a b c d e f g h i j k l m n o p q r s t u v w x y z - ' 0 1 2 3 4 5 6 7 8 9".split()
+	for lettre in mot_explose :
+		if lettre.lower() in alphabet : mot_temp.append(lettre.lower())
+	mot = ''.join(mot_temp) 
+	return mot
+
+
+# REGLAGES
+Après réflexion, j'aimerais bien que ça marche pour n'importe quel encodage. Alors on va prendre le problème à l'envers. 
+On va teste chaque lettre du mot: si elle ne se trouve pas dans la liste d'exclusion, on garde. Sinon on jette.
+
+def nettoie(mot):
+	mot_explose = list(mot)
+	mot_temp = []
+	exclusions = '( , . " )'
+	for lettre in mot_explose :
+		if lettre.lower() not in exclusions : mot_temp.append(lettre.lower())
+	mot = ''.join(mot_temp) 
+	return mot
+	
+La variable que j'ai choisi d'appeler exclusions peut maintenant être remplacée par la variables ponctuation que l'on avait au départ. Il faudra juste la remplacer dans le code ci-dessus par "ponctuation". 
+
+
+# LE REVEIL !
+Ceci fait, il y a peut-être un autre manière moins "brutale" de faire? 
+En ajoutant un for dans la fonction nettoie() on peut choisir de faire tourner le nettoyage autant de fois que nécessaire.
+On pourrait choisir un nombre de tours arbitraire. Considérant toutes les possibilités de la langue française, 3 tours me paraîssent suffisants mais peut-on faire confiance à l'utilisateur??????????
+Je décide de prendre la longueur de chaque mot comme nombre de tours : 
+
+def nettoie(mot):
+	for i in range(len(mot)):
+		if mot[-1] in ponctuation : mot = mot[:-1]
+		if mot[0] in ponctuation : mot = mot[1:]
+	return mot
+
+Résultat:
+	[...]
+	global : [9]
+	grosse : [3]
+	[...]
+
+	
+# REFLEXIONS 
+D'un côté on a 6-7 lignes de codes avec 2 nouvelles variables et une boucle qui tourne sur chaque caractère du texte. 
+De l'autre, on a une fonction courte mais avec une boucle qui tourne inutilement pendant un certain nombre de tours. 
+Quelle méthode favoriser? Dans quel cas le CPU est-il le plus solicité? 
+
+
+#####################################
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px27/px27-4$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from os import getcwd, chdir
+>>> chemin = getcwd() + '/wdir'
+>>> chdir(chemin)
+>>> # VARIABLES GLOBALES
+... ponctuation = '(, . ")'
+>>> 
+>>> ### STOP.LIST ###
+... # CREER STOP.LIST
+... def put_list(liste) :
+...     liste = liste.split()
+...     flux = open('stop.list','w')
+...     for mot in liste :
+...                     flux.write(mot + '\n')
+...     flux.close()
+...     return
+...     
+... 
+>>> # LIRE STOP.LIST
+... def get_list(fichier) :
+s s'en plus qu'elle")de du en le la mais on ou par pas pour qui un une c'est dan 
+...     flux = open(fichier,'r')
+...     stoplist = flux.read().split()
+...     flux.close()
+...     return stoplist
+... 
+>>> # FONCTIONS AUXILLIAIRES
+... def nettoie(mot):
+... for i in range(len(mot)):
+... 	if mot[-1] in ponctuation : mot = mot[:-1]
+... 	if mot[0] in ponctuation : mot = mot[1:]
+... return mot
+... 
+>>> def indexe(dex, mots, ligne) :
+...     for mot in mots :
+...             mot = nettoie(mot)
+...             if mot.lower() in stoplist : pass
+...             else : dex = ajoute(dex, mot, ligne)
+...     return dex
+... 
+>>> def ajoute(dex, mot, ligne) :
+...     if mot in dex :
+...             if ligne in dex[mot] : pass
+...             else : dex[mot].append(ligne)
+...     else : dex[mot] = [ligne]
+...     return dex
+... 
+>>> def prd(d) :
+...     for c in sorted(d) :
+...             print '\t', c, ':', d[c]
+... 
+>>> # FONCTION PRINCIPALE               
+... def pilote(fichier, dex) :
+...     flux = open(fichier, 'r')
+...     for n, ligne in enumerate(flux) :
+...             dex = indexe(dex, ligne.split(), n + 1)
+...     flux.close()
+...     prd(dex)
+...     return dex
+... 
+>>> # APPEL PRINCIPAL
+... stoplist = get_list('stop.list')
+>>> pilote('indexe-moi', {})
+	alors : [8]
+	attendue : [6]
+	autrement : [7]
+	avant : [6]
+	avec : [8]
+	avoir : [5]
+	bien : [1, 5]
+	bon : [9]
+	bouts : [4]
+	certitude : [5]
+	chaque : [4, 8]
+	coder : [3]
+	contexte : [8]
+	dit : [7]
+	expression : [4, 6]
+	fonctionnement : [9]
+	frustration : [3]
+	garantit : [9]
+	global : [9]
+	grosse : [3]
+	instruction : [7, 8]
+	large : [7]
+	mal : [2]
+	marche : [2]
+	petits : [4]
+	plaisir : [1]
+	programme : [1, 2, 7]
+	progressivement : [4, 9]
+	retourne : [5]
+	servir : [6]
+	solution : [3]
+	testant : [4]
+	teste : [8]
+	tourne : [1]
+	tout : [2]
+	valeur : [5]
+	voulu : [8]
+	vraiment : [2]
+{'certitude': [5], 'progressivement': [4, 9], 'global': [9], 'grosse': [3], 'plaisir': [1], 'retourne': [5], 'coder': [3], 'avec': [8], 'alors': [8], 'attendue': [6], 'bien': [1, 5], 'chaque': [4, 8], 'valeur': [5], 'frustration': [3], 'autrement': [7], 'avoir': [5], 'testant': [4], 'tourne': [1], 'bouts': [4], 'vraiment': [2], 'petits': [4], 'teste': [8], 'garantit': [9], 'mal': [2], 'marche': [2], 'instruction': [7, 8], 'solution': [3], 'large': [7], 'fonctionnement': [9], 'tout': [2], 'voulu': [8], 'bon': [9], 'dit': [7], 'avant': [6], 'servir': [6], 'expression': [4, 6], 'contexte': [8], 'programme': [1, 2, 7]}
+>>> 
+#####################################
+
+
+
+ 

@@ -1,0 +1,20 @@
+#[px04-2]
+#coder une fonction unaire vert() qui retourne vrai si son argument a comme valeur #'vert' et faux
+#sinon"; coder de même la fonction rouge() et la fonction orange()
+
+#NB : feu doit être initialisé AVANT de pouvoir être utilisé comme argument...
+
+feu = 'vert'
+def vert(x) : return feu is 'vert'
+vert(feu)				# True
+
+feu = 'rouge'
+def rouge(x) : return feu is 'vert'
+rouge(feu)				# False
+
+feu = 'orange'
+def orange(x) : return feu is 'vert'
+orange(feu)				# False
+
+# en partant du principe que tout ça fait partie du même
+# bloc et qu'on veut autoriser le 'vert'. Sinon c'est le bordel.

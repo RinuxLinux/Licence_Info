@@ -1,0 +1,16 @@
+# [px02-5] soit p = 'pommedeterre'"; coder en une seule expression l'insertion des traits d'union là où ils sont
+nécessaires"; peut-on effectuer l'opération p[7] = '-'!? Qu'en conclure"?
+
+# 1
+
+p = 'pommedeterre' ;
+trait = '-' ;
+p2 = p[0:5] + trait + p[5:7] + trait +  p[7:] ; 
+p2  # pomme-de-terre
+
+
+#2
+ERROR: STR object does not support ITEM ASSIGNMENT
+On ne peut pas insérer de caractère dans une chaîne STR pré-existante.
+Il faut reconstruire bout à bout. (?)
+

@@ -1,0 +1,153 @@
+# Renaud Lizot
+# 14509956
+# px27-3
+
+#####################################
+OBSERVATIONS:
+
+Dans cet exercice on cherche à créer deux fonctions qui remplaceront le bout de code concernant stoplist/stop.list.
+la fonction put_list() créera le fichier stop.list à partir d'une liste de mots donnée en argument. Ne retournera rien.
+La fonction get_list() lira ce fichier et son return servira à définir la variable stoplist, i.e. stoplist = get_list('stop.list'). 
+
+ECRITURE DES FONCTIONS get_list et put_list
+Rien de sorcier, c'est le même code à peu de chose près. 
+put_list prend une liste en argument et get_list prend le nom du fichier où se trouve la stoplist.
+
+APPEL DE PUT_LIST
+L'appel de put_list se fait dans get_list, en première ligne. 
+A mon avis on perd un peu en lisibilité puisque la liste des mots à omettre se retrouve au coeur d'une fonction qui pourrait être perdue au milieu d'un fatras d'autres fonctions, ce qui rendrait toute modification manuelle délicate... mais soit.
+
+Pour le sport, j'ai essayé un autre script qui définit les mots à omettre en variable globale:
+# VARIABLES GLOBALES
+ponctuation = '(, . ")'
+liste_mots = "ce de du en le la mais on ou par pas pour qui un une c'est dans s'en plus qu'elle" 
+
+put_list reste le même mais get_list change pour prendre en compte la nouvelle variable:
+def get_list(fichier, liste) :
+	put_list(liste)
+	(etc.)
+	
+et l'appel de stoplist change aussi un peu:
+stoplist = get_list('stop.list', liste_mots)
+
+Ca marche pareil. Toutefois l'intérêt de l'exercice est de nous faire comprendre que ce type de fonction peut être réutilisable dans n'importe quel autre programme. D'où, peut-être, l'intérêt de définir la liste de mots à omettre à l'intérieur d'une de ces fonctions?
+
+APPEL DE GET_LIST
+Ayant besoin de stoplist dès le début de l'execution, on appelle get_list en même temps que l'on définit stoplist, avant l'appel de la fonction pilote donc.
+Autrement dit, on ne peut plus avoir la définition de stoplist en tête de code, avec l'autre variable globale ponctuation. C'est pourquoi on la retrouve en bas du code, juste avant l'appel de pilote().
+
+
+#####################################
+reno@Jupiter:~$ cd '/home/reno/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px27/px27-3'
+reno@Jupiter:~/Dropbox/COURS/1-EDF1ILPA - Introduction a la programmation/EXOS/Renaud Lizot px27/px27-3$ python
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> # CHANGEMENT DE REPERTOIRE DE TRAVAIL
+... from os import getcwd, chdir
+>>> chemin = getcwd() + '/wdir'
+>>> chdir(chemin)
+>>> 
+>>> # VARIABLES GLOBALES
+... ponctuation = '(, . ")'
+
+>>> ### STOP.LIST ###
+... # CREER STOP.LIST
+... def put_list(liste) :
+...     liste = liste.split()
+...     flux = open('stop.list','w')
+...     for mot in liste :
+...                     flux.write(mot + '\n')
+...     flux.close()
+...     return
+... 
+>>> # LIRE STOP.LIST
+... def get_list(fichier) :
+...     put_list("ce de du en le la mais on ou par pas pour qui un une c'est dans s'en plus qu'elle")
+...     flux = open(fichier,'r')
+...     stoplist = flux.read().split()
+...     flux.close()
+...     return stoplist
+... 
+>>> # FONCTIONS AUXILLIAIRES
+... def nettoie(mot):
+...     if mot[-1] in ponctuation : mot = mot[:-1]
+...     if mot[0] in ponctuation : mot = mot[1:]
+...     return mot
+... 
+>>> 
+>>> def indexe(dex, mots, ligne) :
+...     for mot in mots :
+...             mot = nettoie(mot)
+...             if mot.lower() in stoplist : pass
+...             else : dex = ajoute(dex, mot, ligne)
+...     return dex
+... 
+>>> 
+>>> def ajoute(dex, mot, ligne) :
+...     if mot in dex :
+...             if ligne in dex[mot] : pass
+...             else : dex[mot].append(ligne)
+...     else : dex[mot] = [ligne]
+...     return dex
+... 
+>>> 
+>>> def prd(d) :
+...     for c in sorted(d) :
+...             print '\t', c, ':', d[c]
+... 
+>>> 
+>>> # FONCTION PRINCIPALE               
+... def pilote(fichier, dex) :
+...     flux = open(fichier, 'r')
+...     for n, ligne in enumerate(flux) :
+...             dex = indexe(dex, ligne.split(), n + 1)
+...     flux.close()
+...     prd(dex)
+...     return dex
+... 
+>>> stoplist = get_list('stop.list')
+>>> pilote('indexe-moi', {})
+	alors : [8]
+	attendue : [6]
+	autrement : [7]
+	avant : [6]
+	avec : [8]
+	avoir : [5]
+	bien : [1, 5]
+	bon : [9]
+	bouts : [4]
+	certitude : [5]
+	chaque : [4, 8]
+	coder : [3]
+	contexte : [8]
+	dit : [7]
+	expression : [4, 6]
+	fonctionnement : [9]
+	frustration : [3]
+	garantit : [9]
+	global : [9]
+	grosse : [3]
+	instruction : [7, 8]
+	large : [7]
+	mal : [2]
+	marche : [2]
+	petits : [4]
+	plaisir : [1]
+	programme : [1, 2, 7]
+	progressivement : [4, 9]
+	retourne : [5]
+	servir : [6]
+	solution : [3]
+	testant : [4]
+	teste : [8]
+	tourne : [1]
+	tout : [2]
+	valeur : [5]
+	voulu : [8]
+	vraiment : [2]
+{'certitude': [5], 'progressivement': [4, 9], 'global': [9], 'grosse': [3], 'plaisir': [1], 'retourne': [5], 'coder': [3], 'avec': [8], 'alors': [8], 'attendue': [6], 'bien': [1, 5], 'chaque': [4, 8], 'valeur': [5], 'frustration': [3], 'autrement': [7], 'avoir': [5], 'testant': [4], 'tourne': [1], 'bouts': [4], 'vraiment': [2], 'petits': [4], 'teste': [8], 'garantit': [9], 'mal': [2], 'marche': [2], 'instruction': [7, 8], 'solution': [3], 'large': [7], 'fonctionnement': [9], 'tout': [2], 'voulu': [8], 'bon': [9], 'dit': [7], 'avant': [6], 'servir': [6], 'expression': [4, 6], 'contexte': [8], 'programme': [1, 2, 7]}
+>>> 
+
+
+ 

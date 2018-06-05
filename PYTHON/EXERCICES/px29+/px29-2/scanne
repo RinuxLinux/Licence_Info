@@ -1,0 +1,60 @@
+#! /usr/bin/env python(
+#-*-coding : utf-8 -*-
+# Renaud Lizot
+# 14509956
+# px29-2 main
+
+from urllib import urlopen
+from sys import argv
+from dexlex import *
+from os import chdir, getcwd
+
+source = getcwd()
+chdir(source+'/wdir/')
+
+# la pendaison... une liste de dessins
+P = [ 'c.create_line(40, 185, 140, 185, width=20, fill="maroon")',
+	'c.create_line(70, 185, 70, 10, width=7, fill="maroon")',
+	'c.create_line(66, 10, 129, 10, width=7, fill="maroon")',
+	'c.create_line(127, 13, 127, 60, width=4, fill="yellow")',
+	'c.create_oval(110, 30, 129, 49, width=1, fill="black")',
+	'c.create_rectangle(116, 50, 136, 100, fill="black")',
+	'c.create_line(120, 50, 100, 100, width=4, fill="black")',
+	'c.create_line(136, 50, 146, 100, width=4, fill="black")',
+	'c.create_line(120, 100, 120, 150, width=7, fill="black")',
+	'c.create_line(133, 100, 133, 150, width=7, fill="black")' ]
+
+def pilote(cibles, X, option, switch):
+	liste = get_list('go.list') if option is 'go' else get_list('stop.list')
+	cibles = get_hlinks(cibles) if switch is 'url' else cibles
+	for element in cibles:
+		url = element if switch is 'url' else None
+		flux = urlopen(element) if url else open(element)
+		data = nettoie_html(flux.read()) if switch is 'url' else None 
+		if switch is 'file':
+			for n, texte in enumerate(flux):
+				X = indexe(X, texte.split(), n + 1, liste, switch, option)
+		else:
+			X = indexe(X, data, url, liste, switch, option)
+		flux.close()
+	return X
+
+
+if len(argv) > 1:
+	if '-aide' in argv : 
+		print open('-aide').read()
+		open('-aide').close()
+	else: 
+		try:
+			option = get_option(argv)
+			urls = get_urls(argv)
+			files = get_files(argv, option).split()
+			switch = 'file' if urls is None else 'url'
+			prd(pilote(files if urls is None else urls, {}, get_option(argv), switch), switch)
+		except :
+			exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+else: exit("Une erreur est survenue. \nUsage: \n\tpython scanne FICHIER -option \n\tpython scanne URL1 URL2 -option \nOption: -go \nPour plus de d\xc3\xa9tails: python scanne -aide")	
+
+
+
+

@@ -1,0 +1,6 @@
+# [px02-4] en utilisant uniquement z, coder l'expression qui construit 'abracadabracadabracadabra'.
+
+z = 'abracadabra' ;
+a = z[0:4] ; # abra
+b = z[4:7] ; # cad
+z5 = z[0:4] + z[4:7] + z[0:4] + z[4:7] + z[0:4] + z[4:7] + z[0:4] ; z5

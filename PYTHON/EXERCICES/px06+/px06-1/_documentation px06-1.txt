@@ -1,0 +1,58 @@
+# LIZOT Renaud
+# 14509956
+#
+# px06-1
+
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> from turtle import *
+>>> valeur = raw_input('Combien de pas pour la tortue? ')
+Combien de pas pour la tortue? 150
+>>> for x in range(4):
+...     forward(valeur)
+...     left(90)
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "<string>", line 1, in forward
+  File "/usr/lib/python2.7/lib-tk/turtle.py", line 1552, in forward
+    self._go(distance)
+  File "/usr/lib/python2.7/lib-tk/turtle.py", line 1519, in _go
+    ende = self._position + self._orient * distance
+  File "/usr/lib/python2.7/lib-tk/turtle.py", line 277, in __mul__
+    return Vec2D(self[0]*other, self[1]*other)
+TypeError: can't multiply sequence by non-int of type 'float'
+
+### La commande turtle forward semble ne prendre que des nombres entiers. Quelque chose m'échappe au niveau du raw_input. Vérifions 'type(valeur)' juste après le raw_input pour en savoir d'avantage:
+
+>>> valeur = raw_input('Combien de pas pour la tortue? ')
+Combien de pas pour la tortue? 150
+>>> type(valeur)
+<type 'str'>
+
+### le type d'un raw_input() est une chaîne, même si sa valeur est techniquement un entier? Par ailleurs, forward ne prend pas de string. Je cherche comment convertir un str en int. Ca donne:
+
+>>> from turtle import *
+>>> valeur = int(raw_input('Combien de pas pour la tortue? '))
+Combien de pas pour la tortue? 150
+>>> for x in range(4):
+...     color('blue')
+...     forward(valeur)
+...     left(90)
+... 
+>>>
+
+
+### sinon, tel que c'était demandé dans l'exercice, ça aurait donné ce qui suit:
+
+>>> from turtle import *
+>>> valeur = 150
+>>> for x in range(4):
+...     color('blue')
+...     forward(valeur)
+...     left(90)
+... 
+>>>
+

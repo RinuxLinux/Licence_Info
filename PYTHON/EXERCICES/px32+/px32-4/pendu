@@ -1,0 +1,168 @@
+#! /usr/bin/env python
+#-*-coding : utf-8 -*-
+
+import random
+
+def actualise(event) :
+	global devine
+	if P and trou in devine :
+		if check_key(event) is 'ignore' : pass
+		else:
+			LH.configure(text ="")
+			nouveau = valide(event.char.decode('utf-8').lower(), mot, devine)
+			if devine != nouveau : devine = nouveau
+			else : eval(P.pop(0))
+			affiche()
+
+
+def affiche() :
+	global devine, mot, P
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	LL.configure(text = lettres)
+	if not L : LM ['text'] = mot
+	if len(P) == 0: score("PERDU")
+	if devine == mot : score("GAGN\xc3\x89 !")
+
+
+def check_key(event):
+	global lettres, ignorelist
+	lettres = ''.join(lettres.split())
+	check = 'garde'
+	for i in ignorelist:
+		if event.keysym==i : return 'ignore'
+	if event.char.lower() not in lettres:
+		lettres += event.char.lower()
+		return 'garde'
+	else:
+		LH.configure(text =event.char.lower() + " : d\xc3\xa9j\xc3\xa0 jou\xc3\xa9e")
+		return 'ignore'
+		
+
+
+def get_mots(fichier):
+	flux = open(fichier)
+	mots = flux.read().split()
+	flux.close()
+	return mots
+
+
+def isSeen(mot):
+	seen = ' '.join(get_mots('./wdir/f_dejavu'))
+	if mot in seen: return True
+	else: return False
+
+
+def parametrage(mots):
+	mot = random.choice(mots)
+	compteur = len(mots)
+	while isSeen(mot) is True and compteur != 0:
+		mot = random.choice(mots)
+		compteur -= 1
+	if compteur == 0: reset('./wdir/f_dejavu')
+	record(mot)
+	mot = mot.decode('utf-8')
+	taille = len(mot)
+	trou = '-'
+	devine = trou * taille
+	P = [ 'c.create_line(40, 185, 140, 185, width=20, fill="maroon", tags="potence")',
+	'c.create_line(70, 185, 70, 10, width=7, fill="maroon", tags="potence")',
+	'c.create_line(66, 10, 129, 10, width=7, fill="maroon", tags="potence")',
+	'c.create_line(127, 13, 127, 60, width=4, fill="yellow", tags="potence")',
+	'c.create_oval(110, 30, 129, 49, width=1, fill="black", tags="potence")',
+	'c.create_rectangle(116, 50, 136, 100, fill="black", tags="potence")',
+	'c.create_line(120, 50, 100, 100, width=4, fill="black", tags="potence")',
+	'c.create_line(136, 50, 146, 100, width=4, fill="black", tags="potence")',
+	'c.create_line(120, 100, 120, 150, width=7, fill="black", tags="potence")',
+	'c.create_line(133, 100, 133, 150, width=7, fill="black", tags="potence")' ]
+	lettres = ''
+	ignorelist = get_mots('./wdir/ignkeys.config')
+	return P, mot, taille, trou, devine, lettres, ignorelist
+
+
+def recommence():
+	global P, devine, mot, taille, lettres
+	P, mot, taille, trou, devine, lettres, ignorelist = parametrage(get_mots('./wdir/f_mots'))
+	c.delete('potence')
+	L = len(P)
+	LT.configure(text = devine)
+	LP.configure(text = str(L))
+	LM.configure(text='')
+	LL.configure(text = lettres)
+	LH.configure(text ="")
+
+
+def record(mot):
+	flux = open('./wdir/f_dejavu', 'a+')
+	flux.write(mot + '\n')
+	flux.close()
+
+
+def reset(fichier):
+	flux = open(fichier, 'w')
+	flux.write('')
+	flux.close()
+
+
+def score(resultat):
+	toplevel = Toplevel()
+	toplevel.title(resultat)
+	background = 'IndianRed1' if resultat is "PERDU" else 'lightgreen'
+	msg = Message(toplevel, text=resultat, width=150)
+	msg.config(bg=background, font=('times', 20, 'italic'))
+	msg.pack()
+	b1 = Button(toplevel, text='Rejouer', command=lambda: rejoue(toplevel))
+	b2 = Button(toplevel, text='Quitter', command=top.destroy)
+	b1.pack(side=LEFT)
+	b2.pack(side=RIGHT)
+	toplevel.mainloop()
+
+
+def rejoue(x):
+	x.destroy()
+	recommence()
+
+
+def valide(C, original, devine, R = '') :
+	global mot, taille
+	for x in range(taille):
+		if original [x] == C : R += original [x]
+		else : 
+			R += devine [x]
+	return R
+
+
+
+
+
+
+# GLOBALES
+P, mot, taille, trou, devine, lettres, ignorelist = parametrage(get_mots('./wdir/f_mots'))
+
+
+
+from Tkinter import *
+top = Tk()
+top.title("devine le mot")
+top.bind("<Key>", actualise)
+
+c = Canvas(top, bg='light grey', height=200, width=200)
+c.pack(side = LEFT)
+
+
+
+
+Button(top, text='start', command=recommence).pack(side=TOP)
+Button(top, text='stop', command=top.destroy).pack(side=TOP)
+
+LT = Label(top, text=devine, fg='red') ; LT.pack()
+LM = Label(top, text='', fg='red') ; LM.pack()
+LP = Label(top, text=str(len(P)), fg='blue') ; LP.pack()
+LH = Label(top, text='', fg='red') ; LH.pack(side=BOTTOM)
+LL = Label(top, text='', fg='green') ; LL.pack(side=BOTTOM)
+LJ = Label(top, text='LETTRES JOU\xc3\x89E(S):', fg='forest green'); LJ.pack(side=BOTTOM)
+
+
+top.mainloop()
+

@@ -1,0 +1,1016 @@
+reno@Jupiter:~/mytz$ time python scanne indexe-moi
+	a  :  10, 12
+	alors  :  8
+	attendue  :  6
+	aujourd'hui  :  11
+	autre  :  12
+	autrement  :  7
+	avant  :  6
+	avec  :  8
+	avoir  :  5
+	beau  :  11
+	bien  :  1, 5
+	bon  :  9
+	bouts  :  4
+	certitude  :  5
+	chaque  :  4, 8
+	coder  :  3
+	contexte  :  8
+	des  :  10
+	dire  :  12
+	dit  :  7
+	est  :  1-3, 10
+	expression  :  4, 6, 10
+	faire  :  11-12
+	fait  :  11
+	fera  :  11
+	fonctionnement  :  9
+	frustration  :  3
+	garantit  :  9
+	global  :  9
+	grand'chose  :  12
+	grosse  :  3
+	instruction  :  7-8
+	irai  :  11
+	large  :  7
+	lorsqu'il  :  11
+	mal  :  2
+	marche  :  2
+	petits  :  4
+	plaisir  :  1
+	programme  :  1-2, 7
+	progressivement  :  4, 9
+	retourne  :  5
+	servir  :  6
+	side-car  :  11
+	solution  :  3
+	suivantes  :  10
+	testant  :  4
+	teste  :  8
+	tester  :  10
+	tour  :  11
+	tourne  :  1
+	tout  :  2
+	valeur  :  5
+	voulu  :  8
+	vrai  :  12
+	vraiment  :  2
+
+real	0m0.119s
+user	0m0.037s
+sys	0m0.015s
+
+reno@Jupiter:~/mytz$ time python scanne indexe-moi -go
+	programme  :  1-2, 7
+	solution  :  3
+
+real	0m0.076s
+user	0m0.033s
+sys	0m0.014s
+
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied/
+	01/07/2014  :  http://www.iedparis8.net/ied/
+	11/03/2015  :  http://www.iedparis8.net/ied/
+	2005  :  http://www.iedparis8.net/ied/
+	2014/2015  :  http://www.iedparis8.net/ied/
+	2015-2016  :  http://www.iedparis8.net/ied/
+	24/04/2015  :  http://www.iedparis8.net/ied/
+	8  :  http://www.iedparis8.net/ied/
+	actualités  :  http://www.iedparis8.net/ied/
+	administration  :  http://www.iedparis8.net/ied/
+	administrative  :  http://www.iedparis8.net/ied/
+	année  :  http://www.iedparis8.net/ied/
+	arts  :  http://www.iedparis8.net/ied/
+	auditeur  :  http://www.iedparis8.net/ied/
+	aux  :  http://www.iedparis8.net/ied/
+	avez  :  http://www.iedparis8.net/ied/
+	bourse  :  http://www.iedparis8.net/ied/
+	candidats  :  http://www.iedparis8.net/ied/
+	cette  :  http://www.iedparis8.net/ied/
+	chiffre  :  http://www.iedparis8.net/ied/
+	cliniques  :  http://www.iedparis8.net/ied/
+	comment  :  http://www.iedparis8.net/ied/
+	consultation  :  http://www.iedparis8.net/ied/
+	contenu  :  http://www.iedparis8.net/ied/
+	continue  :  http://www.iedparis8.net/ied/
+	copyright  :  http://www.iedparis8.net/ied/
+	cours  :  http://www.iedparis8.net/ied/
+	coût  :  http://www.iedparis8.net/ied/
+	cursus  :  http://www.iedparis8.net/ied/
+	demande  :  http://www.iedparis8.net/ied/
+	demandes  :  http://www.iedparis8.net/ied/
+	des  :  http://www.iedparis8.net/ied/
+	desu  :  http://www.iedparis8.net/ied/
+	diplôme  :  http://www.iedparis8.net/ied/
+	dispensées  :  http://www.iedparis8.net/ied/
+	dispositifs  :  http://www.iedparis8.net/ied/
+	distance  :  http://www.iedparis8.net/ied/
+	droit  :  http://www.iedparis8.net/ied/
+	droits  :  http://www.iedparis8.net/ied/
+	délivrance  :  http://www.iedparis8.net/ied/
+	départ  :  http://www.iedparis8.net/ied/
+	déplacements  :  http://www.iedparis8.net/ied/
+	déroulement  :  http://www.iedparis8.net/ied/
+	enseignement  :  http://www.iedparis8.net/ied/
+	enseignements  :  http://www.iedparis8.net/ied/
+	environnement  :  http://www.iedparis8.net/ied/
+	equipe  :  http://www.iedparis8.net/ied/
+	equivalences  :  http://www.iedparis8.net/ied/
+	examens  :  http://www.iedparis8.net/ied/
+	fait  :  http://www.iedparis8.net/ied/
+	foire  :  http://www.iedparis8.net/ied/
+	formation  :  http://www.iedparis8.net/ied/
+	formations  :  http://www.iedparis8.net/ied/
+	fréquemment  :  http://www.iedparis8.net/ied/
+	générale  :  http://www.iedparis8.net/ied/
+	ied  :  http://www.iedparis8.net/ied/
+	informatique  :  http://www.iedparis8.net/ied/
+	informer  :  http://www.iedparis8.net/ied/
+	inscription  :  http://www.iedparis8.net/ied/
+	inscrire  :  http://www.iedparis8.net/ied/
+	inscrit  :  http://www.iedparis8.net/ied/
+	institut  :  http://www.iedparis8.net/ied/
+	libre  :  http://www.iedparis8.net/ied/
+	licence  :  http://www.iedparis8.net/ied/
+	ligne  :  http://www.iedparis8.net/ied/
+	lire  :  http://www.iedparis8.net/ied/
+	logiciels  :  http://www.iedparis8.net/ied/
+	lors  :  http://www.iedparis8.net/ied/
+	légales  :  http://www.iedparis8.net/ied/
+	masters  :  http://www.iedparis8.net/ied/
+	mention  :  http://www.iedparis8.net/ied/
+	mentions  :  http://www.iedparis8.net/ied/
+	messagerie  :  http://www.iedparis8.net/ied/
+	modalités  :  http://www.iedparis8.net/ied/
+	mémoire  :  http://www.iedparis8.net/ied/
+	non-bacheliers  :  http://www.iedparis8.net/ied/
+	notes  :  http://www.iedparis8.net/ied/
+	objectifs  :  http://www.iedparis8.net/ied/
+	organisation  :  http://www.iedparis8.net/ied/
+	paris  :  http://www.iedparis8.net/ied/
+	paris8  :  http://www.iedparis8.net/ied/
+	personnel  :  http://www.iedparis8.net/ied/
+	posez  :  http://www.iedparis8.net/ied/
+	pratiques  :  http://www.iedparis8.net/ied/
+	première  :  http://www.iedparis8.net/ied/
+	printemps  :  http://www.iedparis8.net/ied/
+	procédure  :  http://www.iedparis8.net/ied/
+	présentation  :  http://www.iedparis8.net/ied/
+	psychologie  :  http://www.iedparis8.net/ied/
+	pédagogique  :  http://www.iedparis8.net/ied/
+	pédagogiques  :  http://www.iedparis8.net/ied/
+	que  :  http://www.iedparis8.net/ied/
+	questions  :  http://www.iedparis8.net/ied/
+	requis  :  http://www.iedparis8.net/ied/
+	ré-inscription  :  http://www.iedparis8.net/ied/
+	réponses  :  http://www.iedparis8.net/ied/
+	réservés  :  http://www.iedparis8.net/ied/
+	sciences  :  http://www.iedparis8.net/ied/
+	souhaitez  :  http://www.iedparis8.net/ied/
+	soutenance  :  http://www.iedparis8.net/ied/
+	stages  :  http://www.iedparis8.net/ied/
+	suite  :  http://www.iedparis8.net/ied/
+	suivi  :  http://www.iedparis8.net/ied/
+	sur  :  http://www.iedparis8.net/ied/
+	tarifs  :  http://www.iedparis8.net/ied/
+	tous  :  http://www.iedparis8.net/ied/
+	toutes  :  http://www.iedparis8.net/ied/
+	transfert  :  http://www.iedparis8.net/ied/
+	travail  :  http://www.iedparis8.net/ied/
+	universitaire  :  http://www.iedparis8.net/ied/
+	université  :  http://www.iedparis8.net/ied/
+	vacances  :  http://www.iedparis8.net/ied/
+	visuels  :  http://www.iedparis8.net/ied/
+	vos  :  http://www.iedparis8.net/ied/
+	webmaster@iedparis8.net  :  http://www.iedparis8.net/ied/
+	©  :  http://www.iedparis8.net/ied/
+	à  :  http://www.iedparis8.net/ied/
+	éducation  :  http://www.iedparis8.net/ied/
+	études  :  http://www.iedparis8.net/ied/
+	êtes  :  http://www.iedparis8.net/ied/
+
+real	3m16.740s
+user	0m0.969s
+sys	0m0.465s
+
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied/
+	01/07/2014  :  http://www.iedparis8.net/ied/
+	11/03/2015  :  http://www.iedparis8.net/ied/
+	2005  :  http://www.iedparis8.net/ied/
+	2014/2015  :  http://www.iedparis8.net/ied/
+	2015-2016  :  http://www.iedparis8.net/ied/
+	24/04/2015  :  http://www.iedparis8.net/ied/
+	8  :  http://www.iedparis8.net/ied/
+	actualités  :  http://www.iedparis8.net/ied/
+	administration  :  http://www.iedparis8.net/ied/
+	administrative  :  http://www.iedparis8.net/ied/
+	année  :  http://www.iedparis8.net/ied/
+	arts  :  http://www.iedparis8.net/ied/
+	auditeur  :  http://www.iedparis8.net/ied/
+	aux  :  http://www.iedparis8.net/ied/
+	avez  :  http://www.iedparis8.net/ied/
+	bourse  :  http://www.iedparis8.net/ied/
+	candidats  :  http://www.iedparis8.net/ied/
+	cette  :  http://www.iedparis8.net/ied/
+	chiffre  :  http://www.iedparis8.net/ied/
+	cliniques  :  http://www.iedparis8.net/ied/
+	comment  :  http://www.iedparis8.net/ied/
+	consultation  :  http://www.iedparis8.net/ied/
+	contenu  :  http://www.iedparis8.net/ied/
+	continue  :  http://www.iedparis8.net/ied/
+	copyright  :  http://www.iedparis8.net/ied/
+	cours  :  http://www.iedparis8.net/ied/
+	coût  :  http://www.iedparis8.net/ied/
+	cursus  :  http://www.iedparis8.net/ied/
+	demande  :  http://www.iedparis8.net/ied/
+	demandes  :  http://www.iedparis8.net/ied/
+	des  :  http://www.iedparis8.net/ied/
+	desu  :  http://www.iedparis8.net/ied/
+	diplôme  :  http://www.iedparis8.net/ied/
+	dispensées  :  http://www.iedparis8.net/ied/
+	dispositifs  :  http://www.iedparis8.net/ied/
+	distance  :  http://www.iedparis8.net/ied/
+	droit  :  http://www.iedparis8.net/ied/
+	droits  :  http://www.iedparis8.net/ied/
+	délivrance  :  http://www.iedparis8.net/ied/
+	départ  :  http://www.iedparis8.net/ied/
+	déplacements  :  http://www.iedparis8.net/ied/
+	déroulement  :  http://www.iedparis8.net/ied/
+	enseignement  :  http://www.iedparis8.net/ied/
+	enseignements  :  http://www.iedparis8.net/ied/
+	environnement  :  http://www.iedparis8.net/ied/
+	equipe  :  http://www.iedparis8.net/ied/
+	equivalences  :  http://www.iedparis8.net/ied/
+	examens  :  http://www.iedparis8.net/ied/
+	fait  :  http://www.iedparis8.net/ied/
+	foire  :  http://www.iedparis8.net/ied/
+	formation  :  http://www.iedparis8.net/ied/
+	formations  :  http://www.iedparis8.net/ied/
+	fréquemment  :  http://www.iedparis8.net/ied/
+	générale  :  http://www.iedparis8.net/ied/
+	ied  :  http://www.iedparis8.net/ied/
+	informatique  :  http://www.iedparis8.net/ied/
+	informer  :  http://www.iedparis8.net/ied/
+	inscription  :  http://www.iedparis8.net/ied/
+	inscrire  :  http://www.iedparis8.net/ied/
+	inscrit  :  http://www.iedparis8.net/ied/
+	institut  :  http://www.iedparis8.net/ied/
+	libre  :  http://www.iedparis8.net/ied/
+	licence  :  http://www.iedparis8.net/ied/
+	ligne  :  http://www.iedparis8.net/ied/
+	lire  :  http://www.iedparis8.net/ied/
+	logiciels  :  http://www.iedparis8.net/ied/
+	lors  :  http://www.iedparis8.net/ied/
+	légales  :  http://www.iedparis8.net/ied/
+	masters  :  http://www.iedparis8.net/ied/
+	mention  :  http://www.iedparis8.net/ied/
+	mentions  :  http://www.iedparis8.net/ied/
+	messagerie  :  http://www.iedparis8.net/ied/
+	modalités  :  http://www.iedparis8.net/ied/
+	mémoire  :  http://www.iedparis8.net/ied/
+	non-bacheliers  :  http://www.iedparis8.net/ied/
+	notes  :  http://www.iedparis8.net/ied/
+	objectifs  :  http://www.iedparis8.net/ied/
+	organisation  :  http://www.iedparis8.net/ied/
+	paris  :  http://www.iedparis8.net/ied/
+	paris8  :  http://www.iedparis8.net/ied/
+	personnel  :  http://www.iedparis8.net/ied/
+	posez  :  http://www.iedparis8.net/ied/
+	pratiques  :  http://www.iedparis8.net/ied/
+	première  :  http://www.iedparis8.net/ied/
+	printemps  :  http://www.iedparis8.net/ied/
+	procédure  :  http://www.iedparis8.net/ied/
+	présentation  :  http://www.iedparis8.net/ied/
+	psychologie  :  http://www.iedparis8.net/ied/
+	pédagogique  :  http://www.iedparis8.net/ied/
+	pédagogiques  :  http://www.iedparis8.net/ied/
+	que  :  http://www.iedparis8.net/ied/
+	questions  :  http://www.iedparis8.net/ied/
+	requis  :  http://www.iedparis8.net/ied/
+	ré-inscription  :  http://www.iedparis8.net/ied/
+	réponses  :  http://www.iedparis8.net/ied/
+	réservés  :  http://www.iedparis8.net/ied/
+	sciences  :  http://www.iedparis8.net/ied/
+	souhaitez  :  http://www.iedparis8.net/ied/
+	soutenance  :  http://www.iedparis8.net/ied/
+	stages  :  http://www.iedparis8.net/ied/
+	suite  :  http://www.iedparis8.net/ied/
+	suivi  :  http://www.iedparis8.net/ied/
+	sur  :  http://www.iedparis8.net/ied/
+	tarifs  :  http://www.iedparis8.net/ied/
+	tous  :  http://www.iedparis8.net/ied/
+	toutes  :  http://www.iedparis8.net/ied/
+	transfert  :  http://www.iedparis8.net/ied/
+	travail  :  http://www.iedparis8.net/ied/
+	universitaire  :  http://www.iedparis8.net/ied/
+	université  :  http://www.iedparis8.net/ied/
+	vacances  :  http://www.iedparis8.net/ied/
+	visuels  :  http://www.iedparis8.net/ied/
+	vos  :  http://www.iedparis8.net/ied/
+	webmaster@iedparis8.net  :  http://www.iedparis8.net/ied/
+	©  :  http://www.iedparis8.net/ied/
+	à  :  http://www.iedparis8.net/ied/
+	éducation  :  http://www.iedparis8.net/ied/
+	études  :  http://www.iedparis8.net/ied/
+	êtes  :  http://www.iedparis8.net/ied/
+
+real	1m26.657s
+user	0m0.511s
+sys	0m0.159s
+
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied/ -go
+	actualités  :  http://www.iedparis8.net/ied/
+	informatique  :  http://www.iedparis8.net/ied/
+	logiciels  :  http://www.iedparis8.net/ied/
+	paris  :  http://www.iedparis8.net/ied/
+	travail  :  http://www.iedparis8.net/ied/
+	université  :  http://www.iedparis8.net/ied/
+
+real	2m24.476s
+user	0m0.450s
+sys	0m0.177s
+
+# 17 MINUTES!!
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied https://fr.wikipedia.org/wiki/Mandriva_Linux www.canardpc.com 
+	[...]
+	poulsbo  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pourquoi  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pouvait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pouvant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pouvez  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	powerpack  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pratique  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pratiquement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pratiques  :  http://www.iedparis8.net/ied
+	première  :  http://www.iedparis8.net/ied ; https://fr.wikipedia.org/wiki/Mandriva_Linux
+	premières  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	[...]
+	realplayer  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	rebaptisés  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	recherche  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	rechercher  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	recherches  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	reconnus  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	recourant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	recueilli  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	red  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	redhat  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	redistribuée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	redémarrage  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	refusait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	regarder  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	registre  :  http://www.canardpc.com
+	regroupant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	regroupe  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	relativement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	release  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	remarques  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	remonter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	remplace  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	remplacé  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	reprend  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	repris  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	requis  :  http://www.iedparis8.net/ied
+	requérait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	rescue  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	reste  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	[...]
+	tizen  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tiếng  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tops-20  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tos  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	touch  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	toujours  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tournait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tous  :  http://www.iedparis8.net/ied ; https://fr.wikipedia.org/wiki/Mandriva_Linux ; http://www.canardpc.com
+	tout  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	toute  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	toutes  :  http://www.iedparis8.net/ied ; https://fr.wikipedia.org/wiki/Mandriva_Linux
+	traduisait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	traktopel  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	transfert  :  http://www.iedparis8.net/ied
+	transfugedrake  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	transition  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	travail  :  http://www.iedparis8.net/ied ; https://fr.wikipedia.org/wiki/Mandriva_Linux
+	trois  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	troisième  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	trouvent  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	trouvé  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	trouvés  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tru64  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	très  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	turkix  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	type  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	types  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	tâches  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	téléchargeable  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	téléchargeables  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	téléchargement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	télécharger  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	téléchargée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	türkçe  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	ubuntu  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	ucarp  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	udev  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	unicos  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	uniquement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	unity  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	universitaire  :  http://www.iedparis8.net/ied
+	université  :  http://www.iedparis8.net/ied
+	[...]
+	éventuels  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éviter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolue  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolution  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évoquée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	êtes  :  http://www.iedparis8.net/ied
+	être  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Čeština  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Ελληνικά  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Беларуская  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Български  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Русский  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Српски  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Українська  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	עברית  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	العربية  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	فارسی  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	मराठी  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	മലയാളം  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	—  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	…  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	↑  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	中文  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	日本語  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	한국어  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+
+real	17m14.377s
+user	0m32.579s
+sys	0m4.408s
+
+# 15 minutes pour wiki mandriva tout seul...
+reno@Jupiter:~/mytz$ time python scanne https://fr.wikipedia.org/wiki/Mandriva_Linux
+	phares  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	phase  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	phone  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	photos  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	photoshop  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	pikeos  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	[...]
+	procès  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	production  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	produire  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	produit  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	produits  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	professionnelle  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	professionnelles  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	professionnels  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	profiter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	programmes  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	projet  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	projets  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	prononcé  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	propos  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	proposait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	proposant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	propose  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	propres  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	propriétaire  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	propriétaires  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	protocole  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	provient  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	précis  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	précises  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	préconfiguration  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	préfère  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	préfèrent  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	présent  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	présentait  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	présentation  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	présenter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	présents  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	prévues  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	prête  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	[...]
+	«  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«cooker»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«entreprise»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«gelée»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«grappe»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«liste  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«mandrake  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	«spring»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	µc/os-ii  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	·  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	»  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	À  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Élément  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	État  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	États  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	États-unis  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	à  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écoles  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	économique  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écrire  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	écriture  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	édition  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éditions  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éditée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éducation  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	édutice  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	également  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	époque  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	équivalents  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étaient  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	était  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étant  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étendre  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étincelles  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	étoile  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	été  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éventuellement  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éventuels  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	éviter  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolue  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évolution  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	évoquée  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	être  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Čeština  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Ελληνικά  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Беларуская  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Български  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Русский  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Српски  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	Українська  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	עברית  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	العربية  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	فارسی  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	मराठी  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	മലയാളം  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	—  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	…  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	↑  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	中文  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	日本語  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+	한국어  :  https://fr.wikipedia.org/wiki/Mandriva_Linux
+
+real	15m13.847s
+user	0m31.638s
+sys	0m3.942s
+
+
+
+# TEST SUR FONCTION NETTOIE_HTLM AVEC SYSTEME DE MARQUEUR - non concluant
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied www.canardpc.com
+	&  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	'generals2/f2p/reboot'  :  http://www.canardpc.com
+	+35%  :  http://www.canardpc.com
+	/  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	0  :  http://www.iedparis8.net/ied
+	01  :  http://www.canardpc.com
+	01.04.15  :  http://www.canardpc.com
+	01/07/2014  :  http://www.iedparis8.net/ied
+	02.04.15  :  http://www.canardpc.com
+	03.04.15  :  http://www.canardpc.com
+	03h04  :  http://www.canardpc.com
+	06h03  :  http://www.canardpc.com
+	08h04  :  http://www.canardpc.com
+	1  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	10.04.15  :  http://www.canardpc.com
+	10h04  :  http://www.canardpc.com
+	11/03/2015  :  http://www.iedparis8.net/ied
+	11h04  :  http://www.canardpc.com
+	13.04.15  :  http://www.canardpc.com
+	14  :  http://www.canardpc.com
+	15  :  http://www.canardpc.com
+	15h04  :  http://www.canardpc.com
+	16h03  :  http://www.canardpc.com
+	17  :  http://www.canardpc.com
+	18  :  http://www.canardpc.com
+	1er  :  http://www.canardpc.com
+	2  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	2003-2999  :  http://www.canardpc.com
+	2005  :  http://www.iedparis8.net/ied
+	2012  :  http://www.canardpc.com
+	2014/2015  :  http://www.iedparis8.net/ied
+	2015  :  http://www.canardpc.com
+	2015-2016  :  http://www.iedparis8.net/ied
+	24/04/2015  :  http://www.iedparis8.net/ied
+	27.03.15  :  http://www.canardpc.com
+	29.04.15  :  http://www.canardpc.com
+	3  :  http://www.canardpc.com
+	30.03.15  :  http://www.canardpc.com
+	315e  :  http://www.canardpc.com
+	315   :  http://www.canardpc.com
+	316  :  http://www.canardpc.com
+	317  :  http://www.canardpc.com
+	4  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	400  :  http://www.canardpc.com
+	450  :  http://www.canardpc.com
+	482  :  http://www.canardpc.com
+	5  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	50e  :  http://www.canardpc.com
+	6  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	62  :  http://www.canardpc.com
+	66  :  http://www.canardpc.com
+	7  :  http://www.iedparis8.net/ied
+	75020  :  http://www.canardpc.com
+	77  :  http://www.canardpc.com
+	8  :  http://www.iedparis8.net/ied
+	86  :  http://www.canardpc.com
+	872  :  http://www.canardpc.com
+	<  :  http://www.iedparis8.net/ied
+	</blink>  :  http://www.iedparis8.net/ied
+	</div>  :  http://www.canardpc.com
+	</ul>  :  http://www.iedparis8.net/ied
+	>  :  http://www.iedparis8.net/ied
+	a  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	acharnés  :  http://www.canardpc.com
+	actes  :  http://www.canardpc.com
+	actualités  :  http://www.iedparis8.net/ied
+	actus  :  http://www.canardpc.com
+	admin  :  http://www.canardpc.com
+	administration  :  http://www.iedparis8.net/ied
+	administrative  :  http://www.iedparis8.net/ied
+	adresses  :  http://www.canardpc.com
+	affreux  :  http://www.canardpc.com
+	aide  :  http://www.canardpc.com
+	aidez-nous  :  http://www.canardpc.com
+	aime  :  http://www.canardpc.com
+	ainsi  :  http://www.canardpc.com
+	année  :  http://www.iedparis8.net/ied
+	arts  :  http://www.iedparis8.net/ied
+	athena  :  http://www.canardpc.com
+	athéna  :  http://www.canardpc.com
+	attention  :  http://www.canardpc.com
+	au  :  http://www.canardpc.com
+	auditeur  :  http://www.iedparis8.net/ied
+	aussi  :  http://www.canardpc.com
+	aux  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	avec  :  http://www.canardpc.com
+	avez  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	avis  :  http://www.canardpc.com
+	avoir  :  http://www.canardpc.com
+	bal  :  http://www.canardpc.com
+	biendebuter.net  :  http://www.canardpc.com
+	bobigny  :  http://www.canardpc.com
+	bon  :  http://www.canardpc.com
+	bonsoir  :  http://www.canardpc.com
+	bord  :  http://www.canardpc.com
+	bourse  :  http://www.iedparis8.net/ied
+	boutique  :  http://www.canardpc.com
+	bravoure  :  http://www.canardpc.com
+	c  :  http://www.iedparis8.net/ied
+	c&c  :  http://www.canardpc.com
+	calculez  :  http://www.canardpc.com
+	canard  :  http://www.canardpc.com
+	canardpc.com  :  http://www.canardpc.com
+	candidats  :  http://www.iedparis8.net/ied
+	capital  :  http://www.canardpc.com
+	cet  :  http://www.canardpc.com
+	cette  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	ceux  :  http://www.canardpc.com
+	chez  :  http://www.canardpc.com
+	chiffre  :  http://www.iedparis8.net/ied
+	choix  :  http://www.canardpc.com
+	cliniques  :  http://www.iedparis8.net/ied
+	coin  :  http://www.canardpc.com
+	command  :  http://www.canardpc.com
+	comment  :  http://www.iedparis8.net/ied
+	commerce  :  http://www.canardpc.com
+	complots  :  http://www.canardpc.com
+	concours  :  http://www.canardpc.com
+	congelé  :  http://www.canardpc.com
+	connaitre  :  http://www.canardpc.com
+	conquer  :  http://www.canardpc.com
+	conso  :  http://www.canardpc.com
+	consultation  :  http://www.iedparis8.net/ied
+	conséquences  :  http://www.canardpc.com
+	contenu  :  http://www.iedparis8.net/ied
+	continue  :  http://www.iedparis8.net/ied
+	continuer  :  http://www.canardpc.com
+	copyright  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	cours  :  http://www.iedparis8.net/ied
+	coïncidences  :  http://www.canardpc.com
+	coût  :  http://www.iedparis8.net/ied
+	croire  :  http://www.canardpc.com
+	crunchez  :  http://www.canardpc.com
+	création  :  http://www.canardpc.com
+	créez  :  http://www.canardpc.com
+	culte  :  http://www.canardpc.com
+	cursus  :  http://www.iedparis8.net/ied
+	d  :  http://www.iedparis8.net/ied
+	demande  :  http://www.iedparis8.net/ied
+	demandent  :  http://www.canardpc.com
+	demandes  :  http://www.iedparis8.net/ied
+	dernier  :  http://www.canardpc.com
+	des  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	desu  :  http://www.iedparis8.net/ied
+	deux  :  http://www.canardpc.com
+	diplôme  :  http://www.iedparis8.net/ied
+	dispensées  :  http://www.iedparis8.net/ied
+	[...]
+	liberté  :  http://www.canardpc.com
+	libre  :  http://www.iedparis8.net/ied
+	licence  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	ligne  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	lire  :  http://www.iedparis8.net/ied
+	locaux  :  http://www.canardpc.com
+	logiciels  :  http://www.iedparis8.net/ied
+	lors  :  http://www.iedparis8.net/ied
+	lundi  :  http://www.canardpc.com
+	lusth  :  http://www.canardpc.com
+	légales  :  http://www.iedparis8.net/ied
+	m  :  http://www.iedparis8.net/ied
+	magazine  :  http://www.canardpc.com
+	magic  :  http://www.canardpc.com
+	mai  :  http://www.canardpc.com
+	make  :  http://www.canardpc.com
+	marmiton  :  http://www.canardpc.com
+	mars  :  http://www.canardpc.com
+	masters  :  http://www.iedparis8.net/ied
+	mention  :  http://www.iedparis8.net/ied
+	mentions  :  http://www.iedparis8.net/ied
+	menu  :  http://www.canardpc.com
+	merci  :  http://www.canardpc.com
+	mercredi  :  http://www.canardpc.com
+	messagerie  :  http://www.iedparis8.net/ied
+	mieux  :  http://www.canardpc.com
+	might  :  http://www.canardpc.com
+	mod  :  http://www.canardpc.com
+	modalités  :  http://www.iedparis8.net/ied
+	mods  :  http://www.canardpc.com
+	moi  :  http://www.canardpc.com
+	moins  :  http://www.canardpc.com
+	moquette  :  http://www.canardpc.com
+	mort  :  http://www.canardpc.com
+	[...]
+	s  :  http://www.iedparis8.net/ied
+	sa  :  http://www.canardpc.com
+	saisir  :  http://www.canardpc.com
+	sas  :  http://www.canardpc.com
+	sciences  :  http://www.iedparis8.net/ied
+	se  :  http://www.canardpc.com
+	semble  :  http://www.canardpc.com
+	serveur  :  http://www.canardpc.com
+	ses  :  http://www.canardpc.com
+	simples  :  http://www.canardpc.com
+	site  :  http://www.canardpc.com
+	situé  :  http://www.canardpc.com
+	siège  :  http://www.canardpc.com
+	skin  :  http://www.canardpc.com
+	smite  :  http://www.canardpc.com
+	social  :  http://www.canardpc.com
+	sociétés  :  http://www.canardpc.com
+	soir  :  http://www.canardpc.com
+	soleillet  :  http://www.canardpc.com
+	something  :  http://www.canardpc.com
+	son  :  http://www.canardpc.com
+	sondage  :  http://www.canardpc.com
+	souhaitez  :  http://www.iedparis8.net/ied
+	sous  :  http://www.canardpc.com
+	sous-sol  :  http://www.canardpc.com
+	soutenance  :  http://www.iedparis8.net/ied
+	soutenir  :  http://www.canardpc.com
+	soutien  :  http://www.canardpc.com
+	souvenez-vous  :  http://www.canardpc.com
+	stages  :  http://www.iedparis8.net/ied
+	stop  :  http://www.canardpc.com
+	suis  :  http://www.canardpc.com
+	suite</a></td>  :  http://www.iedparis8.net/ied
+	suivant  :  http://www.canardpc.com
+	suivi  :  http://www.iedparis8.net/ied
+	sur  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	sébum  :  http://www.canardpc.com
+	t  :  http://www.iedparis8.net/ied
+	tarifs  :  http://www.iedparis8.net/ied
+	tous  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	tout  :  http://www.canardpc.com
+	toute  :  http://www.canardpc.com
+	toutes  :  http://www.iedparis8.net/ied
+	transfert  :  http://www.iedparis8.net/ied
+	travail  :  http://www.iedparis8.net/ied
+	troublantes  :  http://www.canardpc.com
+	trouve  :  http://www.canardpc.com
+	u  :  http://www.iedparis8.net/ied
+	ubisoft  :  http://www.canardpc.com
+	universitaire  :  http://www.iedparis8.net/ied
+	université  :  http://www.iedparis8.net/ied
+	up  :  http://www.canardpc.com
+	url  :  http://www.canardpc.com
+	v  :  http://www.iedparis8.net/ied
+	vacances  :  http://www.iedparis8.net/ied
+	vendredi  :  http://www.canardpc.com
+	ventes  :  http://www.canardpc.com
+	vidéo  :  http://www.canardpc.com
+	visuels  :  http://www.iedparis8.net/ied
+	vos  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	votre  :  http://www.canardpc.com
+	vu  :  http://www.canardpc.com
+	webmaster@iedparis8.net  :  http://www.iedparis8.net/ied
+	westwood  :  http://www.canardpc.com
+	wobak  :  http://www.canardpc.com
+	y  :  http://www.canardpc.com
+	©  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	à  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+	ça  :  http://www.canardpc.com
+	é  :  http://www.iedparis8.net/ied
+	échantillons  :  http://www.canardpc.com
+	écrit  :  http://www.canardpc.com
+	édition  :  http://www.canardpc.com
+	éducation  :  http://www.iedparis8.net/ied
+	électrique  :  http://www.canardpc.com
+	équipe  :  http://www.canardpc.com
+	étaient  :  http://www.canardpc.com
+	était  :  http://www.canardpc.com
+	études  :  http://www.iedparis8.net/ied
+	été  :  http://www.canardpc.com
+	êtes  :  http://www.iedparis8.net/ied ; http://www.canardpc.com
+
+real	5m33.493s
+user	0m3.331s
+sys	0m1.162s
+
+
+
+reno@Jupiter:~/mytz$ time python scanne http://www.iedparis8.net/ied/ www.canardpc.com -go
+	actualités  :  http://www.iedparis8.net/ied/
+	informatique  :  http://www.iedparis8.net/ied/
+	logiciels  :  http://www.iedparis8.net/ied/
+	paris  :  http://www.iedparis8.net/ied/ ; http://www.canardpc.com
+	travail  :  http://www.iedparis8.net/ied/
+	université  :  http://www.iedparis8.net/ied/
+
+real	2m41.501s
+user	0m0.665s
+sys	0m0.198s
+
+# GESTION D'ERREURS
+reno@Jupiter:~/mytz$ python scanne qsdfqqgfsdg erazpqdpsf
+Une erreur est survenue. 
+Usage: 
+	python scanne FICHIER -option 
+	python scanne URL1 URL2 -option 
+Option: -go 
+Pour plus de détails: python scanne -aide
+
+reno@Jupiter:~/mytz$ python scanne -aide
+Usage:
+	python scanne FICHIER -option
+	python scanne URL1 URL2 ... -option
+
+Options: 
+	-go	cherche les termes contenus dans une liste donnée
+		(par défaut: cherche tous les termes)
+	-aide	affiche l'aide
+
+Note:
+	URL:	peut commencer par http:// ou par www.
+		accepte plusieurs URL
+
+reno@Jupiter:~/mytz$ python scanne qdfsdfqlj -aide qsdsldjfqlkjf
+Usage:
+	python scanne FICHIER -option
+	python scanne URL1 URL2 ... -option
+
+Options: 
+	-go	cherche les termes contenus dans une liste donnée
+		(par défaut: cherche tous les termes)
+	-aide	affiche l'aide
+
+Note:
+	URL:	peut commencer par http:// ou par www.
+		accepte plusieurs URL
+		
+reno@Jupiter:~/mytz$ python scanne tpp.dqfd.com 
+Une erreur est survenue. 
+Usage: 
+	python scanne FICHIER -option 
+	python scanne URL1 URL2 -option 
+Option: -go 
+Pour plus de détails: python scanne -aide
+
+reno@Jupiter:~/mytz$ python scanne indexe gro
+Une erreur est survenue. 
+Usage: 
+	python scanne FICHIER -option 
+	python scanne URL1 URL2 -option 
+Option: -go 
+Pour plus de détails: python scanne -aide
+
+# OPTION -STOP PAR DEFAUT
+reno@Jupiter:~/mytz$ python scanne indexe-moi -youpilavie
+	a  :  10, 12
+	alors  :  8
+	attendue  :  6
+	aujourd'hui  :  11
+	autre  :  12
+	autrement  :  7
+	avant  :  6
+	avec  :  8
+	avoir  :  5
+	beau  :  11
+	bien  :  1, 5
+	bon  :  9
+	bouts  :  4
+	certitude  :  5
+	chaque  :  4, 8
+	coder  :  3
+	contexte  :  8
+	des  :  10
+	dire  :  12
+	dit  :  7
+	est  :  1-3, 10
+	expression  :  4, 6, 10
+	faire  :  11-12
+	fait  :  11
+	fera  :  11
+	fonctionnement  :  9
+	frustration  :  3
+	garantit  :  9
+	global  :  9
+	grand'chose  :  12
+	grosse  :  3
+	instruction  :  7-8
+	irai  :  11
+	large  :  7
+	lorsqu'il  :  11
+	mal  :  2
+	marche  :  2
+	petits  :  4
+	plaisir  :  1
+	programme  :  1-2, 7
+	progressivement  :  4, 9
+	retourne  :  5
+	servir  :  6
+	side-car  :  11
+	solution  :  3
+	suivantes  :  10
+	testant  :  4
+	teste  :  8
+	tester  :  10
+	tour  :  11
+	tourne  :  1
+	tout  :  2
+	valeur  :  5
+	voulu  :  8
+	vrai  :  12
+	vraiment  :  2
+
+reno@Jupiter:~/mytz$ python scanne indexe-moi - go
+	a  :  10, 12
+	alors  :  8
+	attendue  :  6
+	aujourd'hui  :  11
+	autre  :  12
+	autrement  :  7
+	avant  :  6
+	avec  :  8
+	avoir  :  5
+	beau  :  11
+	bien  :  1, 5
+	bon  :  9
+	bouts  :  4
+	certitude  :  5
+	chaque  :  4, 8
+	coder  :  3
+	contexte  :  8
+	des  :  10
+	dire  :  12
+	dit  :  7
+	est  :  1-3, 10
+	expression  :  4, 6, 10
+	faire  :  11-12
+	fait  :  11
+	fera  :  11
+	fonctionnement  :  9
+	frustration  :  3
+	garantit  :  9
+	global  :  9
+	grand'chose  :  12
+	grosse  :  3
+	instruction  :  7-8
+	irai  :  11
+	large  :  7
+	lorsqu'il  :  11
+	mal  :  2
+	marche  :  2
+	petits  :  4
+	plaisir  :  1
+	programme  :  1-2, 7
+	progressivement  :  4, 9
+	retourne  :  5
+	servir  :  6
+	side-car  :  11
+	solution  :  3
+	suivantes  :  10
+	testant  :  4
+	teste  :  8
+	tester  :  10
+	tour  :  11
+	tourne  :  1
+	tout  :  2
+	valeur  :  5
+	voulu  :  8
+	vrai  :  12
+	vraiment  :  2

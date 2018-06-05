@@ -1,0 +1,7 @@
+# [px03-1] définissez la fonction unaire cube() qui permet d'élever au cube un nombre passé en argument, de
+telle sorte que cube(3) retourne 27, cube(4) retourne 64, et cube(100) retourne 1000000"; utilisez-la pour
+vérifier le cube de 2 et le cube de 5.
+
+def cube(x) : return x * x * x 
+cube(2) # 8 
+cube(5) # 125 

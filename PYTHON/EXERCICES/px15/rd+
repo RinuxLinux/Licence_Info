@@ -1,0 +1,23 @@
+#! /usr/bin/env python
+#-*-coding: utf-8 -*-
+# px15-2
+
+def RomDec(R):
+	N = 0
+	R = [conv[x] for x in R.upper()]
+	for x in range(len(R)-1):
+		if R[x] < R[x+1]: N-= R[x]
+		else: 
+			N+= R[x]
+	N += R[-1]
+	return N
+
+conv = {'C':100,'D':500,'I':1,'M':1000,'L':50,'V':5,'X':10}
+somme = 0
+
+import sys
+if len(sys.argv) > 1 : 
+	for x in sys.argv[1:]: somme += RomDec(x)
+	print somme
+else: exit('Argument manquant')
+

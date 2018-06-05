@@ -1,0 +1,64 @@
+# Renaud Lizot
+# 14509956
+# px33-2
+# morpion : grille modulable
+
+# Analyse
+
+1. étendre la grille à 5x5 cases, suffit-il pour cela de changer la valeur de T?
+Réponse: oui.
+
+2. Le programme continue-t-il à fonctionner?
+Réponse: plus ou moins. Le programme ne sait plus déterminer quand le joueur gagne (procedures faites pour une matrice 3x3)
+
+3. Que faut-il changer pour améliorer son comportement?
+Le processus qui détermine les combinaisons gagnantes est fait pour une matrice à 3x3 cases.
+Il faut modifier gagnant() en indexant les combinaisons sur le nombre de cases dans la matrice
+
+4. Peut-on coder une solution générale pour n'importe quelle dimension?
+On pourrait mais, pour rendre le jeu intéresant à jouer, il faudrait apporter une modification à la règle du jeu.
+
+
+# Faisabilité
+
+Commençons par généraliser la fonction gagnant() pour qu'elle contrôle les lignes, colonnes et diagonales pour n'importe quelle taille de matrice.
+
+	Lignes : [[M[x][y] for y in range(T)] for x in range(T)]
+	Colonnes : [[M[x][y] for x in range(T)] for y in range(T)]
+	diagonale \ : [M[x][x] for x in range(T)]
+	diagonale / : [M[x][T-x-1] for x in range(T)]
+
+Maintenant, modifions la façon dont est contrôler le contenu de ces listes:
+
+	for i in range(T):
+		if [[M[x][y] for y in range(T)] for x in range(T)][i].count(s) is T : return True
+		if [[M[x][y] for x in range(T)] for y in range(T)][i].count(s) is T : return True
+	if [M[x][x] for x in range(T)].count(s) is T : return True
+	if [M[x][T-x-1] for x in range(T)].count(s) is T : return True
+
+Il faut aussi modifier la façon dont est contrôlé le cas où la grille est pleine.
+Pour cela nous créons une nouvelle variable locale:
+
+	m = []
+	for x in range(T):
+		m += M[x]
+
+La nouvelle fonction gagnant() ressemble maintenant à ça:
+
+def gagnant(s) : 
+	global info
+	m = []
+	for x in range(T): 
+		m += M[x]
+	for i in range(T):
+		if [[M[x][y] for y in range(T)] for x in range(T)][i].count(s) is T : return True
+		if [[M[x][y] for x in range(T)] for y in range(T)][i].count(s) is T : return True
+	if [M[x][x] for x in range(T)].count(s) is T : return True
+	if [M[x][T-x-1] for x in range(T)].count(s) is T : return True
+	if False not in m : info ['text'] = 'GAME OVER'
+
+# Tests: OK
+
+# Amélioration:
+j'ajoute l'obligation de donner la taille de la grille en ldc, pour faciliter les tests.
+ex: $ python morpion 3

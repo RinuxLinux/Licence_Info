@@ -1,0 +1,4 @@
+[px03-3] définir la fonction unaire respire() qui prend une chaîne en argument, et retourne cette même chaîne après avoir ajouté un espace avant et un espace après.
+
+def respire(x) : " " + x + " "
+respire('huuuuh')

@@ -1,0 +1,15 @@
+# Renaud Lizot
+# 14509956
+# px13-4
+
+>>> ps = 'je tu il nous vous ils'.split()
+>>> ip1 = 'e es e ons ez ent'.split()
+>>> v = 'filer rigoler conjuguer'.split()
+>>> conjugue = []
+>>>
+>>> conj = [[ps[x] + ' ' + v[y][:-2] + ip1[x] for x in range(0,6)] for y in range(len(v))]
+>>> conj
+[['je file', 'tu files', 'il file', 'nous filons', 'vous filez', 'ils filent'], ['je rigole', 'tu rigoles', 'il rigole', 'nous rigolons', 'vous rigolez', 'ils rigolent'], ['je conjugue', 'tu conjugues', 'il conjugue', 'nous conjuguons', 'vous conjuguez', 'ils conjuguent']]
+>>> 
+
+
