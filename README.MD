@@ -1,1 +1,3 @@
-Travaux réalisés pendant la Licence Info IED
+Travaux rÃ©alisÃ©s pendant la Licence Info IED
+
+TODO: ajouter C, Prolog pour archives
